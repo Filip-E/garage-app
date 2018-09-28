@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class MyDbContext : DbContext
+    public class MyDbContext : DbContext
     {
         public MyDbContext() : base("connectionString") { }
         public DbSet<Product> Products { get; set; }
