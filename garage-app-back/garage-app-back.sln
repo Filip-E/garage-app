@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "garage-app-bl", "WebApplication1\garage-app-bl.csproj", "{3F3B7C0B-4718-4164-904F-0D26F906CDAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "garage-app-bl", "garage-app-bl\garage-app-bl.csproj", "{3F3B7C0B-4718-4164-904F-0D26F906CDAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "garage-app-dal", "DAL\garage-app-dal.csproj", "{0AB064BE-4F37-4988-84C1-DD1067EA1700}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "garage-app-dal", "garage-app-dal\garage-app-dal.csproj", "{0AB064BE-4F37-4988-84C1-DD1067EA1700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
