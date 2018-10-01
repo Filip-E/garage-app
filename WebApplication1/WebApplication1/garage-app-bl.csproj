@@ -138,9 +138,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\garage-app-dal.csproj">
       <Project>{0ab064be-4f37-4988-84c1-dd1067ea1700}</Project>
-      <Name>DAL</Name>
+      <Name>garage-app-dal</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
