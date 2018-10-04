@@ -9,9 +9,9 @@ namespace WebApplication1.Mappers
 {
     public class ProductsMapper
     {
-        public ProductResponseDTO ToDto(Product product)
+        public ProductResponseDto ToDto(Product product)
         {
-            ProductResponseDTO dto = new ProductResponseDTO
+            ProductResponseDto dto = new ProductResponseDto
             {
                 Name = product.Name, Price = product.Price, Stock = product.Stock
             };

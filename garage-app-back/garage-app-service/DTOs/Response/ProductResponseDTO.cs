@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication1.DTOs.Response
 {
-    public class ProductResponseDTO
+    public class ProductResponseDto
     {
         public string Name { get; set; }
 

@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
 
         public IHttpActionResult GetAllProducts()
         {
-            List<ProductResponseDTO> response = new List<ProductResponseDTO>();
+            List<ProductResponseDto> response = new List<ProductResponseDto>();
             List<Product> products = _service.GetProducts();
             foreach (Product p in products)
             {
@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
 
         public IHttpActionResult GetProduct(int id)
         {
-            ProductResponseDTO product = _mapper.ToDto(_service.FindProduct(id));
+            ProductResponseDto product = _mapper.ToDto(_service.FindProduct(id));
             if (product == null)
             {
                 return NotFound();
