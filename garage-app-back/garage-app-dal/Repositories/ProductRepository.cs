@@ -27,6 +27,10 @@ namespace DAL.Repositories
         {
             return _context.Products.Find(id);
         }
+        public List<Category> getCategoriesFromProduct(int id)
+        {
+            return _context.Products.Find(id).Categories;
+        }
         public void UpdateProduct(Product product)
         {
             _context.Products.Attach(product);
