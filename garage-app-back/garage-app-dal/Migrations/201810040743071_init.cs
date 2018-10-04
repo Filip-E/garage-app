@@ -12,8 +12,7 @@ namespace DAL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(unicode: false),
-                        Category = c.String(unicode: false),
+                        Name = c.String(nullable: false, maxLength: 64, storeType: "nvarchar"),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.Id);

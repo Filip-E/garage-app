@@ -23,13 +23,11 @@ namespace DAL.Migrations
             Product p1 = new Product();
             p1.Id = 1;
             p1.Name = "Tomato Soup";
-            p1.Category = "Groceries";
             p1.Price = 1;
 
             Product p2 = new Product();
             p2.Id = 2;
             p2.Name = "Hammer";
-            p2.Category = "Hardware";
             p2.Price = 19.99M;
 
             //Product[] productsSeed = new Product[] { p1, p2 };

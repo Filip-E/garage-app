@@ -33,7 +33,6 @@ namespace DAL.Repositories
         {
             Product productFromDb = _context.Products.Find(product.Id);
             productFromDb.Name = product.Name;
-            productFromDb.Category = product.Category;
             productFromDb.Price= product.Price;
             _context.SaveChanges();
         }
@@ -43,6 +42,5 @@ namespace DAL.Repositories
             _context.Products.Remove(productFromDb);
             _context.SaveChanges();
         }
-
     }
 }
