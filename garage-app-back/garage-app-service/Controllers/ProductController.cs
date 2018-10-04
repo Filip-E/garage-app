@@ -24,23 +24,22 @@ namespace WebApplication1.Controllers
         public IHttpActionResult GetAllProducts()
         {
             List<ProductResponseDTO> response = new List<ProductResponseDTO>();
-            List<Product> products = _service.getProducts();
-
+            List<Product> products = _service.GetProducts();
             foreach (Product p in products)
             {
-                response.Add(_mapper.ToDTO(p));
+                response.Add(_mapper.ToDto(p));
             }
             return Ok(response);
         }
 
-        //public IHttpActionResult GetProduct(int id)
-        //{
-        //    var product = _service.findProduct(id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(product);
-        //}
+        public IHttpActionResult GetProduct(int id)
+        {
+            ProductResponseDTO product = _mapper.ToDto(_service.FindProduct(id));
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
     }
 }

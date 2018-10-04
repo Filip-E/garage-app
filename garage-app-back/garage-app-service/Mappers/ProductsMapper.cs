@@ -9,13 +9,13 @@ namespace WebApplication1.Mappers
 {
     public class ProductsMapper
     {
-        public ProductResponseDTO ToDTO(Product product)
+        public ProductResponseDTO ToDto(Product product)
         {
-            ProductResponseDTO dto = new ProductResponseDTO();
+            ProductResponseDTO dto = new ProductResponseDTO
+            {
+                Name = product.Name, Price = product.Price, Stock = product.Stock
+            };
 
-            dto.Name = product.Name;
-            dto.Price = product.Price;
-            dto.Stock = product.Stock;
             return dto;
         }
     }
