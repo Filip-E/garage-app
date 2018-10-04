@@ -19,6 +19,8 @@ namespace DAL.models
 
         [Required]
         public decimal Price { get; set; }
+        [Required]
+        public int Stock { get; set; }
 
         public List<Category> Categories { get; set; }
         public Product()

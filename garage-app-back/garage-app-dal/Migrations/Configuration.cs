@@ -21,19 +21,34 @@ namespace DAL.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            Category c1 = new Category();
+            c1.Id = 1;
+            c1.Type = "Retro_Vintage";
+
             Product p1 = new Product();
             p1.Id = 1;
-            p1.Name = "Tomato Soup";
-            p1.Price = 1;
+            p1.Name = "Bowling kegels";
+            p1.Price = 12.99M;
+            p1.Categories.Add(c1);
 
             Product p2 = new Product();
             p2.Id = 2;
-            p2.Name = "Hammer";
+            p2.Name = "Coca Cola Cooler";
             p2.Price = 19.99M;
+            p2.Categories.Add(c1);
 
-            //Product[] productsSeed = new Product[] { p1, p2 };
-            context.Products.AddOrUpdate(p1);
-            context.Products.AddOrUpdate(p2);
+            Category[] categorySeed = new Category[] { c1 };
+            foreach (Category c in categorySeed)
+            {
+                context.Categories.AddOrUpdate(c);
+            }
+
+            Product[] productsSeed = new Product[] { p1, p2 };
+            foreach (Product p in productsSeed)
+            {
+                context.Products.AddOrUpdate(p);
+            }
         }
     }
 }

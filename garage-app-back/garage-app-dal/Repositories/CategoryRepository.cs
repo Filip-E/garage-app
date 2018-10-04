@@ -31,10 +31,6 @@ namespace DAL.Repositories
         {
             return _context.Categories.Find(id);
         }
-        public List<Category> getCategoriesFromCategory(int id)
-        {
-            return _context.Categories.Find(id).Categories;
-        }
         public void UpdateCategory(Category category)
         {
             _context.Categories.Attach(category);

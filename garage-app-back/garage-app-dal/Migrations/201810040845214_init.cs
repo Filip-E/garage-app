@@ -23,6 +23,7 @@ namespace DAL.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 64, storeType: "nvarchar"),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Stock = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
