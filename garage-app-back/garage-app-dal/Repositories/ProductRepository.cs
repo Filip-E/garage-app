@@ -1,8 +1,6 @@
-﻿using System;
+﻿using DAL.models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
@@ -14,29 +12,28 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public void createProduct(Product product)
+        public void InsertProduct(Product product)
         {
             _context.Products.Add(product);
             _context.SaveChanges();
         }
 
-        public List<Product> getProducts()
+        public List<Product> GetProducts()
         {
            return _context.Products.ToList();
         }
 
-        public Product findProduct(int id)
+        public Product FindProduct(int id)
         {
             return _context.Products.Find(id);
         }
-        public void updateProduct(Product product)
+        public void UpdateProduct(Product product)
         {
-            Product productFromDb = _context.Products.Find(product.Id);
-            productFromDb.Name = product.Name;
-            productFromDb.Price= product.Price;
+            _context.Products.Attach(product);
+            _context.Entry(product).State = System.Data.Entity.EntityState.Modified;
             _context.SaveChanges();
         }
-        public void deleteProduct(int id)
+        public void DeleteProduct(int id)
         {
             Product productFromDb = _context.Products.Find(id);
             _context.Products.Remove(productFromDb);

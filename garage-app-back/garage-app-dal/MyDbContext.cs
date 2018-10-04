@@ -1,4 +1,5 @@
-﻿using MySql.Data.Entity;
+﻿using DAL.models;
+using MySql.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,5 +13,6 @@ namespace DAL
     {
         public MyDbContext() : base("connectionString") { }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

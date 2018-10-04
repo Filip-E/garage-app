@@ -70,13 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201810040743071_init.cs" />
-    <Compile Include="Migrations\201810040743071_init.Designer.cs">
-      <DependentUpon>201810040743071_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810040753061_addsCategory.cs" />
-    <Compile Include="Migrations\201810040753061_addsCategory.Designer.cs">
-      <DependentUpon>201810040753061_addsCategory.cs</DependentUpon>
+    <Compile Include="Migrations\201810040810286_init.cs" />
+    <Compile Include="Migrations\201810040810286_init.Designer.cs">
+      <DependentUpon>201810040810286_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Category.cs" />
@@ -90,11 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810040743071_init.resx">
-      <DependentUpon>201810040743071_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810040753061_addsCategory.resx">
-      <DependentUpon>201810040753061_addsCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810040810286_init.resx">
+      <DependentUpon>201810040810286_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
