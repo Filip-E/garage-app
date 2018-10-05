@@ -1,6 +1,7 @@
+using garage_app_entities;
+
 namespace DAL.Migrations
 {
-    using models;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;

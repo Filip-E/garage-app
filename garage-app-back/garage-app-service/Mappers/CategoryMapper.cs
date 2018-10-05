@@ -7,13 +7,13 @@ using WebApplication1.DTOs.Response;
 
 namespace WebApplication1.Mappers
 {
-    public class ProductsMapper
+    public class CategoryMapper
     {
-        public ProductResponseDto ToDto(Product product)
+        public CategoryResponseDto ToDto(Category category)
         {
-            return new ProductResponseDto
+            return new CategoryResponseDto()
             {
-                Name = product.Name, Price = product.Price, Stock = product.Stock
+                Type = category.Type
             };
         }
     }

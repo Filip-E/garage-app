@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace DAL.models
+namespace garage_app_entities
 {
     public class Category
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(32)]
         public string Type { get; set; }
 
         public List<Product> Products { get; set; }

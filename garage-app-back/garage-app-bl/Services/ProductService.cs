@@ -1,10 +1,7 @@
-﻿using DAL.models;
-using DAL.Repositories;
-using System;
+﻿using DAL.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using garage_app_entities;
+
 namespace garage_app_bl.Services
 {
     public class ProductService
@@ -23,6 +20,11 @@ namespace garage_app_bl.Services
         public Product FindProduct(int id)
         {
             return _repo.FindProduct(id);
+        }
+
+        public List<Category> GetCategoriesFromProduct(int productId)
+        {
+            return _repo.GetCategoriesFromProduct(productId);
         }
     }
 }

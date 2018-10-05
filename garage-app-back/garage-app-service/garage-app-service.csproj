@@ -118,12 +118,14 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mappers\CategoryMapper.cs" />
     <Compile Include="Mappers\ProductsMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,9 +148,9 @@
       <Project>{7187b6ff-725d-4d89-98fd-d8471aa13bba}</Project>
       <Name>garage-app-bl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\garage-app-dal\garage-app-dal.csproj">
-      <Project>{0AB064BE-4F37-4988-84C1-DD1067EA1700}</Project>
-      <Name>garage-app-dal</Name>
+    <ProjectReference Include="..\garage-app-entities\garage-app-entities.csproj">
+      <Project>{24779092-4E13-48F5-82F4-46ED6E551A81}</Project>
+      <Name>garage-app-entities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

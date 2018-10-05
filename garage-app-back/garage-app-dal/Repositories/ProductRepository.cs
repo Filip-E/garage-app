@@ -1,6 +1,6 @@
-﻿using DAL.models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using garage_app_entities;
 
 namespace DAL.Repositories
 {
@@ -27,9 +27,9 @@ namespace DAL.Repositories
         {
             return _context.Products.Find(id);
         }
-        public List<Category> getCategoriesFromProduct(int id)
+        public List<Category> GetCategoriesFromProduct(int productId)
         {
-            return _context.Products.Find(id).Categories;
+            return new List<Category>(_context.Products.Where(p => p.Id == productId).SelectMany(c => c.Categories));
         }
         public void UpdateProduct(Product product)
         {

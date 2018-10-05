@@ -1,11 +1,8 @@
-﻿using DAL.models;
-using garage_app_bl.Services;
-using System;
+﻿using garage_app_bl.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using garage_app_entities;
+using Swashbuckle.Swagger.Annotations;
 using WebApplication1.DTOs.Response;
 using WebApplication1.Mappers;
 
@@ -13,13 +10,15 @@ namespace WebApplication1.Controllers
 {
     public class ProductController : ApiController
     {
-        private ProductService  _service;
-        private ProductsMapper _mapper;
+        private readonly ProductService  _service;
+        private readonly ProductsMapper _productsMapper;
+
         ProductController()
         {
             _service = new ProductService();
-            _mapper = new ProductsMapper();
+            _productsMapper = new ProductsMapper();
         }
+
 
         public IHttpActionResult GetAllProducts()
         {
@@ -27,14 +26,15 @@ namespace WebApplication1.Controllers
             List<Product> products = _service.GetProducts();
             foreach (Product p in products)
             {
-                response.Add(_mapper.ToDto(p));
+                response.Add(_productsMapper.ToDto(p));
             }
             return Ok(response);
         }
 
-        public IHttpActionResult GetProduct(int id)
+
+        public IHttpActionResult GetProduct(int productId)
         {
-            ProductResponseDto product = _mapper.ToDto(_service.FindProduct(id));
+            ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productId));
             if (product == null)
             {
                 return NotFound();
