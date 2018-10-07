@@ -9,6 +9,7 @@ using garage_app_entities;
 
 namespace DAL
 {
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class MyDbContext : DbContext
     {
         public MyDbContext() : base("connectionString") { }
