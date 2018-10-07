@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using garage_app_entities;
 
@@ -25,7 +26,15 @@ namespace DAL.Repositories
 
         public Product FindProduct(int id)
         {
-            return _context.Products.Find(id);
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                return product;
+            }
+            else
+            {
+                throw new ArgumentException("Product was not found!");
+            }
         }
         public List<Category> GetCategoriesFromProduct(int productId)
         {

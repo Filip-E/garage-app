@@ -7,6 +7,7 @@ using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
+    [Route("category")]
     public class CategoryController : ApiController
     {
         private readonly ProductService _service;

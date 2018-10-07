@@ -1,4 +1,5 @@
-﻿using garage_app_bl.Services;
+﻿using System;
+using garage_app_bl.Services;
 using System.Collections.Generic;
 using System.Web.Http;
 using garage_app_entities;
@@ -8,6 +9,7 @@ using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
+    [Route("product")]
     public class ProductController : ApiController
     {
         private readonly ProductService  _service;
@@ -19,7 +21,7 @@ namespace WebApplication1.Controllers
             _productsMapper = new ProductsMapper();
         }
 
-
+        
         public IHttpActionResult GetAllProducts()
         {
             List<ProductResponseDto> response = new List<ProductResponseDto>();
@@ -31,15 +33,22 @@ namespace WebApplication1.Controllers
             return Ok(response);
         }
 
-
+        [Route("productId")]
         public IHttpActionResult GetProduct(int productId)
         {
-            ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productId));
-            if (product == null)
+            try
             {
-                return NotFound();
+                ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productId));
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                return Ok(product);
             }
-            return Ok(product);
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
