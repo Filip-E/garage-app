@@ -11,7 +11,7 @@ using WebApplication1.Mappers;
 namespace WebApplication1.Controllers
 {
     [Route("product")]
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+//    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class ProductController : ApiController
     {
         private readonly ProductService  _service;

@@ -9,7 +9,7 @@ using WebApplication1.Mappers;
 namespace WebApplication1.Controllers
 {
     [Route("category")]
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+//    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class CategoryController : ApiController
     {
         private readonly ProductService _service;
