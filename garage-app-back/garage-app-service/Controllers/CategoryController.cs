@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using garage_app_bl.Services;
 using garage_app_entities;
 using WebApplication1.DTOs.Response;
@@ -8,6 +9,7 @@ using WebApplication1.Mappers;
 namespace WebApplication1.Controllers
 {
     [Route("category")]
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class CategoryController : ApiController
     {
         private readonly ProductService _service;

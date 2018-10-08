@@ -2,6 +2,7 @@
 using garage_app_bl.Services;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using garage_app_entities;
 using Swashbuckle.Swagger.Annotations;
 using WebApplication1.DTOs.Response;
@@ -10,6 +11,7 @@ using WebApplication1.Mappers;
 namespace WebApplication1.Controllers
 {
     [Route("product")]
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class ProductController : ApiController
     {
         private readonly ProductService  _service;
