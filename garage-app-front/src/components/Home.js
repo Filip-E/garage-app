@@ -1,12 +1,12 @@
 import {Component} from "react";
 import logo from "../logo.svg";
 import React from "react";
-import DenseAppBar from "./DenseAppBar";
+// import DenseAppBar from "./DenseAppBar";
 
 class Home extends Component {
     render() {
         return (
-            <DenseAppBar>
+
                 <div className="App">
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo"/>
@@ -16,7 +16,7 @@ class Home extends Component {
                         To get started, edit <code>src/App.js</code> and save to reload.
                     </p>
                 </div>
-            </DenseAppBar>
+
         )
     }
 }
