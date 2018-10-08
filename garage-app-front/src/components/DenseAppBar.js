@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Home from "./Home";
-import Retro_VintageStuff from "./Retro_VintageStuff";
+import Retro_VintageContainer from "../containers/Retro_VintageContainer";
 import Service from "./Service";
 import Parts from "./Parts";
 import Contact from "./Contact";
@@ -63,7 +63,7 @@ function DenseAppBar(props) {
             <Switch>
                 <Route exact path={home} component={Home}/>
                 <Route exact path={service} component={Service}/>
-                <Route exact path={retroVintage} component={Retro_VintageStuff}/>
+                <Route exact path={retroVintage} component={Retro_VintageContainer}/>
                 <Route exact path={parts} component={Parts}/>
                 <Route exact path={cars} component={Cars}/>
                 <Route exact path={contact} component={Contact}/>
