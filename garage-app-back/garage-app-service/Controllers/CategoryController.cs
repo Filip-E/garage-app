@@ -4,12 +4,13 @@ using System.Web.Http.Cors;
 using garage_app_bl.Services;
 using garage_app_entities;
 using WebApplication1.DTOs.Response;
+using WebApplication1.Filter;
 using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
     [Route("category")]
-//    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    
     public class CategoryController : ApiController
     {
         private readonly ProductService _service;
@@ -20,6 +21,9 @@ namespace WebApplication1.Controllers
             _service = new ProductService();
             _categoryMapper = new CategoryMapper();
         }
+
+        [AllowAnonymous]
+        [HttpGet]
         public IHttpActionResult GetCategoriesFromProduct(int productId)
         {
             List<CategoryResponseDto> categoryResponseDtos = new List<CategoryResponseDto>();

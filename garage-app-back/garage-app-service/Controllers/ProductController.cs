@@ -6,12 +6,12 @@ using System.Web.Http.Cors;
 using garage_app_entities;
 using Swashbuckle.Swagger.Annotations;
 using WebApplication1.DTOs.Response;
+using WebApplication1.Filter;
 using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
     [Route("product")]
-//    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class ProductController : ApiController
     {
         private readonly ProductService  _service;
@@ -23,7 +23,8 @@ namespace WebApplication1.Controllers
             _productsMapper = new ProductsMapper();
         }
 
-        
+        [AllowAnonymous]
+        [HttpGet]
         public IHttpActionResult GetAllProducts()
         {
             List<ProductResponseDto> response = new List<ProductResponseDto>();
@@ -35,6 +36,8 @@ namespace WebApplication1.Controllers
             return Ok(response);
         }
 
+        [JwtAuthentication]
+        [HttpGet]
         [Route("productId")]
         public IHttpActionResult GetProduct(int productId)
         {

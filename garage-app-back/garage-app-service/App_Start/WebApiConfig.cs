@@ -25,6 +25,7 @@ namespace WebApplication1
             );
             var cors = new EnableCorsAttribute("http://localhost:3000", "*", "*");
             config.EnableCors(cors);
+            config.Filters.Add(new AuthorizeAttribute());
         }
     }
 }
