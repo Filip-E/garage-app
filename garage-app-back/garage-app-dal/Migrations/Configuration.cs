@@ -39,6 +39,13 @@ namespace DAL.Migrations
             p2.Price = 19.99M;
             p2.Categories.Add(c1);
 
+            User u1 = new User()
+            {
+                Id = 1,
+                Password = "admin",
+                UserName = "admin"
+            };
+
             Category[] categorySeed = new Category[] { c1 };
             foreach (Category c in categorySeed)
             {
@@ -50,6 +57,8 @@ namespace DAL.Migrations
             {
                 context.Products.AddOrUpdate(p);
             }
+
+            context.Users.AddOrUpdate(u1);
         }
     }
 }

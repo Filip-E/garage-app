@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201810041008036_usingFluentApi.Designer.cs">
       <DependentUpon>201810041008036_usingFluentApi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810091334401_addsUser.cs" />
+    <Compile Include="Migrations\201810091334401_addsUser.Designer.cs">
+      <DependentUpon>201810091334401_addsUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810041008036_usingFluentApi.resx">
       <DependentUpon>201810041008036_usingFluentApi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810091334401_addsUser.resx">
+      <DependentUpon>201810091334401_addsUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

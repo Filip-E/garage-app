@@ -15,6 +15,8 @@ namespace DAL
         public MyDbContext() : base("connectionString") { }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
@@ -30,6 +32,15 @@ namespace DAL
 
             modelBuilder.Entity<Category>()
                 .Property(category => category.Type)
+                .HasMaxLength(32)
+                .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .Property(user => user.UserName)
+                .HasMaxLength(32)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(user => user.Password)
                 .HasMaxLength(32)
                 .IsRequired();
         }
