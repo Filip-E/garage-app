@@ -4,20 +4,27 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Http;
+using garage_app_bl.Services;
 
 namespace WebApplication1.Controllers
 {
     public class TokenController : ApiController
     {
-        [AllowAnonymous]
-        public string Get(string username, string password)
+        private AuthService _authService;
+
+        public TokenController()
         {
-            if (CheckUser(username, password))
+            _authService = new AuthService();
+        }
+        [AllowAnonymous]
+        public IHttpActionResult Get(string username, string password)
+        {
+            if (_authService.ValidateUser(username,password))
             {
-                return JwtManager.GenerateToken(username);
+                return Ok(JwtManager.GenerateToken(username));
             }
 
-            throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            return Unauthorized();
         }
 
         private bool CheckUser(string username, string password)

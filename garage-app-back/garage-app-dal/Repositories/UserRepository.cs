@@ -7,7 +7,7 @@ using garage_app_entities;
 
 namespace DAL.Repositories
 {
-    class UserRepository
+    public class UserRepository
     {
         private MyDbContext _context;
 
