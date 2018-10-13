@@ -17,10 +17,10 @@ class Login extends Component {
                 open
                 fullScreen={this.props.fullScreen}>
                     <DialogTitle>Log in</DialogTitle>
-                <DialogContentText>
-                    {this.props.errorText}
-                </DialogContentText>
                     <DialogContent>
+                        <DialogContentText>
+                            {this.props.errorText}
+                        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
