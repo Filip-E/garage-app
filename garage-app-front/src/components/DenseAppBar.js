@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,9 +15,6 @@ import Cars from "./Cars";
 import LoginContainer from "../containers/LoginContainer";
 
 const styles = {
-    typography: {
-        useNextVariants: true,
-    },
     root: {
         flexGrow: 1,
     },
@@ -31,58 +28,61 @@ const styles = {
     }
 };
 
-function DenseAppBar(props) {
-    const {classes} = props;
-    const retroVintage = "/retro_vintage";
-    const home = "/";
-    const service = "/service";
-    const parts = "/parts";
-    const cars = "/cars";
-    const contact = "/contact";
-    const login = "/login";
+class DenseAppBar extends Component{
+    render(){
+        const classes = this.props.classes;
+        const retroVintage = "/retro_vintage";
+        const home = "/";
+        const service = "/service";
+        const parts = "/parts";
+        const cars = "/cars";
+        const contact = "/contact";
+        const login = "/login";
 
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar variant="dense">
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={home}>
-                        Home
-                    </IconButton>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={service}>
-                        Service
-                    </IconButton>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={retroVintage}>
-                        Retro / Vintage stuff
-                    </IconButton>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={parts}>
-                        Parts
-                    </IconButton>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={cars}>
-                        Cars
-                    </IconButton>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={contact}>
-                        Contact
-                    </IconButton>
-                    <section className={classes.rightToolbar}>
-                        <Button color="inherit" href={login}>Login</Button>
-                    </section>
-                    {/*<Typography variant="title" color="inherit">*/}
-                    {/*Photos*/}
-                    {/*</Typography>*/}
-                </Toolbar>
-            </AppBar>
-            <Switch>
-                <Route exact path={home} component={Home}/>
-                <Route exact path={service} component={Service}/>
-                <Route exact path={retroVintage} component={Retro_VintageContainer}/>
-                <Route exact path={parts} component={Parts}/>
-                <Route exact path={cars} component={Cars}/>
-                <Route exact path={contact} component={Contact}/>
-                <Route exact path={login} component={LoginContainer}/>
-                <Redirect to={home}/>
-            </Switch>
-        </div>
-    );
+        return (
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar variant="dense">
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={home}>
+                            Home
+                        </IconButton>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={service}>
+                            Service
+                        </IconButton>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={retroVintage}>
+                            Retro / Vintage stuff
+                        </IconButton>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={parts}>
+                            Parts
+                        </IconButton>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={cars}>
+                            Cars
+                        </IconButton>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={contact}>
+                            Contact
+                        </IconButton>
+                        <section className={classes.rightToolbar}>
+                            <Button color="inherit" href={login}>Login</Button>
+                        </section>
+                        {/*<Typography variant="title" color="inherit">*/}
+                        {/*Photos*/}
+                        {/*</Typography>*/}
+                    </Toolbar>
+                </AppBar>
+                <Switch>
+                    <Route exact path={home} component={Home}/>
+                    <Route exact path={service} component={Service}/>
+                    <Route exact path={retroVintage} component={Retro_VintageContainer}/>
+                    <Route exact path={parts} component={Parts}/>
+                    <Route exact path={cars} component={Cars}/>
+                    <Route exact path={contact} component={Contact}/>
+                    <Route exact path={login} component={LoginContainer}/>
+                    <Redirect to={home}/>
+                </Switch>
+            </div>
+        );
+    }
+
 }
 
 DenseAppBar.propTypes = {

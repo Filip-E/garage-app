@@ -3,18 +3,19 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import Login from "../components/Login";
 import authenticateUser from "../actions/AuthActions";
+import Redirect from "react-router-dom/es/Redirect";
+
 
 
 class LoginContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {username : '', password: ''};
+        this.state = {username : '', password: '', redirect : false };
         this.handleChange = this.handleChange.bind(this);
 
     }
     cancel = () => {
-        console.log('test');
-        this.props.history.push('/');
+        this.setState({redirect: true})
     };
     handleChange (event){
         const id = event.target.id;
@@ -25,6 +26,9 @@ class LoginContainer extends Component {
         this.props.authUser({'username' : this.state.username, 'password' : this.state.password});
     };
     render() {
+        if(this.state.redirect){
+            return(<Redirect to="/"/>)
+        }
         if(this.props.auth.token){
             return(
                 <p> you are already logged in</p>
