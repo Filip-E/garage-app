@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
             return Ok(response);
         }
 
-        [JwtAuthentication]
+        [AllowAnonymous]
         [HttpGet]
         [Route("productId")]
         public IHttpActionResult GetProduct(int productId)
