@@ -1,10 +1,10 @@
 import actionTypes from "../actions/actionTypes";
-import {setSessionCookie} from "../utils/CookieManager";
+import {getCookie, setSessionCookie} from "../utils/CookieManager";
 
 const initialState = {
     error: '',
     response: '',
-    token: ''
+    token: getCookie('token')
 };
 export default function authReducer(state = initialState, action) {
     switch (action.type) {

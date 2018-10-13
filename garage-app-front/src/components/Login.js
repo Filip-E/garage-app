@@ -6,15 +6,20 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Dialog from '@material-ui/core/Dialog';
+import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 
 class Login extends Component {
 
     render() {
+        console.log(this.props.errorText);
         return (
             <Dialog
                 open
                 fullScreen={this.props.fullScreen}>
                     <DialogTitle>Log in</DialogTitle>
+                <DialogContentText>
+                    {this.props.errorText}
+                </DialogContentText>
                     <DialogContent>
                         <TextField
                             autoFocus
@@ -26,7 +31,6 @@ class Login extends Component {
                             onChange={this.props.handleChange}
                         />
                         <TextField
-                            autoFocus
                             margin="dense"
                             id="password"
                             label="password"

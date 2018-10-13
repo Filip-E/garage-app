@@ -8,8 +8,7 @@ import {logOut} from "../actions/AuthActions";
 class DenseAppBarContainer extends Component {
 
     render() {
-        console.log(this.props.auth);
-        return(<DenseAppBar auth={this.props.auth}/>)
+        return(<DenseAppBar auth={this.props.auth} logout={this.props.logout}/>)
     }
 }
 

@@ -39,6 +39,7 @@ class LoginContainer extends Component {
                     cancel={this.cancel}
                     submit={this.handleSubmit}
                     handleChange={this.handleChange}
+                    errorText={this.props.auth.error.Message}
                 />
             )
         }

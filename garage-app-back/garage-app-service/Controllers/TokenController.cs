@@ -23,8 +23,12 @@ namespace WebApplication1.Controllers
             {
                 return Ok(JwtManager.GenerateToken(username));
             }
+            else
+            {
+                return BadRequest("Wrong username and password combination");
+            }
 
-            return Unauthorized();
+            
         }
 
         private bool CheckUser(string username, string password)
