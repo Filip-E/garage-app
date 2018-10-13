@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Home from "./Home";
@@ -12,10 +12,12 @@ import Service from "./Service";
 import Parts from "./Parts";
 import Contact from "./Contact";
 import Cars from "./Cars";
-
-// import MenuIcon from '@material-ui/icons/Menu';
+import LoginContainer from "../containers/LoginContainer";
 
 const styles = {
+    typography: {
+        useNextVariants: true,
+    },
     root: {
         flexGrow: 1,
     },
@@ -23,6 +25,10 @@ const styles = {
         marginLeft: -18,
         marginRight: 10,
     },
+    rightToolbar: {
+        marginLeft: 'auto',
+        marginRight: -12,
+    }
 };
 
 function DenseAppBar(props) {
@@ -33,6 +39,8 @@ function DenseAppBar(props) {
     const parts = "/parts";
     const cars = "/cars";
     const contact = "/contact";
+    const login = "/login";
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -55,6 +63,9 @@ function DenseAppBar(props) {
                     <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={contact}>
                         Contact
                     </IconButton>
+                    <section className={classes.rightToolbar}>
+                        <Button color="inherit" href={login}>Login</Button>
+                    </section>
                     {/*<Typography variant="title" color="inherit">*/}
                     {/*Photos*/}
                     {/*</Typography>*/}
@@ -67,6 +78,7 @@ function DenseAppBar(props) {
                 <Route exact path={parts} component={Parts}/>
                 <Route exact path={cars} component={Cars}/>
                 <Route exact path={contact} component={Contact}/>
+                <Route exact path={login} component={LoginContainer}/>
                 <Redirect to={home}/>
             </Switch>
         </div>

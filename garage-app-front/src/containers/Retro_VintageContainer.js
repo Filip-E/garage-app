@@ -6,26 +6,27 @@ import Loading from "../components/Loading";
 import RetroVintageStuff from "../components/RetroVintageStuff";
 
 
-class Retro_VintageContainer extends Component{
-    componentDidMount(){
+class Retro_VintageContainer extends Component {
+    componentDidMount() {
         this.props.fetchProducts();
     }
-    render(){
-        if(this.props.fetched){
-            if(this.props.error){
-                return(
+
+    render() {
+        if (this.props.fetched) {
+            if (this.props.error) {
+                return (
                     <p>oeps, er is iets mis gegaan</p>
                 )
-            }else{
-                return(
+            } else {
+                return (
                     <RetroVintageStuff
                         products={this.props.products}
                     />
                 )
             }
         }
-        else{
-            return(
+        else {
+            return (
                 <Loading/>
             )
         }
@@ -33,7 +34,7 @@ class Retro_VintageContainer extends Component{
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         products: state.product.products,
         error: state.product.error,
         fetched: state.product.fetched
@@ -48,4 +49,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Retro_VintageContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(Retro_VintageContainer);

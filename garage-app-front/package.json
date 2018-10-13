@@ -12,7 +12,8 @@
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "prop-types": "latest"
+    "prop-types": "latest",
+    "@material-ui/icons": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
