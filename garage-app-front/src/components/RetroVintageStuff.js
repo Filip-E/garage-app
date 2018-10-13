@@ -9,13 +9,11 @@ class RetroVintageStuff extends Component {
             <div>
                 <h1>Retro Vintage</h1>
                 <ul>
-                    <li>
-                        {this.props.products.map(product => {
-                            return (
-                                <ProductCard product={product}/>
-                            )
-                        })}
-                    </li>
+                    {this.props.products.map(product => {
+                        return (
+                            <ProductCard product={product}/>
+                        )
+                    })}
                 </ul>
             </div>
         )

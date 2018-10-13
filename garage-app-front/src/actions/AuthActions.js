@@ -20,3 +20,10 @@ export default function authenticateUser(user){
             })
     }
 }
+export function logOut() {
+    return (dispatch) =>{
+        dispatch({
+            type: actionTypes.LOG_OUT,
+        });
+    }
+}

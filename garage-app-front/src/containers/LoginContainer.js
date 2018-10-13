@@ -4,37 +4,37 @@ import {connect} from "react-redux";
 import Login from "../components/Login";
 import authenticateUser from "../actions/AuthActions";
 import Redirect from "react-router-dom/es/Redirect";
-
+import {getCookie} from "../utils/CookieManager";
 
 
 class LoginContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {username : '', password: '', redirect : false };
+        this.state = {username: '', password: '', redirect: false};
         this.handleChange = this.handleChange.bind(this);
 
     }
+
     cancel = () => {
         this.setState({redirect: true})
     };
-    handleChange (event){
+
+    handleChange(event) {
         const id = event.target.id;
-        this.setState({[id]: event.target.value });
+        this.setState({[id]: event.target.value});
     }
+
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.authUser({'username' : this.state.username, 'password' : this.state.password});
+        this.props.authUser({'username': this.state.username, 'password': this.state.password});
     };
+
     render() {
-        if(this.state.redirect){
-            return(<Redirect to="/"/>)
+        if (this.state.redirect || getCookie('token') !== '') {
+            return (<Redirect to="/"/>)
         }
-        if(this.props.auth.token){
-            return(
-                <p> you are already logged in</p>
-            )
-        }else{
-            return(
+        else {
+            return (
                 <Login
                     cancel={this.cancel}
                     submit={this.handleSubmit}
@@ -42,6 +42,7 @@ class LoginContainer extends Component {
                 />
             )
         }
+
     }
 }
 
@@ -53,7 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        authUser: (user) =>{
+        authUser: (user) => {
             dispatch(authenticateUser(user))
         }
     };

@@ -13,6 +13,7 @@ import Parts from "./Parts";
 import Contact from "./Contact";
 import Cars from "./Cars";
 import LoginContainer from "../containers/LoginContainer";
+import {getCookie} from "../utils/CookieManager";
 
 const styles = {
     root: {
@@ -28,8 +29,8 @@ const styles = {
     }
 };
 
-class DenseAppBar extends Component{
-    render(){
+class DenseAppBar extends Component {
+    render() {
         const classes = this.props.classes;
         const retroVintage = "/retro_vintage";
         const home = "/";
@@ -38,6 +39,12 @@ class DenseAppBar extends Component{
         const cars = "/cars";
         const contact = "/contact";
         const login = "/login";
+        let btn;
+        if (getCookie('token') === '') {
+            btn = (<Button color="inherit" href={login}>Login</Button>);
+        } else {
+            btn = (<Button color="inherit" onClick={this.props.logout}>Logout</Button>)
+        }
 
         return (
             <div className={classes.root}>
@@ -49,7 +56,8 @@ class DenseAppBar extends Component{
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={service}>
                             Service
                         </IconButton>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={retroVintage}>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
+                                    href={retroVintage}>
                             Retro / Vintage stuff
                         </IconButton>
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={parts}>
@@ -62,11 +70,8 @@ class DenseAppBar extends Component{
                             Contact
                         </IconButton>
                         <section className={classes.rightToolbar}>
-                            <Button color="inherit" href={login}>Login</Button>
+                            {btn}
                         </section>
-                        {/*<Typography variant="title" color="inherit">*/}
-                        {/*Photos*/}
-                        {/*</Typography>*/}
                     </Toolbar>
                 </AppBar>
                 <Switch>
