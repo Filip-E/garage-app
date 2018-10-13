@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DAL.Repositories;
+using garage_app_entities;
 
 namespace garage_app_bl.Services
 {
@@ -16,14 +17,22 @@ namespace garage_app_bl.Services
         {
             _userRepository = new UserRepository(new MyDbContext());
         }
+
         public bool ValidateUser(string userName, string password)
         {
-            var user = _userRepository.FindUserByUserName(userName);
-            if (user.Password == password)
+            try
             {
-                return true;
+                User user = _userRepository.FindUserByUserName(userName);
+                if (user.Password == password)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (ArgumentException)
             {
                 return false;
             }

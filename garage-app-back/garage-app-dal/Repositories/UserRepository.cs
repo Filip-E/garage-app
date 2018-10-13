@@ -23,7 +23,16 @@ namespace DAL.Repositories
 
         public User FindUserByUserName(string userName)
         {
-            return _context.Users.First(user => user.UserName == userName);
+            User user = _context.Users.FirstOrDefault(u => u.UserName == userName);
+
+            if (user != null)
+            {
+                return user;
+            }
+            else
+            {
+                throw new ArgumentException("user was not found");
+            }
         }
     }
 }

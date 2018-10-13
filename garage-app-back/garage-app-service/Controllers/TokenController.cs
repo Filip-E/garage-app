@@ -16,24 +16,31 @@ namespace WebApplication1.Controllers
         {
             _authService = new AuthService();
         }
+
         [AllowAnonymous]
         public IHttpActionResult Get(string username, string password)
         {
-            if (_authService.ValidateUser(username,password))
+            try
             {
-                return Ok(JwtManager.GenerateToken(username));
+                bool isUserAuthenticated = _authService.ValidateUser(username, password);
+                if (isUserAuthenticated)
+                {
+                    return Ok(JwtManager.GenerateToken(username));
+                }
+                else
+                {
+                    return BadRequest("Wrong username and password combination");
+                }
             }
-            else
+            catch (Exception)
             {
-                return BadRequest("Wrong username and password combination");
+                return InternalServerError();
             }
-
-            
         }
+
 
         private bool CheckUser(string username, string password)
         {
-
             return true;
         }
     }
