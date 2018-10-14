@@ -3,6 +3,7 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import DenseAppBar from "../components/DenseAppBar";
 import {logOut} from "../actions/AuthActions";
+import {withRouter} from "react-router-dom";
 
 
 class DenseAppBarContainer extends Component {
@@ -26,4 +27,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DenseAppBarContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DenseAppBarContainer));

@@ -4,6 +4,7 @@ import {fetchProductsByCategoryAndFilter} from "../actions/productActions";
 import {connect} from "react-redux";
 import Loading from "../components/Loading";
 import RetroVintageStuff from "../components/RetroVintageStuff";
+import {withRouter} from "react-router-dom";
 
 
 class Retro_VintageContainer extends Component {
@@ -48,4 +49,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Retro_VintageContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Retro_VintageContainer));
