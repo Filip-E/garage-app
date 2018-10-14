@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import ProductCardContainer from "../containers/ProductCardContainer";
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         flexGrow: 1,
     },
@@ -18,7 +18,7 @@ class RetroVintageStuff extends Component {
                 <Grid container spacing={24}>
                     {this.props.products.map(product => {
                         return (
-                            <ProductCardContainer product={product}/>
+                            <ProductCardContainer key={product.Name} product={product}/>
                         )
                     })}
                 </Grid>
