@@ -3,7 +3,6 @@ import React from "react";
 
 class ProductCard extends Component {
     render() {
-        console.log(this.props.product);
         return (
             <li>
                 Naam: {this.props.product.Name} <br/>

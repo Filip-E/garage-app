@@ -3,7 +3,7 @@ import axios from "axios";
 import {apiLocation} from "./serverUrl";
 import actionTypes from "./actionTypes";
 
-export default function fetchProducts(){
+export function fetchProducts(){
     return (dispatch) => {
         dispatch({type:actionTypes.FETCH_PRODUCTS});
         return axios
@@ -20,5 +20,34 @@ export default function fetchProducts(){
                     payload: error
                 })
             })
+    }
+}
+
+export function fetchProductsByCategoryAndFilter(category){
+    return (dispatch) => {
+        dispatch({type:actionTypes.FETCH_PRODUCTS});
+        return axios
+            .get(apiLocation + "/product/category?category=" + category)
+            .then(response =>{
+                dispatch({
+                    type: actionTypes.FETCH_PRODUCTS_SUCCESS,
+                    payload : response
+                });
+                dispatch({
+                    type: actionTypes.FILTER_STOCK
+                });
+            })
+            .catch(error =>{
+                dispatch({
+                    type: actionTypes.FETCH_PRODUCTS_FAIL,
+                    payload: error
+                })
+            })
+    }
+}
+
+export function filterStock(){
+    return (dispatch) =>{
+        dispatch({type: actionTypes.FILTER_STOCK});
     }
 }

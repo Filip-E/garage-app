@@ -36,21 +36,35 @@ namespace DAL.Repositories
                 throw new ArgumentException("Product was not found!");
             }
         }
+
         public List<Category> GetCategoriesFromProduct(int productId)
         {
             return new List<Category>(_context.Products.Where(p => p.Id == productId).SelectMany(c => c.Categories));
         }
+
+        public List<Product> GetProductsByCategory(string categoryType)
+        {
+            return new List<Product>(_context.Categories.Where(c => c.Type == categoryType).SelectMany(c => c.Products));
+        }
+
         public void UpdateProduct(Product product)
         {
             _context.Products.Attach(product);
             _context.Entry(product).State = System.Data.Entity.EntityState.Modified;
             _context.SaveChanges();
         }
-        public void DeleteProduct(int id)
+        public void DeleteProduct(string name)
         {
-            Product productFromDb = _context.Products.Find(id);
-            _context.Products.Remove(productFromDb);
-            _context.SaveChanges();
+            Product productFromDb = _context.Products.FirstOrDefault(p => p.Name == name);
+            if (productFromDb != null)
+            {
+                _context.Products.Remove(productFromDb);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Product was not found!");
+            }
         }
     }
 }

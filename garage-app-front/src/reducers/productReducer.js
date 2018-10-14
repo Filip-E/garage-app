@@ -34,6 +34,20 @@ export default function productReducer(state = initialState, action) {
                 error: action.payload
             }
         }
+        case actionTypes.FILTER_STOCK:{
+            console.log('hi');
+            let filteredProducts = state.products.filter((product)=> product.Stock !== 0);
+            console.log(filteredProducts);
+            console.log("state:");
+            console.log({
+                ...state,
+                products : filteredProducts
+            });
+            return{
+                ...state,
+                products : filteredProducts
+            }
+        }
         default:
             return state;
     }

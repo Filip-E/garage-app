@@ -11,7 +11,7 @@ using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
-    [Route("product")]
+    
     public class ProductController : ApiController
     {
         private readonly ProductService  _service;
@@ -25,6 +25,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [Route("product")]
         public IHttpActionResult GetAllProducts()
         {
             List<ProductResponseDto> response = new List<ProductResponseDto>();
@@ -38,7 +39,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("productId")]
+        [Route("product/productId")]
         public IHttpActionResult GetProduct(int productId)
         {
             try
@@ -49,6 +50,30 @@ namespace WebApplication1.Controllers
                     return NotFound();
                 }
                 return Ok(product);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("product/category")]
+        public IHttpActionResult GetProductsByCategory(string category)
+        {
+            try
+            {
+                List<Product> productsByCategory = _service.GetProductsByCategory(category);
+
+                List<ProductResponseDto> productResponseDtos = new List<ProductResponseDto>();
+
+                foreach (Product product in productsByCategory)
+                {
+                    productResponseDtos.Add(_productsMapper.ToDto(product));
+                }
+
+                return Ok(productResponseDtos);
             }
             catch (ArgumentException e)
             {

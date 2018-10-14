@@ -1,6 +1,6 @@
 import React from "react";
 import {Component} from "react";
-import fetchProducts from "../actions/productActions";
+import {fetchProductsByCategoryAndFilter} from "../actions/productActions";
 import {connect} from "react-redux";
 import Loading from "../components/Loading";
 import RetroVintageStuff from "../components/RetroVintageStuff";
@@ -8,7 +8,7 @@ import RetroVintageStuff from "../components/RetroVintageStuff";
 
 class Retro_VintageContainer extends Component {
     componentDidMount() {
-        this.props.fetchProducts();
+        this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
     }
 
     render() {
@@ -24,8 +24,7 @@ class Retro_VintageContainer extends Component {
                     />
                 )
             }
-        }
-        else {
+        } else {
             return (
                 <Loading/>
             )
@@ -43,9 +42,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProducts: () => {
-            dispatch(fetchProducts());
-        },
+        fetchProductsByCategoryAndFilter: (category) => {
+            dispatch(fetchProductsByCategoryAndFilter(category));
+        }
     };
 };
 

@@ -26,5 +26,10 @@ namespace garage_app_bl.Services
         {
             return _repo.GetCategoriesFromProduct(productId);
         }
+
+        public List<Product> GetProductsByCategory(string categoryType)
+        {
+            return _repo.GetProductsByCategory(categoryType);
+        }
     }
 }

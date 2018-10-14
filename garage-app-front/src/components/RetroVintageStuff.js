@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 
 class RetroVintageStuff extends Component {
     render() {
-        console.log(this.props.products);
+
         return (
             <div>
                 <h1>Retro Vintage</h1>

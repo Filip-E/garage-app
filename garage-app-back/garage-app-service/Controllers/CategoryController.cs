@@ -9,25 +9,33 @@ using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
-    [Route("category")]
-    
     public class CategoryController : ApiController
     {
-        private readonly ProductService _service;
+        private readonly ProductService _productService;
+        private readonly CategoryService _categoryService;
         private readonly CategoryMapper _categoryMapper;
 
         public CategoryController()
         {
-            _service = new ProductService();
+            _productService = new ProductService();
+            _categoryService = new CategoryService();
             _categoryMapper = new CategoryMapper();
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("category")]
+        public IHttpActionResult GetCategories()
+        {
+            return Ok(_categoryService.GetCategories());
         }
 
         [AllowAnonymous]
         [HttpGet]
+        [Route("category/productId")]
         public IHttpActionResult GetCategoriesFromProduct(int productId)
         {
             List<CategoryResponseDto> categoryResponseDtos = new List<CategoryResponseDto>();
-            List<Category> categories = _service.GetCategoriesFromProduct(productId);
+            List<Category> categories = _productService.GetCategoriesFromProduct(productId);
             ;
             foreach (Category category in categories)
             {
