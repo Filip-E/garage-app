@@ -1,6 +1,13 @@
-import {Component} from "react";
-import React from "react";
-import ProductCard from "./ProductCard";
+import React, {Component} from "react";
+import Grid from '@material-ui/core/Grid';
+import withStyles from "@material-ui/core/es/styles/withStyles";
+import ProductCardContainer from "../containers/ProductCardContainer";
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+});
 
 class RetroVintageStuff extends Component {
     render() {
@@ -8,16 +15,16 @@ class RetroVintageStuff extends Component {
         return (
             <div>
                 <h1>Retro Vintage</h1>
-                <ul>
+                <Grid container spacing={24}>
                     {this.props.products.map(product => {
                         return (
-                            <ProductCard product={product}/>
+                            <ProductCardContainer product={product}/>
                         )
                     })}
-                </ul>
+                </Grid>
             </div>
         )
     }
 }
 
-export default RetroVintageStuff;
+export default withStyles(styles)(RetroVintageStuff);

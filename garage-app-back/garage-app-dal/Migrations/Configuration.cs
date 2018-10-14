@@ -30,11 +30,14 @@ namespace DAL.Migrations
             Product p1 = new Product {Id = 1, Name = "Bowling kegels", Price = 12.99M, Stock = 10};
             p1.Categories.Add(c1);
 
-            Product p2 = new Product {Id = 2, Name = "Coca Cola Cooler", Price = 19.99M};
+            Product p2 = new Product {Id = 2, Name = "Coca Cola Cooler", Price = 19.99M, Stock = 0};
             p2.Categories.Add(c1);
 
-            Product p3 = new Product {Id = 3, Name = "Zoeklicht chroom", Price = 19.99M};
+            Product p3 = new Product {Id = 3, Name = "Zoeklicht chroom", Price = 19.99M, Stock = 2};
             p3.Categories.Add(c2);
+
+            Product p4 = new Product {Id = 4, Name = "Retro mic", Price = 14.99M, Stock = 1};
+            p4.Categories.Add(c1);
 
             User u1 = new User()
             {
@@ -49,7 +52,7 @@ namespace DAL.Migrations
                 context.Categories.AddOrUpdate(c);
             }
 
-            Product[] productsSeed = new Product[] { p1, p2, p3 };
+            Product[] productsSeed = new Product[] { p1, p2, p3, p4 };
             foreach (Product p in productsSeed)
             {
                 context.Products.AddOrUpdate(p);
