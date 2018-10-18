@@ -22,5 +22,43 @@ namespace garage_app_bl.Services
         {
             return _repository.GetCategories();
         }
+
+        public Category FindCategory(string type)
+        {
+            return _repository.FindCategory(type);
+        }
+
+        public void InsertCategory(Category category)
+        {
+            HasCategoryRequiredProps(category);
+            try
+            {
+                _repository.FindCategory(category.Type);
+            }
+            catch (ArgumentException)
+            {
+                throw new ArgumentException($"category {category.Type} already exists");
+            }
+
+            _repository.InsertCategory(category);
+        }
+
+        public void UpdateCategory(Category category)
+        {
+            HasCategoryRequiredProps(category);
+
+            Category findCategory = _repository.FindCategory(category.Type);
+            category.Id = findCategory.Id;
+
+            _repository.UpdateCategory(category);
+        }
+
+        private static void HasCategoryRequiredProps(Category category)
+        {
+            if (category.Type.Equals(null))
+            {
+                throw new ArgumentException("type can not be null");
+            }
+        }
     }
 }

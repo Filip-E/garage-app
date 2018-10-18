@@ -36,6 +36,18 @@ namespace DAL.Repositories
                 throw new ArgumentException("Product was not found!");
             }
         }
+        public Product FindProduct(string name)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Name.Equals(name));
+            if (product != null)
+            {
+                return product;
+            }
+            else
+            {
+                throw new ArgumentException("Product was not found!");
+            }
+        }
 
         public List<Category> GetCategoriesFromProduct(int productId)
         {

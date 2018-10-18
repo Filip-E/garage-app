@@ -31,6 +31,18 @@ namespace DAL.Repositories
         {
             return _context.Categories.Find(id);
         }
+        public Category FindCategory(string type)
+        {
+            Category category = _context.Categories.FirstOrDefault(c => c.Type.Equals(type));
+            if (category != null)
+            {
+                return category;
+            }
+            else
+            {
+                throw new ArgumentException($"category {category.Type} was not found");
+            }
+        }
         public void UpdateCategory(Category category)
         {
             _context.Categories.Attach(category);

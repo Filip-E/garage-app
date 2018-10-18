@@ -152,6 +152,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
+    <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
     <Compile Include="Filter\AddChallengeOnUnauthorizedResult.cs" />
@@ -177,7 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DTOs\Request\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

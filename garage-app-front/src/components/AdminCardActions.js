@@ -6,7 +6,6 @@ class AdminCardActions extends Component{
     render(){
         return(
         <CardActions>
-            <p>testing</p>
             <button>test</button>
         </CardActions>
         )
