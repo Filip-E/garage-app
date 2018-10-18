@@ -69,6 +69,29 @@ export function addProduct(productWithCategoryTypes, token) {
     }
 }
 
+export function deleteProduct(productId, token) {
+    return (dispatch) => {
+        dispatch({type: actionTypes.DELETE_PRODUCT_START});
+        return axios
+            .delete(
+                apiLocation + "/product/" + productId,
+                {
+                    headers: { Authorization: "Bearer " + token }
+                }
+            ).then(response =>{
+                dispatch({
+                    type: actionTypes.DELETE_PRODUCT_SUCCESS,
+                    payload: response
+                });
+            }).catch(error =>{
+                dispatch({
+                    type: actionTypes.DELETE_PRODUCT_FAIL,
+                    payload: error
+                })
+            });
+    }
+}
+
 export function handleClickOpenDialog(){
     return (dispatch) =>{
         dispatch({type: actionTypes.DIALOG_OPEN});

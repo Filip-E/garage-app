@@ -15,7 +15,7 @@ export default function authenticateUser(user){
             .catch(error =>{
                 dispatch({
                     type: actionTypes.AUTH_FAIL,
-                    payload: error.response.data
+                    payload: error.response.data.Message
                 })
             })
     }

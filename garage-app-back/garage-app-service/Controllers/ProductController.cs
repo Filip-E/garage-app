@@ -138,8 +138,15 @@ namespace WebApplication1.Controllers
         [Route("product/{productId}")]
         public IHttpActionResult DeleteProduct(int productId)
         {
-            _service.deleteProduct(productId);
-            return new StatusCodeResult(HttpStatusCode.NoContent, this);
+            try
+            {
+                _service.deleteProduct(productId);
+                return new StatusCodeResult(HttpStatusCode.NoContent, this);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

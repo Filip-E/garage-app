@@ -17,7 +17,7 @@ class ProductCard extends Component {
     render() {
         let actions;
         if(this.props.token !== ''){
-            actions = (<AdminCardActionsContainer/>);
+            actions = (<AdminCardActionsContainer productId={this.props.product.Id}/>);
         }else{
             actions = (<div/>);
         }

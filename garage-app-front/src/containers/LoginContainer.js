@@ -42,7 +42,7 @@ class LoginContainer extends Component {
                     cancel={this.goBack}
                     submit={this.handleSubmit}
                     handleChange={this.handleChange}
-                    errorText={this.props.auth.error.Message}
+                    errorText={this.props.error}
                 />
             )
         }
@@ -52,7 +52,7 @@ class LoginContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        error: state.auth.error
     }
 };
 
