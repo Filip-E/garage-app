@@ -1,8 +1,10 @@
 ﻿using System;
 using garage_app_bl.Services;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
 using garage_app_entities;
 using Swashbuckle.Swagger.Annotations;
 using WebApplication1.DTOs.Request;
@@ -113,14 +115,14 @@ namespace WebApplication1.Controllers
             return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPut]
         [Route("product")]
-        public IHttpActionResult UpdateProduct(InsertProductRequestDto productRequestDto)
+        public IHttpActionResult UpdateProduct(UpdateProductRequestDto productRequestDto)
         {
             Product product = _productsMapper.ToProduct(productRequestDto);
             _service.UpdateProduct(product, productRequestDto.CategoryTypes);
-            return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
+            return new StatusCodeResult(HttpStatusCode.NoContent,this);
         }
     }
 }

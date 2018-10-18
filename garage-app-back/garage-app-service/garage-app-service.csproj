@@ -153,6 +153,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
+    <Compile Include="DTOs\Request\UpdateProductRequestDto.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
     <Compile Include="Filter\AddChallengeOnUnauthorizedResult.cs" />

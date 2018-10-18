@@ -14,6 +14,7 @@ namespace WebApplication1.Mappers
         {
             return new ProductResponseDto
             {
+                Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
                 Stock = product.Stock
@@ -24,6 +25,17 @@ namespace WebApplication1.Mappers
         {
             return new Product
             {
+                Name = productRequestDto.Name,
+                Price = productRequestDto.Price,
+                Stock = productRequestDto.Stock
+            };
+        }
+
+        public Product ToProduct(UpdateProductRequestDto productRequestDto)
+        {
+            return new Product
+            {
+                Id = productRequestDto.Id,
                 Name = productRequestDto.Name,
                 Price = productRequestDto.Price,
                 Stock = productRequestDto.Stock

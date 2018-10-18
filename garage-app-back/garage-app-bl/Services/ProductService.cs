@@ -42,7 +42,7 @@ namespace garage_app_bl.Services
 
         public void InsertProduct(Product product)
         {
-            HasProductRequiredProps(product);
+            HasProductRequiredProps(product, false);
             try
             {
                 Product findProduct = _repository.FindProduct(product.Name);
@@ -59,9 +59,7 @@ namespace garage_app_bl.Services
 
         public void UpdateProduct(Product product, string[] categoryTypes)
         {
-            HasProductRequiredProps(product);
-            Product findProduct = _repository.FindProduct(product.Name);
-            product.Id = findProduct.Id;
+            HasProductRequiredProps(product, true);
 
             List<Category> categories = new List<Category>();
             foreach (string categoryType in categoryTypes)
@@ -87,8 +85,16 @@ namespace garage_app_bl.Services
             _repository.UpdateProduct(findProduct);
         }
 
-        private static void HasProductRequiredProps(Product product)
+        private static void HasProductRequiredProps(Product product, bool isIdRequired)
         {
+            if (isIdRequired)
+            {
+                if (product.Id.Equals(null))
+                {
+                    throw new ArgumentException("name can not be null");
+                }
+            }
+            
             if (product.Name.Equals(null))
             {
                 throw new ArgumentException("name can not be null");
