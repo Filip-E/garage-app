@@ -109,10 +109,18 @@ namespace WebApplication1.Controllers
         [Route("product")]
         public IHttpActionResult InsertProduct(InsertProductRequestDto productRequestDto)
         {
-            Product product = _productsMapper.ToProduct(productRequestDto);
-            _service.InsertProduct(product);
-            _service.AddCategoryToProduct(productRequestDto.CategoryTypes,productRequestDto.Name);
-            return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
+            try
+            {
+                Product product = _productsMapper.ToProduct(productRequestDto);
+                _service.InsertProduct(product);
+                _service.AddCategoryToProduct(productRequestDto.CategoryTypes, productRequestDto.Name);
+                return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [JwtAuthentication]

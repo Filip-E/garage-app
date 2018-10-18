@@ -48,7 +48,7 @@ namespace garage_app_bl.Services
                 Product findProduct = _repository.FindProduct(product.Name);
                 if (findProduct != null)
                 {
-                    throw new ArgumentException($"product {product.Name} already exists");
+                    throw new Exception($"product {product.Name} already exists");
                 }
             }
             catch (ArgumentException)
@@ -74,9 +74,9 @@ namespace garage_app_bl.Services
         public void AddCategoryToProduct(string[] categoryType, string productName)
         {
             Product findProduct = new Product();
+            findProduct = _repository.FindProduct(productName);
             foreach (var type in categoryType)
             {
-                findProduct = _repository.FindProduct(productName);
                 Category findCategory = _categoryService.FindCategory(type);
 
                 findProduct.Categories.Add(findCategory);
