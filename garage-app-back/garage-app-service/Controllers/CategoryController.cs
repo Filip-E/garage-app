@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("category/productId")]
+        [Route("category/product/{productId}")]
         public IHttpActionResult GetCategoriesFromProduct(int productId)
         {
             List<CategoryResponseDto> categoryResponseDtos = new List<CategoryResponseDto>();

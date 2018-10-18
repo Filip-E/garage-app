@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("product/productId")]
+        [Route("product/{productId}")]
         public IHttpActionResult GetProduct(int productId)
         {
             try
@@ -62,7 +62,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("product/productName")]
+        [Route("product/name/{productName}")]
         public IHttpActionResult GetProduct(string productName)
         {
             try
@@ -82,7 +82,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("product/category")]
+        [Route("product/category/{category}")]
         public IHttpActionResult GetProductsByCategory(string category)
         {
             try
