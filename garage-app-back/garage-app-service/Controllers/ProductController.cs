@@ -125,7 +125,7 @@ namespace WebApplication1.Controllers
             return new StatusCodeResult(HttpStatusCode.NoContent,this);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpDelete]
         [Route("product/{productId}")]
         public IHttpActionResult DeleteProduct(int productId)
