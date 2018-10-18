@@ -27,7 +27,7 @@ export function fetchProductsByCategoryAndFilter(category){
     return (dispatch) => {
         dispatch({type:actionTypes.FETCH_PRODUCTS});
         return axios
-            .get(apiLocation + "/product/category?category=" + category)
+            .get(apiLocation + "/product/category/" + category)
             .then(response =>{
                 dispatch({
                     type: actionTypes.FETCH_PRODUCTS_SUCCESS,
