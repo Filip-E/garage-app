@@ -22,6 +22,7 @@ class Retro_VintageContainer extends Component {
                 return (
                     <RetroVintageStuff
                         products={this.props.products}
+                        token={this.props.token}
                     />
                 )
             }
@@ -37,7 +38,8 @@ const mapStateToProps = (state) => {
     return {
         products: state.product.products,
         error: state.product.error,
-        fetched: state.product.fetched
+        fetched: state.product.fetched,
+        token : state.auth.token
     }
 };
 
