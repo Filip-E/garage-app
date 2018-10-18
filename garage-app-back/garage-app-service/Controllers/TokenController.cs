@@ -18,6 +18,7 @@ namespace WebApplication1.Controllers
         }
 
         [AllowAnonymous]
+        [Route("token/{username}/{password}")]
         public IHttpActionResult Get(string username, string password)
         {
             try
@@ -36,12 +37,6 @@ namespace WebApplication1.Controllers
             {
                 return InternalServerError();
             }
-        }
-
-
-        private bool CheckUser(string username, string password)
-        {
-            return true;
         }
     }
 }
