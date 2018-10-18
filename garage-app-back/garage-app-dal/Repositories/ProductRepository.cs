@@ -65,9 +65,9 @@ namespace DAL.Repositories
             _context.Entry(product).State = System.Data.Entity.EntityState.Modified;
             _context.SaveChanges();
         }
-        public void DeleteProduct(string name)
+        public void DeleteProduct(int productId)
         {
-            Product productFromDb = _context.Products.FirstOrDefault(p => p.Name == name);
+            Product productFromDb = _context.Products.Find(productId);
             if (productFromDb != null)
             {
                 _context.Products.Remove(productFromDb);

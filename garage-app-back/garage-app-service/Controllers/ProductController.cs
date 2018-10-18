@@ -124,5 +124,14 @@ namespace WebApplication1.Controllers
             _service.UpdateProduct(product, productRequestDto.CategoryTypes);
             return new StatusCodeResult(HttpStatusCode.NoContent,this);
         }
+
+        [AllowAnonymous]
+        [HttpDelete]
+        [Route("product/{productId}")]
+        public IHttpActionResult DeleteProduct(int productId)
+        {
+            _service.deleteProduct(productId);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
+        }
     }
 }

@@ -85,6 +85,11 @@ namespace garage_app_bl.Services
             _repository.UpdateProduct(findProduct);
         }
 
+        public void deleteProduct(int productId)
+        {
+            _repository.DeleteProduct(productId);
+        }
+
         private static void HasProductRequiredProps(Product product, bool isIdRequired)
         {
             if (isIdRequired)
