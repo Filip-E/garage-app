@@ -31,7 +31,7 @@ class LoginContainer extends Component {
     };
 
     render() {
-        if (this.state.redirect || getCookie('token') !== '') {
+        if (this.state.redirect || getCookie('garage_app_token') !== '') {
             return (
                 <Redirect to={this.goBack()}/>
             );

@@ -4,12 +4,12 @@ import {getCookie, setSessionCookie} from "../utils/CookieManager";
 const initialState = {
     error: '',
     response: '',
-    token: getCookie('token')
+    token: getCookie('garage_app_token')
 };
 export default function authReducer(state = initialState, action) {
     switch (action.type) {
         case actionTypes.AUTH_SUCCESS:{
-            setSessionCookie('token',action.payload.data);
+            setSessionCookie('garage_app_token',action.payload.data);
             return{
                 ...state,
                 error: null,
@@ -26,7 +26,7 @@ export default function authReducer(state = initialState, action) {
             }
         }
         case actionTypes.LOG_OUT:{
-            setSessionCookie('token', '');
+            setSessionCookie('garage_app_token', '');
             return{
                 ...state,
                 error: null,

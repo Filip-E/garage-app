@@ -40,7 +40,7 @@ class DenseAppBar extends Component {
         const contact = "/contact";
         const login = "/login";
         let btn;
-        if (getCookie('token') === '') {
+        if (getCookie('garage_app_token') === '') {
             btn = (<Button color="inherit" href={login}>Login</Button>);
         } else {
             btn = (<Button color="inherit" onClick={this.props.logout}>Logout</Button>)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using garage_app_entities;
 
@@ -61,21 +62,13 @@ namespace DAL.Repositories
 
         public void UpdateProduct(Product product)
         {
-            Product oldProduct = _context.Products.Find(product.Id);
-
-            if (oldProduct == null)
-            {
-                throw new ArgumentException("product was not found");
-            }
-            oldProduct.Name = product.Name;
-            oldProduct.Price = product.Price;
-            oldProduct.Stock = product.Stock;
+            _context.Products.Attach(product);
+            _context.Entry(product).State = EntityState.Modified;
 
             foreach (Category category in product.Categories)
             {
                 _context.Categories.Attach(category);
             }
-            //_context.Products.Add(oldProduct);
 
             _context.SaveChanges();
         }
