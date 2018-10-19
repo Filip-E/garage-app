@@ -14,10 +14,9 @@ using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
 {
-    
     public class ProductController : ApiController
     {
-        private readonly ProductService  _service;
+        private readonly ProductService _service;
         private readonly ProductsMapper _productsMapper;
 
         ProductController()
@@ -37,6 +36,7 @@ namespace WebApplication1.Controllers
             {
                 response.Add(_productsMapper.ToDto(p));
             }
+
             return Ok(response);
         }
 
@@ -52,6 +52,7 @@ namespace WebApplication1.Controllers
                 {
                     return NotFound();
                 }
+
                 return Ok(product);
             }
             catch (ArgumentException e)
@@ -72,6 +73,7 @@ namespace WebApplication1.Controllers
                 {
                     return NotFound();
                 }
+
                 return Ok(product);
             }
             catch (ArgumentException e)
@@ -104,7 +106,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [JwtAuthentication]
+        [AllowAnonymous]
         [HttpPost]
         [Route("product")]
         public IHttpActionResult InsertProduct(InsertProductRequestDto productRequestDto)
@@ -120,17 +122,23 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
-        [JwtAuthentication]
+        [AllowAnonymous]
         [HttpPut]
         [Route("product")]
         public IHttpActionResult UpdateProduct(UpdateProductRequestDto productRequestDto)
         {
-            Product product = _productsMapper.ToProduct(productRequestDto);
-            _service.UpdateProduct(product, productRequestDto.CategoryTypes);
-            return new StatusCodeResult(HttpStatusCode.NoContent,this);
+            try
+            {
+                Product product = _productsMapper.ToProduct(productRequestDto);
+                _service.UpdateProduct(product, productRequestDto.CategoryTypes);
+                return new StatusCodeResult(HttpStatusCode.NoContent, this);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [JwtAuthentication]
