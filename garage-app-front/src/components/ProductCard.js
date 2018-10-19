@@ -25,7 +25,7 @@ class ProductCard extends Component {
             <Grid item>
                 <Card>
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography gutterBottom variant="title" component="body2">
                             {this.props.product.Name}
                         </Typography>
                         <Typography component="p">
