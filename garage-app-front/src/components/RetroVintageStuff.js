@@ -4,12 +4,7 @@ import withStyles from "@material-ui/core/es/styles/withStyles";
 import ProductCardContainer from "../containers/ProductCardContainer";
 import AddIcon from '@material-ui/icons/Add';
 import Button from "@material-ui/core/Button/Button";
-import Dialog from "@material-ui/core/Dialog/Dialog";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import TextField from "@material-ui/core/TextField/TextField";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
+import BasicDialogContainer from "../containers/BasicDialogContainer";
 
 const styles = () => ({
     root: {
@@ -40,51 +35,7 @@ class RetroVintageStuff extends Component {
                         )
                     })}
                 </Grid>
-                <Dialog
-                    open={this.props.open}
-                    onClose={this.props.handleClose}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Voeg een Retro-Vintage item toe</DialogTitle>
-                    <DialogContentText>
-                        {this.props.error}
-                    </DialogContentText>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="naam"
-                            type="text"
-                            fullWidth
-                            onChange={this.props.handleChange}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="price"
-                            label="prijs"
-                            type="number"
-                            fullWidth
-                            onChange={this.props.handleChange}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="stock"
-                            label="stock"
-                            type="number"
-                            fullWidth
-                            onChange={this.props.handleChange}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.props.handleClose} color="secondary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.props.submit} color="primary">
-                            Add
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <BasicDialogContainer productId={this.props.products[0].Id}/>
             </div>
 
         )

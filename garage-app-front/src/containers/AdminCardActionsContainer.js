@@ -12,7 +12,6 @@ class AdminCardActionsContainer extends Component {
     }
 
     deleteProduct() {
-        console.log(this.props);
         this.props.deleteProductDispatch(this.props.productId, this.props.token)
     }
 

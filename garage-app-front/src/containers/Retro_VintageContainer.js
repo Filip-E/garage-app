@@ -1,6 +1,5 @@
-import React from "react";
-import {Component} from "react";
-import {addProduct, fetchProductsByCategoryAndFilter, handleClickOpenDialog, handleClose} from "../actions/productActions";
+import React, {Component} from "react";
+import {fetchProductsByCategoryAndFilter, handleClickOpenDialog} from "../actions/productActions";
 import {connect} from "react-redux";
 import Loading from "../components/Loading";
 import RetroVintageStuff from "../components/RetroVintageStuff";
@@ -8,36 +7,9 @@ import {withRouter} from "react-router-dom";
 
 
 class Retro_VintageContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: "",
-            price: 0,
-            stock: 0,
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.submit = this.submit.bind(this);
-    }
 
     componentDidMount() {
         this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
-    }
-
-    handleChange(event) {
-        const id = event.target.id;
-        this.setState({[id]: event.target.value});
-    }
-
-    submit(event) {
-        event.preventDefault();
-        this.props.addProduct({
-            Name: this.state.name,
-            Price: this.state.price,
-            Stock: this.state.stock,
-            CategoryTypes: [
-                "Retro_Vintage"
-            ]
-        }, this.props.token);
     }
 
     render() {
@@ -57,12 +29,7 @@ class Retro_VintageContainer extends Component {
                         <RetroVintageStuff
                             products={this.props.products}
                             token={this.props.token}
-                            submit={this.submit}
-                            open={this.props.open}
-                            handleChange={this.handleChange}
                             handleClickOpen={this.props.handleClickOpenDialog}
-                            handleClose ={this.props.handleClose}
-                            error = {this.props.error.response.data.Message}
                         />
                     )
                 }
@@ -71,12 +38,7 @@ class Retro_VintageContainer extends Component {
                     <RetroVintageStuff
                         products={this.props.products}
                         token={this.props.token}
-                        submit={this.submit}
-                        open={this.props.open}
-                        handleChange={this.handleChange}
                         handleClickOpen={this.props.handleClickOpenDialog}
-                        handleClose ={this.props.handleClose}
-                        error=""
                     />
                 )
             }
@@ -104,15 +66,9 @@ const mapDispatchToProps = dispatch => {
         fetchProductsByCategoryAndFilter: (category) => {
             dispatch(fetchProductsByCategoryAndFilter(category));
         },
-        addProduct: (productWithCategoryTypes, token) => {
-            dispatch(addProduct(productWithCategoryTypes, token));
-        },
         handleClickOpenDialog: () =>{
             dispatch(handleClickOpenDialog())
         },
-        handleClose: () =>{
-            dispatch(handleClose())
-        }
     };
 };
 
