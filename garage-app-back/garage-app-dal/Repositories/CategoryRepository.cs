@@ -40,7 +40,7 @@ namespace DAL.Repositories
             }
             else
             {
-                throw new ArgumentException($"category {category.Type} was not found");
+                throw new ArgumentException($"category {type} was not found");
             }
         }
         public void UpdateCategory(Category category)

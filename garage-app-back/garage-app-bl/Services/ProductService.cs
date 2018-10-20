@@ -40,7 +40,12 @@ namespace garage_app_bl.Services
             return _repository.GetProductsByCategory(categoryType);
         }
 
-        public void InsertProduct(Product product)
+        /// <summary>
+        /// inserts a new product into the database
+        /// </summary>
+        /// <param name="product">product to be inserted</param>
+        /// <returns>Id of the created product</returns>
+        public int InsertProduct(Product product)
         {
             HasProductRequiredProps(product, false);
             try
@@ -50,10 +55,13 @@ namespace garage_app_bl.Services
                 {
                     throw new Exception($"product {product.Name} already exists");
                 }
+
+                return -1;
             }
             catch (ArgumentException)
             {
                 _repository.InsertProduct(product);
+                return _repository.FindProduct(product.Name).Id;
             }
         }
 

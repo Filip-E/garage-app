@@ -111,16 +111,22 @@ namespace WebApplication1.Controllers
         [Route("product")]
         public IHttpActionResult InsertProduct(InsertProductRequestDto productRequestDto)
         {
+            int idInsertedProduct = -1;
             try
             {
                 Product product = _productsMapper.ToProduct(productRequestDto);
-                _service.InsertProduct(product);
+                idInsertedProduct = _service.InsertProduct(product);
                 _service.AddCategoryToProduct(productRequestDto.CategoryTypes, productRequestDto.Name);
                 return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
             }
             catch (Exception ex)
             {
+                if (idInsertedProduct != -1)
+                {
+                    _service.deleteProduct(idInsertedProduct);
+                }
                 return BadRequest(ex.Message);
+
             }
         }
 
