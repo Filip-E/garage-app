@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using garage_app_bl.Services;
 using garage_app_entities;
+using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
 using WebApplication1.Filter;
 using WebApplication1.Mappers;
@@ -43,6 +45,33 @@ namespace WebApplication1.Controllers
             }
 
             return Ok(categoryResponseDtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("category/{categoryId}")]
+        public IHttpActionResult FindCategory(int categoryId)
+        {
+            return Ok(_categoryService.FindCategory(categoryId));
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("category")]
+        public IHttpActionResult InsertCategory(InsertCategoryRequestDto productRequestDto)
+        {
+            try
+            {
+                Category category = _categoryMapper.ToCategory(productRequestDto);
+                category.Id = _categoryService.InsertCategory(category);
+                return Created($"category/{category.Id}", _categoryMapper.ToDto(category));
+            }
+            catch (ArgumentException ex)
+            {
+
+                return BadRequest(ex.Message);
+
+            }
         }
     }
 }

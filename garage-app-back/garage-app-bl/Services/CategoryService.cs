@@ -27,20 +27,29 @@ namespace garage_app_bl.Services
         {
             return _repository.FindCategory(type);
         }
+        public Category FindCategory(int categoryId)
+        {
+            return _repository.FindCategory(categoryId);
+        }
 
-        public void InsertCategory(Category category)
+        public int InsertCategory(Category category)
         {
             HasCategoryRequiredProps(category);
             try
             {
-                _repository.FindCategory(category.Type);
+                if (_repository.FindCategory(category.Type) != null)
+                {
+                    throw new Exception($"category {category.Type} already exists");
+                }
+
+                return -1;
             }
             catch (ArgumentException)
             {
-                throw new ArgumentException($"category {category.Type} already exists");
+                _repository.InsertCategory(category);
+                return (_repository.FindCategory(category.Type)).Id;
             }
 
-            _repository.InsertCategory(category);
         }
 
         public void UpdateCategory(Category category)
@@ -60,5 +69,7 @@ namespace garage_app_bl.Services
                 throw new ArgumentException("type can not be null");
             }
         }
+
+
     }
 }
