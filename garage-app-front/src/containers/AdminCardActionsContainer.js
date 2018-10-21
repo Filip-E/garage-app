@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import AdminCardActionsComponent from "../components/AdminCardActionsComponent";
 import {
     deleteProduct,
-    fetchProductsByCategoryAndFilter,
+    fetchProductsAndFilter,
     handleClickOpenDialog,
     makeEditDialogTrue,
     setProductId
@@ -31,7 +31,7 @@ class AdminCardActionsContainer extends Component {
     render() {
         if (this.props.response !== null) {
             if (this.props.response.status === 204) {
-                this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+                this.props.fetchProductsAndFilter('Retro_Vintage');
             }
         }
         return (
@@ -55,8 +55,8 @@ const mapDispatchToProps = dispatch => {
         deleteProductDispatch: (productId, token) => {
             dispatch(deleteProduct(productId, token));
         },
-        fetchProductsByCategoryAndFilter: (category) =>{
-            dispatch(fetchProductsByCategoryAndFilter(category));
+        fetchProductsAndFilter: (category) =>{
+            dispatch(fetchProductsAndFilter(category));
         },
         prepareEditDialog: (productId) =>{
             dispatch(makeEditDialogTrue());

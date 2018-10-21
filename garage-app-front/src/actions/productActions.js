@@ -2,11 +2,11 @@ import axios from "axios";
 import {apiLocation} from "./serverUrl";
 import actionTypes from "./actionTypes";
 
-export function fetchProducts() {
+export function fetchProducts(category) {
     return (dispatch) => {
         dispatch({type: actionTypes.FETCH_PRODUCTS});
         return axios
-            .get(apiLocation + "/product")
+            .get(apiLocation + "/product/category/" + category)
             .then(response => {
                 dispatch({
                     type: actionTypes.FETCH_PRODUCTS_SUCCESS,
@@ -21,7 +21,7 @@ export function fetchProducts() {
             });
     }
 }
-export function fetchProductsByCategoryAndFilter(category) {
+export function fetchProductsAndFilter(category) {
     return (dispatch) => {
         dispatch({type: actionTypes.FETCH_PRODUCTS});
         return axios

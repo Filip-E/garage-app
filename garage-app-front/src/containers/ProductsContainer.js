@@ -1,32 +1,32 @@
 import React, {Component} from "react";
 import {
     fetchProducts,
-    fetchProductsByCategoryAndFilter,
+    fetchProductsAndFilter,
     handleClickOpenDialog,
     makeEditDialogFalse,
     setProductId
 } from "../actions/productActions";
 import {connect} from "react-redux";
 import Loading from "../components/Loading";
-import RetroVintageStuff from "../components/RetroVintageStuff";
+import ProductsComponent from "../components/ProductsComponent";
 import {withRouter} from "react-router-dom";
 
 
-class Retro_VintageContainer extends Component {
+class ProductsContainer extends Component {
 
     componentDidMount() {
         if(this.props.token){
-            this.props.fetchProducts();
+            this.props.fetchProducts(this.props.productCategory);
         }else{
-            this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+            this.props.fetchProductsAndFilter(this.props.productCategory);
         }
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(prevProps.token !== this.props.token){
             if(this.props.token){
-                this.props.fetchProducts();
+                this.props.fetchProducts(this.props.productCategory);
             }else{
-                this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+                this.props.fetchProductsAndFilter(this.props.productCategory);
             }
         }
     }
@@ -34,7 +34,7 @@ class Retro_VintageContainer extends Component {
         if (this.props.fetched) {
             if (this.props.response !== null) {
                 if (this.props.response.status === 201) {
-                    this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+                    this.props.fetchProductsAndFilter(this.props.productCategory);
                 }
             }
             if (this.props.error !== null) {
@@ -44,21 +44,23 @@ class Retro_VintageContainer extends Component {
                     )
                 } else {
                     return (
-                        <RetroVintageStuff
+                        <ProductsComponent
                             products={this.props.products}
                             token={this.props.token}
                             handleClickOpen={this.props.handleClickOpenDialog}
                             editDialog={this.props.editDialogState}
+                            pageTitle={this.props.pageTitle}
                         />
                     )
                 }
             } else {
                 return (
-                    <RetroVintageStuff
+                    <ProductsComponent
                         products={this.props.products}
                         token={this.props.token}
                         handleClickOpen={this.props.handleClickOpenDialog}
                         editDialog={this.props.editDialogState}
+                        pageTitle={this.props.pageTitle}
                     />
                 )
             }
@@ -84,11 +86,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProducts: () =>{
-            dispatch(fetchProducts());
+        fetchProducts: (category) =>{
+            dispatch(fetchProducts(category));
         },
-        fetchProductsByCategoryAndFilter: (category) => {
-            dispatch(fetchProductsByCategoryAndFilter(category));
+        fetchProductsAndFilter: (category) => {
+            dispatch(fetchProductsAndFilter(category));
         },
         handleClickOpenDialog: () =>{
             dispatch(makeEditDialogFalse());
@@ -98,4 +100,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Retro_VintageContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductsContainer));

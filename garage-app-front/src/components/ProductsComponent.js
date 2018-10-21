@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import Grid from '@material-ui/core/Grid';
-import withStyles from "@material-ui/core/es/styles/withStyles";
 import ProductCardContainer from "../containers/ProductCardContainer";
 import AddIcon from '@material-ui/icons/Add';
 import Button from "@material-ui/core/Button/Button";
 import BasicDialogContainer from "../containers/BasicDialogContainer";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = () => ({
     root: {
@@ -12,7 +12,7 @@ const styles = () => ({
     },
 });
 
-class RetroVintageStuff extends Component {
+class ProductsComponent extends Component {
     render() {
         let actions;
         if (this.props.token !== '') {
@@ -27,7 +27,7 @@ class RetroVintageStuff extends Component {
         }
         return (
             <div>
-                <h1>Retro Vintage {actions}</h1>
+                <h1>{this.props.pageTitle} {actions}</h1>
                 <Grid container spacing={24}>
                     {this.props.products.map(product => {
                         return (
@@ -42,4 +42,4 @@ class RetroVintageStuff extends Component {
     }
 }
 
-export default withStyles(styles)(RetroVintageStuff);
+export default withStyles(styles)(ProductsComponent);

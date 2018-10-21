@@ -7,7 +7,7 @@ import ProductCard from "../components/ProductCard";
 class AdminCardActionsContainer extends Component{
 
     render(){
-        // don't render when product is null. don't know why this happens. see map in RetroVintageStuff.js
+        // don't render when product is null. don't know why this happens. see map in ProductsComponent.js
         if(this.props.product){
             return(
                 <ProductCard token={this.props.token} product={this.props.product}/>

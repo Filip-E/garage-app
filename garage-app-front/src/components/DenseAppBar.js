@@ -7,13 +7,13 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Home from "./Home";
-import Retro_VintageContainer from "../containers/Retro_VintageContainer";
 import Service from "./Service";
-import Parts from "./Parts";
 import Contact from "./Contact";
 import Cars from "./Cars";
 import LoginContainer from "../containers/LoginContainer";
 import {getCookie} from "../utils/CookieManager";
+import RetroVintageProductsWrapper from "../wrappers/RetroVintageProductsWrapper";
+import PartsProductsWrapper from "../wrappers/PartsProductsWrapper";
 
 const styles = {
     root: {
@@ -77,8 +77,8 @@ class DenseAppBar extends Component {
                 <Switch>
                     <Route exact path={home} component={Home}/>
                     <Route exact path={service} component={Service}/>
-                    <Route exact path={retroVintage} component={Retro_VintageContainer}/>
-                    <Route exact path={parts} component={Parts}/>
+                    <Route exact path={retroVintage} component={RetroVintageProductsWrapper}/>
+                    <Route exact path={parts} component={PartsProductsWrapper}/>
                     <Route exact path={cars} component={Cars}/>
                     <Route exact path={contact} component={Contact}/>
                     <Route exact path={login} component={LoginContainer}/>
