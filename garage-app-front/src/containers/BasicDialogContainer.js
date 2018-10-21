@@ -5,8 +5,8 @@ import {
     handleClickOpenDialog,
     handleClose
 } from "../actions/productActions";
-import connect from "react-redux/es/connect/connect";
 import BasicDialog from "../components/BasicDialog";
+import {connect} from "react-redux";
 
 
 class BasicDialogContainer extends Component {

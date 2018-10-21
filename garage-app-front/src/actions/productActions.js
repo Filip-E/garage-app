@@ -1,4 +1,3 @@
-// import actionTypes from "actionTypes";
 import axios from "axios";
 import {apiLocation} from "./serverUrl";
 import actionTypes from "./actionTypes";

@@ -1,7 +1,6 @@
 import {Component} from "react";
 import logo from "../logo.svg";
 import React from "react";
-// import DenseAppBar from "./DenseAppBar";
 
 class Home extends Component {
     render() {

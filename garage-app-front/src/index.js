@@ -15,16 +15,19 @@ import createMuiTheme from "@material-ui/core/es/styles/createMuiTheme";
 const middleware = applyMiddleware(thunk);
 const store = createStore(rootReducer, composeWithDevTools(middleware));
 const theme = createMuiTheme({
+    palette: {
+        type: 'light',
+    },
     typography: {
         useNextVariants: true,
     },
 });
 ReactDOM.render(
-    <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
             <App/>
-        </MuiThemeProvider>
-    </Provider>,
+        </Provider>
+    </MuiThemeProvider>,
     document.getElementById('root')
 );
 registerServiceWorker();

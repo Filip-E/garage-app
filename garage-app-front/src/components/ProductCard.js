@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import Grid from "@material-ui/core/Grid/Grid";
 import Card from "@material-ui/core/Card/Card";
-import withStyles from "@material-ui/core/es/styles/withStyles";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import Typography from "@material-ui/core/Typography/Typography";
 import AdminCardActionsContainer from "../containers/AdminCardActionsContainer";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
     card: {

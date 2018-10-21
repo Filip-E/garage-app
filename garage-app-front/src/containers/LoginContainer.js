@@ -3,9 +3,8 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import Login from "../components/Login";
 import authenticateUser from "../actions/AuthActions";
-import Redirect from "react-router-dom/es/Redirect";
 import {getCookie} from "../utils/CookieManager";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 
 
 class LoginContainer extends Component {
