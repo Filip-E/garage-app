@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {
+    fetchProducts,
     fetchProductsByCategoryAndFilter,
     handleClickOpenDialog,
     makeEditDialogFalse,
@@ -14,9 +15,21 @@ import {withRouter} from "react-router-dom";
 class Retro_VintageContainer extends Component {
 
     componentDidMount() {
-        this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+        if(this.props.token){
+            this.props.fetchProducts();
+        }else{
+            this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+        }
     }
-
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.token !== this.props.token){
+            if(this.props.token){
+                this.props.fetchProducts();
+            }else{
+                this.props.fetchProductsByCategoryAndFilter('Retro_Vintage');
+            }
+        }
+    }
     render() {
         if (this.props.fetched) {
             if (this.props.response !== null) {
@@ -71,6 +84,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchProducts: () =>{
+            dispatch(fetchProducts());
+        },
         fetchProductsByCategoryAndFilter: (category) => {
             dispatch(fetchProductsByCategoryAndFilter(category));
         },
