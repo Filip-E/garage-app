@@ -15,17 +15,13 @@ class BasicDialog extends Component {
     }
 
     makePropertiesArray() {
-        console.log("product id");
-        console.log(this.props.productId);
         const array = [];
-        let product;
+        let product = {};
         this.props.products.forEach((element) => {
             if (element.Id === this.props.productId) {
                 product = element;
             }
         });
-
-        console.log(product);
         for (let key in product) {
             if (product.hasOwnProperty(key)) {
                 if (key !== "Id") {

@@ -1,7 +1,7 @@
 import React from "react";
 import {Component} from "react";
 import {
-    addProduct,
+    addProduct, editProduct,
     handleClickOpenDialog,
     handleClose
 } from "../actions/productActions";
@@ -9,18 +9,24 @@ import connect from "react-redux/es/connect/connect";
 import BasicDialog from "../components/BasicDialog";
 
 
-class BasicDialogContainer extends Component{
+class BasicDialogContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            Name: "",
-            Price: 0,
-            Stock: 0,
-            Id:null,
-        };
+        let productState = {};
+        this.props.products.forEach((p) =>{
+            if(p.Id === this.props.productId){
+                for (let i = 0; i < Object.keys(p).length; i++) {
+                    productState[Object.keys(p)[i]] = p[Object.keys(p)[i]];
+                }
+            }
+        });
+        console.log("PRODUCT STATE:");
+        console.log(productState);
+        this.state = productState;
         this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
     }
+
     handleChange(event) {
         const id = event.target.id;
         this.setState({[id]: event.target.value});
@@ -28,28 +34,37 @@ class BasicDialogContainer extends Component{
 
     submit(event) {
         event.preventDefault();
-        this.props.addProduct({
+        let product = {
             Name: this.state.Name,
             Price: this.state.Price,
             Stock: this.state.Stock,
             CategoryTypes: [
                 "Retro_Vintage"
             ]
-        }, this.props.token);
+        };
+        if (event.target.textContent === "ADD") {
+            delete product.Id;
+            console.log("PRODUCT ADD");
+            console.log(product);
+            this.props.addProduct(product, this.props.token);
+        } else if(event.target.textContent === "EDIT") {
+            product["Id"] = this.props.productId;
+            this.props.editProduct(product, this.props.token);
+        }
     }
 
-    render(){
-        return(
+    render() {
+        return (
             // productId + edit needs to be set by the object calling <BasicDialogContainer/>
             <BasicDialog
-            open={this.props.open}
-            handleClose={this.props.handleClose}
-            error={this.props.error}
-            handleChange={this.handleChange}
-            submit={this.submit}
-            products={this.props.products}
-            productId={this.props.productId}
-            edit={this.props.edit}
+                open={this.props.open}
+                handleClose={this.props.handleClose}
+                error={this.props.error}
+                handleChange={this.handleChange}
+                submit={this.submit}
+                products={this.props.products}
+                productId={this.props.productId}
+                edit={this.props.edit}
             />
         );
     }
@@ -72,10 +87,13 @@ const mapDispatchToProps = dispatch => {
         addProduct: (productWithCategoryTypes, token) => {
             dispatch(addProduct(productWithCategoryTypes, token));
         },
-        handleClickOpenDialog: () =>{
+        editProduct: (productWithCategoryTypes, token) => {
+            dispatch(editProduct(productWithCategoryTypes, token));
+        },
+        handleClickOpenDialog: () => {
             dispatch(handleClickOpenDialog())
         },
-        handleClose: () =>{
+        handleClose: () => {
             dispatch(handleClose())
         }
     };

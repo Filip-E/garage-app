@@ -63,7 +63,33 @@ export function addProduct(productWithCategoryTypes, token) {
             }).catch(error =>{
                 dispatch({
                     type: actionTypes.ADD_PRODUCT_FAIL,
-                    payload: error
+                    payload: error.response.data.Message
+                })
+            });
+    }
+}
+
+export function editProduct(productWithCategoryTypes, token) {
+    return (dispatch) => {
+        dispatch({type: actionTypes.EDIT_PRODUCT_START});
+        console.log("product send to server to edit:");
+        console.log(productWithCategoryTypes);
+        return axios
+            .put(
+                apiLocation + "/product",
+                productWithCategoryTypes,
+                {
+                    headers: { Authorization: "Bearer " + token }
+                }
+            ).then(response =>{
+                dispatch({
+                    type: actionTypes.EDIT_PRODUCT_SUCCESS,
+                    payload: response
+                });
+            }).catch(error =>{
+                dispatch({
+                    type: actionTypes.EDIT_PRODUCT_FAIL,
+                    payload: error.response.data.Message
                 })
             });
     }

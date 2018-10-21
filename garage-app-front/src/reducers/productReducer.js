@@ -73,6 +73,35 @@ export default function productReducer(state = initialState, action) {
                 open: true
             }
         }
+        case actionTypes.EDIT_PRODUCT_START:{
+            return{
+                ...state,
+                fetching: true,
+                fetched: false,
+                response: null,
+                error: null,
+            }
+        }
+        case actionTypes.EDIT_PRODUCT_SUCCESS:{
+            return{
+                ...state,
+                fetching: false,
+                fetched: true,
+                response: action.payload,
+                error: null,
+                open: false
+            }
+        }
+        case actionTypes.EDIT_PRODUCT_FAIL:{
+            return{
+                ...state,
+                fetching: false,
+                fetched: true,
+                response: null,
+                error: action.payload,
+                open: true
+            }
+        }
         case actionTypes.DELETE_PRODUCT_START:{
             return{
                 ...state,

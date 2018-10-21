@@ -1,6 +1,7 @@
 ﻿using System;
 using garage_app_bl.Services;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -143,6 +144,8 @@ namespace WebApplication1.Controllers
             }
             catch (ArgumentException ex)
             {
+//                Console.WriteLine(ex.StackTrace);
+                Debug.WriteLine(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
