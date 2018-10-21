@@ -5,7 +5,9 @@ const initialState = {
     products: [],
     error: null,
     response: null,
-    open: false
+    open: false,
+    editDialogState: false,
+    storeProductId: 1
 };
 
 export default function productReducer(state = initialState, action) {
@@ -108,6 +110,24 @@ export default function productReducer(state = initialState, action) {
             return{
                 ...state,
                 open: true
+            }
+        }
+        case actionTypes.EDIT_DIALOG_TRUE:{
+            return{
+                ...state,
+                editDialogState: true
+            }
+        }
+        case actionTypes.EDIT_DIALOG_FALSE:{
+            return{
+                ...state,
+                editDialogState: false
+            }
+        }
+        case actionTypes.SET_PRODUCT_ID:{
+            return{
+                ...state,
+                storeProductId: action.payload
             }
         }
         default:

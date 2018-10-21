@@ -20,7 +20,6 @@ class BasicDialogContainer extends Component{
         };
         this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
-        // this.fillProductIdIfNoneExists = this.fillProductIdIfNoneExists.bind(this);
     }
     handleChange(event) {
         const id = event.target.id;
@@ -39,23 +38,9 @@ class BasicDialogContainer extends Component{
         }, this.props.token);
     }
 
-    // fillProductIdIfNoneExists(){
-    //     if(this.state.Id === null){
-    //         if(this.props.Id === null){
-    //             console.log("props id null");
-    //             console.log(this.props.products[0].Id);
-    //             this.setState({Id: this.props.products[0].Id});
-    //         }else{
-    //             console.log("props is not null aka is injected");
-    //             console.log(this.props.Id);
-    //             this.setState({Id: this.props.Id});
-    //         }
-    //     }
-    // }
-
     render(){
-        // this.fillProductIdIfNoneExists();
         return(
+            // productId + edit needs to be set by the object calling <BasicDialogContainer/>
             <BasicDialog
             open={this.props.open}
             handleClose={this.props.handleClose}
@@ -64,6 +49,7 @@ class BasicDialogContainer extends Component{
             submit={this.submit}
             products={this.props.products}
             productId={this.props.productId}
+            edit={this.props.edit}
             />
         );
     }
@@ -76,7 +62,8 @@ const mapStateToProps = (state) => {
         fetched: state.product.fetched,
         response: state.product.response,
         open: state.product.open,
-        token: state.auth.token
+        token: state.auth.token,
+        productId: state.product.storeProductId
     }
 };
 

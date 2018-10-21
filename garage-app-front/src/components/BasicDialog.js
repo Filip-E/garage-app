@@ -9,9 +9,23 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 
 class BasicDialog extends Component {
-    test() {
+    constructor(props) {
+        super(props);
+        this.renderButton = this.renderButton.bind(this);
+    }
+
+    makePropertiesArray() {
+        console.log("product id");
+        console.log(this.props.productId);
         const array = [];
-        let product = this.props.products[this.props.productId];
+        let product;
+        this.props.products.forEach((element) => {
+            if (element.Id === this.props.productId) {
+                product = element;
+            }
+        });
+
+        console.log(product);
         for (let key in product) {
             if (product.hasOwnProperty(key)) {
                 if (key !== "Id") {
@@ -22,9 +36,15 @@ class BasicDialog extends Component {
         return (array);
     }
 
+    renderButton() {
+        if (this.props.edit) {
+            return (<Button onClick={this.props.submit} color="primary">EDIT</Button>)
+        } else {
+            return (<Button onClick={this.props.submit} color="primary">ADD</Button>)
+        }
+    }
+
     render() {
-        // console.log("Id in component");
-        // console.log(this.props.productId);
         return (
             <Dialog
                 open={this.props.open}
@@ -36,7 +56,11 @@ class BasicDialog extends Component {
                     {this.props.error}
                 </DialogContentText>
                 <DialogContent>
-                    {this.test().map((property) => {
+                    {this.makePropertiesArray().map((property) => {
+                        let value = "";
+                        if (this.props.edit) {
+                            value = property[Object.keys(property)[0]];
+                        }
                         let inputType = "";
                         // Object.keys(property)[0] => returns the key instead of the value of said key
 
@@ -49,13 +73,16 @@ class BasicDialog extends Component {
                         } else if (typeof(property[Object.keys(property)[0]]) === "number") {
                             inputType = "number"
                         }
+
                         return (
                             <TextField
+                                key={Object.keys(property)[0]}
                                 margin="dense"
                                 id={Object.keys(property)[0]}
                                 label={Object.keys(property)[0]}
                                 type={inputType}
                                 fullWidth
+                                defaultValue={value}
                                 onChange={this.props.handleChange}
                             />
                         )
@@ -66,13 +93,12 @@ class BasicDialog extends Component {
                     <Button onClick={this.props.handleClose} color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={this.props.submit} color="primary">
-                        Add
-                    </Button>
+                    {this.renderButton()}
                 </DialogActions>
             </Dialog>
         )
     }
+
 }
 
 export default BasicDialog;

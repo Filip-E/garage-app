@@ -1,16 +1,29 @@
-import React from "react";
-import {Component} from "react";
+import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import AdminCardActionsComponent from "../components/AdminCardActionsComponent";
-import {deleteProduct, fetchProductsByCategoryAndFilter} from "../actions/productActions";
+import {
+    deleteProduct,
+    fetchProductsByCategoryAndFilter,
+    handleClickOpenDialog,
+    makeEditDialogTrue,
+    setProductId
+} from "../actions/productActions";
 
 class AdminCardActionsContainer extends Component {
     constructor(props) {
         super(props);
+        this.editProduct = this.editProduct.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
     }
-
+    editProduct(){
+        // this.props.makeEditDialogTrue();
+        // this.props.setProductId(this.props.productId);
+        // this.props.handleClickOpenDialog();
+        console.log("product id trying to set:");
+        console.log(this.props.productId);
+        this.props.prepareEditDialog(this.props.productId);
+    }
     deleteProduct() {
         this.props.deleteProductDispatch(this.props.productId, this.props.token)
     }
@@ -24,6 +37,7 @@ class AdminCardActionsContainer extends Component {
         return (
                 <AdminCardActionsComponent
                     deleteProduct={this.deleteProduct}
+                    editProduct={this.editProduct}
                 />
         )
     }
@@ -43,6 +57,21 @@ const mapDispatchToProps = dispatch => {
         },
         fetchProductsByCategoryAndFilter: (category) =>{
             dispatch(fetchProductsByCategoryAndFilter(category));
+        },
+        prepareEditDialog: (productId) =>{
+            dispatch(makeEditDialogTrue());
+            dispatch(setProductId(productId));
+            dispatch(handleClickOpenDialog());
+
+        },
+        makeEditDialogTrue: () =>{
+            dispatch(makeEditDialogTrue());
+        },
+        handleClickOpenDialog: () =>{
+            dispatch(handleClickOpenDialog());
+        },
+        setProductId: (productId)=>{
+            dispatch(setProductId(productId));
         }
     };
 };

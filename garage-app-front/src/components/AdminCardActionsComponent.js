@@ -9,7 +9,7 @@ class AdminCardActionsComponent extends Component {
     render() {
         return (
             <CardActions>
-                <Button variant="fab" color="secondary" aria-label="Edit" mini>
+                <Button variant="fab" color="secondary" aria-label="Edit" mini onClick={this.props.editProduct}>
                     <EditIcon fontSize="small"/>
                 </Button>
                 <Button variant="fab" aria-label="Delete" mini onClick={this.props.deleteProduct}>

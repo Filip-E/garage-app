@@ -103,6 +103,28 @@ export function handleClose(){
         dispatch({type: actionTypes.DIALOG_CLOSE})
     }
 }
+
+export function makeEditDialogTrue(){
+    return (dispatch) =>{
+        dispatch({type: actionTypes.EDIT_DIALOG_TRUE})
+    }
+}
+
+export function makeEditDialogFalse(){
+    return (dispatch) =>{
+        dispatch({type: actionTypes.EDIT_DIALOG_FALSE})
+    }
+}
+
+export function setProductId(productId){
+    return (dispatch) =>{
+        dispatch({type: actionTypes.SET_PRODUCT_ID, payload: productId})
+    }
+}
+
+
+
+
 export function filterStock() {
     return (dispatch) => {
         dispatch({type: actionTypes.FILTER_STOCK});

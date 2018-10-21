@@ -35,7 +35,7 @@ class RetroVintageStuff extends Component {
                         )
                     })}
                 </Grid>
-                <BasicDialogContainer productId={this.props.products[0].Id}/>
+                <BasicDialogContainer edit={this.props.editDialog}/>
             </div>
 
         )
