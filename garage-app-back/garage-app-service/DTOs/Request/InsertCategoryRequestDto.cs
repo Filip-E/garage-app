@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApplication1.DTOs.Response
+namespace WebApplication1.DTOs.Request
 {
-    public class CategoryResponseDto
+    public class InsertCategoryRequestDto
     {
-        public int Id { get; set; }
         public string Type { get; set; }
     }
 }

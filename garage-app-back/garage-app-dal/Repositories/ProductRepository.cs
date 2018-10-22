@@ -8,7 +8,7 @@ namespace DAL.Repositories
 {
     public class ProductRepository
     {
-        private MyDbContext _context;
+        private readonly MyDbContext _context;
         public ProductRepository(MyDbContext context)
         {
             _context = context;

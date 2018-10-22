@@ -13,6 +13,7 @@ namespace WebApplication1.Mappers
         {
             return new CategoryResponseDto()
             {
+                Id = category.Id,
                 Type = category.Type
             };
         }

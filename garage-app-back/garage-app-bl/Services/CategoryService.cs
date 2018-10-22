@@ -47,14 +47,15 @@ namespace garage_app_bl.Services
         {
             HasCategoryRequiredProps(category);
 
-            Category findCategory = _repository.FindCategory(category.Type);
-            category.Id = findCategory.Id;
-
             _repository.UpdateCategory(category);
         }
 
         private static void HasCategoryRequiredProps(Category category)
         {
+            if (category.Id.Equals(null))
+            {
+                throw new ArgumentException("name can not be null");
+            }
             if (category.Type.Equals(null))
             {
                 throw new ArgumentException("type can not be null");
