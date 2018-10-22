@@ -10,7 +10,7 @@ class ProductCardContainer extends Component{
         // don't render when product is null. don't know why this happens. see map in ProductsComponent.js
         if(this.props.product){
             return(
-                <ProductCard token={this.props.token} product={this.props.product} />
+                <ProductCard token={this.props.token} product={this.props.product} productCategory={this.props.productCategory}/>
             )
         }else{
             return <div/>

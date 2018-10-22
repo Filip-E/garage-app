@@ -20,6 +20,7 @@ const theme = createMuiTheme({
     },
     typography: {
         useNextVariants: true,
+        suppressDeprecationWarnings: true,
     },
 });
 ReactDOM.render(

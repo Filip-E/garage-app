@@ -24,11 +24,11 @@ class AdminCardActionsContainer extends Component {
     }
 
     render() {
-        if (this.props.response !== null) {
-            if (this.props.response.status === 204) {
-                this.props.fetchProducts('Retro_Vintage');
-            }
-        }
+        // if (this.props.response !== null) {
+        //     if (this.props.response.status === 204) {
+        //         this.props.fetchProducts(this.props.productCategory);
+        //     }
+        // }
         return (
                 <AdminCardActionsComponent
                     deleteProduct={this.deleteProduct}

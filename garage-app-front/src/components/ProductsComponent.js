@@ -31,7 +31,7 @@ class ProductsComponent extends Component {
                 <Grid container spacing={24}>
                     {this.props.products.map(product => {
                         return (
-                            <ProductCardContainer key={product.Name} product={product} />
+                            <ProductCardContainer key={product.Name} product={product} productCategory={this.props.productCategory} />
                         )
                     })}
                 </Grid>
