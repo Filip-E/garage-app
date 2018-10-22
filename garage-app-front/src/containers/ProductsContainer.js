@@ -13,23 +13,33 @@ import {withRouter} from "react-router-dom";
 
 
 class ProductsContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+    }
 
     componentDidMount() {
-        if(this.props.token){
+        if (this.props.token) {
             this.props.fetchProducts(this.props.productCategory);
-        }else{
+        } else {
             this.props.fetchProductsAndFilter(this.props.productCategory);
         }
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.token !== this.props.token){
-            if(this.props.token){
+        if (prevProps.token !== this.props.token) {
+            if (this.props.token) {
                 this.props.fetchProducts(this.props.productCategory);
-            }else{
+            } else {
                 this.props.fetchProductsAndFilter(this.props.productCategory);
             }
         }
     }
+
+    handleClickOpen() {
+        this.props.prepareAddDialog(this.props.products[0].Id);
+    }
+
     render() {
         if (this.props.fetched) {
             if (this.props.response !== null) {
@@ -48,7 +58,7 @@ class ProductsContainer extends Component {
                         <ProductsComponent
                             products={this.props.products}
                             token={this.props.token}
-                            handleClickOpen={this.props.handleClickOpenDialog}
+                            handleClickOpen={this.handleClickOpen}
                             editDialog={this.props.editDialogState}
                             pageTitle={this.props.pageTitle}
                             productCategory={this.props.productCategory}
@@ -60,7 +70,7 @@ class ProductsContainer extends Component {
                     <ProductsComponent
                         products={this.props.products}
                         token={this.props.token}
-                        handleClickOpen={this.props.handleClickOpenDialog}
+                        handleClickOpen={this.handleClickOpen}
                         editDialog={this.props.editDialogState}
                         pageTitle={this.props.pageTitle}
                         productCategory={this.props.productCategory}
@@ -89,16 +99,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProducts: (category) =>{
+        fetchProducts: (category) => {
             dispatch(fetchProducts(category));
         },
         fetchProductsAndFilter: (category) => {
             dispatch(fetchProductsAndFilter(category));
         },
-        handleClickOpenDialog: () =>{
+        prepareAddDialog: (productId) => {
             dispatch(makeEditDialogFalse());
             dispatch(handleClickOpenDialog());
-            dispatch(setProductId(1));
+            dispatch(setProductId(productId));
         },
     };
 };

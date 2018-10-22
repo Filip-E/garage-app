@@ -61,7 +61,7 @@ const mapDispatchToProps = dispatch => {
         makeEditDialogTrue: () =>{
             dispatch(makeEditDialogTrue());
         },
-        handleClickOpenDialog: () =>{
+        prepareAddDialog: () =>{
             dispatch(handleClickOpenDialog());
         },
         setProductId: (productId)=>{

@@ -71,6 +71,7 @@ class BasicDialogContainer extends Component {
                 products={this.props.products}
                 productId={this.props.productId}
                 edit={this.props.edit}
+                productCategory={this.props.productCategory}
             />
         );
     }
@@ -96,7 +97,7 @@ const mapDispatchToProps = dispatch => {
         editProduct: (productWithCategoryTypes, token) => {
             dispatch(editProduct(productWithCategoryTypes, token));
         },
-        handleClickOpenDialog: () => {
+        prepareAddDialog: () => {
             dispatch(handleClickOpenDialog())
         },
         handleClose: () => {

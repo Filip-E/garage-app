@@ -7,7 +7,7 @@ const initialState = {
     response: null,
     open: false,
     editDialogState: false,
-    storeProductId: 1
+    storeProductId: 0
 };
 
 export default function productReducer(state = initialState, action) {

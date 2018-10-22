@@ -15,6 +15,8 @@ class BasicDialog extends Component {
     }
 
     makePropertiesArray() {
+        console.log("productId");
+        console.log(this.props.productId);
         const array = [];
         let product = {};
         this.props.products.forEach((element) => {
@@ -29,6 +31,8 @@ class BasicDialog extends Component {
                 }
             }
         }
+        console.log("propsArray:");
+        console.log(array);
         return (array);
     }
 
@@ -40,6 +44,23 @@ class BasicDialog extends Component {
         }
     }
 
+    renderTitle() {
+        let subject = "";
+        if (this.props.productCategory === "Parts") {
+            subject = "Part";
+        } else {
+            subject = "Retro-Vintage";
+        }
+        let title = "";
+        if (this.props.edit) {
+            title = "Pas een " + subject + " item aan";
+        } else {
+            title = "Voeg een " + subject + " item toe";
+        }
+        return (title);
+    }
+
+
     render() {
         return (
             <Dialog
@@ -47,7 +68,7 @@ class BasicDialog extends Component {
                 onClose={this.props.handleClose}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Voeg een Retro-Vintage item toe</DialogTitle>
+                <DialogTitle id="form-dialog-title">{this.renderTitle()}</DialogTitle>
                 <DialogContentText>
                     {this.props.error}
                 </DialogContentText>
