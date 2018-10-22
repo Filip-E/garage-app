@@ -34,7 +34,8 @@ class ProductsContainer extends Component {
         if (this.props.fetched) {
             if (this.props.response !== null) {
                 if (this.props.response.status === 201) {
-                    this.props.fetchProductsAndFilter(this.props.productCategory);
+                    console.log("201 fetch");
+                    this.props.fetchProducts(this.props.productCategory);
                 }
             }
             if (this.props.error !== null) {
@@ -50,6 +51,7 @@ class ProductsContainer extends Component {
                             handleClickOpen={this.props.handleClickOpenDialog}
                             editDialog={this.props.editDialogState}
                             pageTitle={this.props.pageTitle}
+                            productCategory={this.props.productCategory}
                         />
                     )
                 }
@@ -61,6 +63,7 @@ class ProductsContainer extends Component {
                         handleClickOpen={this.props.handleClickOpenDialog}
                         editDialog={this.props.editDialogState}
                         pageTitle={this.props.pageTitle}
+                        productCategory={this.props.productCategory}
                     />
                 )
             }

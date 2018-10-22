@@ -35,9 +35,8 @@ class ProductsComponent extends Component {
                         )
                     })}
                 </Grid>
-                <BasicDialogContainer edit={this.props.editDialog}/>
+                <BasicDialogContainer edit={this.props.editDialog} productCategory={this.props.productCategory}/>
             </div>
-
         )
     }
 }

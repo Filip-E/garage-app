@@ -1,10 +1,5 @@
-import React from "react";
-import {Component} from "react";
-import {
-    addProduct, editProduct,
-    handleClickOpenDialog,
-    handleClose
-} from "../actions/productActions";
+import React, {Component} from "react";
+import {addProduct, editProduct, handleClickOpenDialog, handleClose} from "../actions/productActions";
 import BasicDialog from "../components/BasicDialog";
 import {connect} from "react-redux";
 
@@ -13,20 +8,33 @@ class BasicDialogContainer extends Component {
     constructor(props) {
         super(props);
         let productState = {};
-        this.props.products.forEach((p) =>{
-            if(p.Id === this.props.productId){
+        this.props.products.forEach((p) => {
+            if (p.Id === this.props.productId) {
                 for (let i = 0; i < Object.keys(p).length; i++) {
-                    productState[Object.keys(p)[i]] = p[Object.keys(p)[i]];
+                    let prop = Object.keys(p)[i];
+                    productState[prop] = p[prop];
                 }
             }
         });
-        console.log("PRODUCT STATE:");
-        console.log(productState);
         this.state = productState;
         this.handleChange = this.handleChange.bind(this);
         this.submit = this.submit.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if(prevProps !== this.props){
+            let productState = {};
+            this.props.products.forEach((p) => {
+                if (p.Id === this.props.productId) {
+                    for (let i = 0; i < Object.keys(p).length; i++) {
+                        let prop = Object.keys(p)[i];
+                        productState[prop] = p[prop];
+                    }
+                }
+            });
+            this.setState(productState);
+        }
+    }
     handleChange(event) {
         const id = event.target.id;
         this.setState({[id]: event.target.value});
@@ -39,15 +47,13 @@ class BasicDialogContainer extends Component {
             Price: this.state.Price,
             Stock: this.state.Stock,
             CategoryTypes: [
-                "Retro_Vintage"
+                this.props.productCategory
             ]
         };
         if (event.target.textContent === "ADD") {
             delete product.Id;
-            console.log("PRODUCT ADD");
-            console.log(product);
             this.props.addProduct(product, this.props.token);
-        } else if(event.target.textContent === "EDIT") {
+        } else if (event.target.textContent === "EDIT") {
             product["Id"] = this.props.productId;
             this.props.editProduct(product, this.props.token);
         }

@@ -4,13 +4,13 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import ProductCard from "../components/ProductCard";
 
-class AdminCardActionsContainer extends Component{
+class ProductCardContainer extends Component{
 
     render(){
         // don't render when product is null. don't know why this happens. see map in ProductsComponent.js
         if(this.props.product){
             return(
-                <ProductCard token={this.props.token} product={this.props.product}/>
+                <ProductCard token={this.props.token} product={this.props.product} />
             )
         }else{
             return <div/>
@@ -30,4 +30,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AdminCardActionsContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductCardContainer));

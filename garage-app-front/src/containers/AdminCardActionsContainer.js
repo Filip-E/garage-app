@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import AdminCardActionsComponent from "../components/AdminCardActionsComponent";
 import {
     deleteProduct,
-    fetchProductsAndFilter,
+    fetchProducts,
     handleClickOpenDialog,
     makeEditDialogTrue,
     setProductId
@@ -17,11 +17,6 @@ class AdminCardActionsContainer extends Component {
         this.deleteProduct = this.deleteProduct.bind(this);
     }
     editProduct(){
-        // this.props.makeEditDialogTrue();
-        // this.props.setProductId(this.props.productId);
-        // this.props.handleClickOpenDialog();
-        console.log("product id trying to set:");
-        console.log(this.props.productId);
         this.props.prepareEditDialog(this.props.productId);
     }
     deleteProduct() {
@@ -31,7 +26,7 @@ class AdminCardActionsContainer extends Component {
     render() {
         if (this.props.response !== null) {
             if (this.props.response.status === 204) {
-                this.props.fetchProductsAndFilter('Retro_Vintage');
+                this.props.fetchProducts('Retro_Vintage');
             }
         }
         return (
@@ -55,14 +50,13 @@ const mapDispatchToProps = dispatch => {
         deleteProductDispatch: (productId, token) => {
             dispatch(deleteProduct(productId, token));
         },
-        fetchProductsAndFilter: (category) =>{
-            dispatch(fetchProductsAndFilter(category));
+        fetchProducts: (category) =>{
+            dispatch(fetchProducts(category));
         },
         prepareEditDialog: (productId) =>{
             dispatch(makeEditDialogTrue());
             dispatch(setProductId(productId));
             dispatch(handleClickOpenDialog());
-
         },
         makeEditDialogTrue: () =>{
             dispatch(makeEditDialogTrue());

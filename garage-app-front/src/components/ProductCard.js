@@ -17,7 +17,7 @@ class ProductCard extends Component {
     render() {
         let actions;
         if(this.props.token !== ''){
-            actions = (<AdminCardActionsContainer productId={this.props.product.Id}/>);
+            actions = (<AdminCardActionsContainer productId={this.props.product.Id} productCategory={this.props.productCategory}/> );
         }else{
             actions = (<div/>);
         }
@@ -25,7 +25,7 @@ class ProductCard extends Component {
             <Grid item>
                 <Card>
                     <CardContent>
-                        <Typography gutterBottom variant="title" component="body2">
+                        <Typography gutterBottom variant="title">
                             {this.props.product.Name}
                         </Typography>
                         <Typography component="p">
