@@ -1,4 +1,4 @@
-import actionTypes from "./actionTypes";
+import actionTypes from "./ProductActionTypes";
 import axios from "axios";
 import {apiLocation} from "./serverUrl";
 

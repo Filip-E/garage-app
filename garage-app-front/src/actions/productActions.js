@@ -1,6 +1,6 @@
 import axios from "axios";
 import {apiLocation} from "./serverUrl";
-import actionTypes from "./actionTypes";
+import actionTypes from "./ProductActionTypes";
 
 export function fetchProducts(category) {
     return (dispatch) => {

@@ -7,16 +7,16 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import TextField from "@material-ui/core/TextField/TextField";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
+import ExtensionDialogCategoriesContainer from "../containers/ExtensionDialogCategoriesContainer";
 
 class BasicDialog extends Component {
     constructor(props) {
         super(props);
         this.renderButton = this.renderButton.bind(this);
+        this.renderExtensionCategories = this.renderExtensionCategories.bind(this);
     }
 
     makePropertiesArray() {
-        console.log("productId");
-        console.log(this.props.productId);
         const array = [];
         let product = {};
         this.props.products.forEach((element) => {
@@ -31,8 +31,6 @@ class BasicDialog extends Component {
                 }
             }
         }
-        console.log("propsArray:");
-        console.log(array);
         return (array);
     }
 
@@ -60,6 +58,11 @@ class BasicDialog extends Component {
         return (title);
     }
 
+    renderExtensionCategories() {
+        if (this.props.productCategory === "Parts" && this.props.edit) {
+            return (<ExtensionDialogCategoriesContainer/>)
+        }
+    }
 
     render() {
         return (
@@ -105,6 +108,7 @@ class BasicDialog extends Component {
                         )
                     })
                     }
+                    {this.renderExtensionCategories()}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.handleClose} color="secondary">
@@ -115,7 +119,6 @@ class BasicDialog extends Component {
             </Dialog>
         )
     }
-
 }
 
 export default BasicDialog;

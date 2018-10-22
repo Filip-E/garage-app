@@ -24,8 +24,8 @@ namespace DAL.Migrations
             //  to avoid creating duplicate seed data.
 
             Category c1 = new Category {Id = 1, Type = "Retro_Vintage"};
-
             Category c2 = new Category {Id = 2, Type = "Parts"};
+            Category c3 = new Category {Id = 3, Type = "Lamps"};
 
             Product p1 = new Product {Id = 1, Name = "Bowling kegels", Price = 12.99M, Stock = 10};
             p1.Categories.Add(c1);
@@ -35,6 +35,7 @@ namespace DAL.Migrations
 
             Product p3 = new Product {Id = 3, Name = "Zoeklicht chroom", Price = 19.99M, Stock = 2};
             p3.Categories.Add(c2);
+            p3.Categories.Add(c3);
 
             Product p4 = new Product {Id = 4, Name = "Retro mic", Price = 14.99M, Stock = 1};
             p4.Categories.Add(c1);
@@ -46,7 +47,7 @@ namespace DAL.Migrations
                 UserName = "admin"
             };
 
-            Category[] categorySeed = new Category[] { c1, c2 };
+            Category[] categorySeed = new Category[] { c1, c2, c3 };
             foreach (Category c in categorySeed)
             {
                 context.Categories.AddOrUpdate(c);

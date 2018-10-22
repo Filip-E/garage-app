@@ -1,4 +1,4 @@
-import actionTypes from "../actions/actionTypes";
+import actionTypes from "../actions/ProductActionTypes";
 const initialState = {
     fetching: false,
     fetched: false,
