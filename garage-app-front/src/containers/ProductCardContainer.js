@@ -3,12 +3,12 @@ import {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import ProductCard from "../components/ProductCard";
-import {fetchCategories} from "../actions/CategoryActions";
+import {fetchProductCategories} from "../actions/CategoryActions";
 
 class ProductCardContainer extends Component{
 
     componentDidMount() {
-        this.props.fetchCategories(this.props.product.Id);
+        this.props.fetchProductCategories(this.props.product.Id);
     }
 
 
@@ -33,8 +33,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchCategories: (productId) => {
-            dispatch(fetchCategories(productId));
+        fetchProductCategories: (productId) => {
+            dispatch(fetchProductCategories(productId));
         }
     };
 };

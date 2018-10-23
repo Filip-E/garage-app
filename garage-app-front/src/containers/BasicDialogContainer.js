@@ -47,6 +47,7 @@ class BasicDialogContainer extends Component {
             Price: this.state.Price,
             Stock: this.state.Stock,
             CategoryTypes: [
+                // todo fix this only send one category to server. see log when editing a part
                 this.props.productCategory
             ]
         };
