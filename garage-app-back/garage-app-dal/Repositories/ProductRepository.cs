@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using garage_app_entities;
 
@@ -9,6 +10,7 @@ namespace DAL.Repositories
     public class ProductRepository
     {
         private readonly MyDbContext _context;
+
         public ProductRepository(MyDbContext context)
         {
             _context = context;
@@ -22,7 +24,7 @@ namespace DAL.Repositories
 
         public List<Product> GetProducts()
         {
-           return _context.Products.ToList();
+            return _context.Products.ToList();
         }
 
         public Product FindProduct(int id)
@@ -37,6 +39,7 @@ namespace DAL.Repositories
                 throw new ArgumentException("Product was not found!");
             }
         }
+
         public Product FindProduct(string name)
         {
             var product = _context.Products.FirstOrDefault(p => p.Name.Equals(name));
@@ -57,39 +60,40 @@ namespace DAL.Repositories
 
         public List<Product> GetProductsByCategory(string categoryType)
         {
-            return new List<Product>(_context.Categories.Where(c => c.Type == categoryType).SelectMany(c => c.Products));
+            return new List<Product>(_context.Categories.Where(c => c.Type == categoryType)
+                .SelectMany(c => c.Products));
         }
 
         public void UpdateProduct(Product product)
         {
-            _context.Products.Attach(product);
-            _context.Entry(product).State = EntityState.Modified;
+            // help => http://www.entityframeworktutorial.net/EntityFramework4.3/update-many-to-many-entity-using-dbcontext.aspx
+            // don't forget equals implementation for objects
 
-            foreach (Category category in product.Categories)
+            var existingProduct =
+                _context.Products.Include("Categories").FirstOrDefault(p => p.Id == product.Id);
+            if (existingProduct == null)
+            {
+                throw new ArgumentException("Product was not found");
+            }
+
+
+            var deleteCategories =
+                existingProduct.Categories.Except(product.Categories).ToList();
+
+            var addedCategories =
+                product.Categories.Except(existingProduct.Categories).ToList();
+
+            deleteCategories.ForEach(category => existingProduct.Categories.Remove(category));
+
+            foreach (Category category in addedCategories)
             {
                 _context.Categories.Attach(category);
+                existingProduct.Categories.Add(category);
             }
-
-            // code to delete category from a product (delete entry in join table
-            var categoriesFromDb = _context.Products.Where(p => p.Id == product.Id).SelectMany(p => p.Categories);
-            List<Category> categoriesToDelete = new List<Category>();
-            foreach (Category categoryFromDb in categoriesFromDb)
-            {
-                if (!product.Categories.Contains(categoryFromDb))
-                {
-                    categoriesToDelete.Add(categoryFromDb);
-                }
-            }
-
-            _context.Entry(product).Collection("Categories").Load();
-            foreach (Category category in categoriesToDelete)
-            {
-                product.Categories.Remove(category);
-            }
-
 
             _context.SaveChanges();
         }
+
         public void DeleteProduct(int productId)
         {
             Product productFromDb = _context.Products.Find(productId);
