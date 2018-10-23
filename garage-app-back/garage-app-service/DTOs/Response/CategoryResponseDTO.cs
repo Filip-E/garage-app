@@ -7,6 +7,7 @@ namespace WebApplication1.DTOs.Response
 {
     public class CategoryResponseDto
     {
+        public int Id { get; set; }
         public string Type { get; set; }
     }
 }

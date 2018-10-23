@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace DAL.Repositories
 {
     public class CategoryRepository
     {
+        private readonly MyDbContext _context;
 
-        private MyDbContext _context;
         public CategoryRepository(MyDbContext context)
         {
             _context = context;
@@ -31,6 +32,7 @@ namespace DAL.Repositories
         {
             return _context.Categories.Find(id);
         }
+
         public Category FindCategory(string type)
         {
             Category category = _context.Categories.FirstOrDefault(c => c.Type.Equals(type));
@@ -43,17 +45,32 @@ namespace DAL.Repositories
                 throw new ArgumentException($"category {type} was not found");
             }
         }
+
         public void UpdateCategory(Category category)
         {
             _context.Categories.Attach(category);
-            _context.Entry(category).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(category).State = EntityState.Modified;
+
+            foreach (Product product in category.Products)
+            {
+                _context.Products.Attach(product);
+            }
+
             _context.SaveChanges();
         }
+
         public void DeleteCategory(int id)
         {
             Category categoryFromDb = _context.Categories.Find(id);
-            _context.Categories.Remove(categoryFromDb);
-            _context.SaveChanges();
+            if (categoryFromDb != null)
+            {
+                _context.Categories.Remove(categoryFromDb);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Product was not found!");
+            }
         }
     }
 }
