@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using garage_app_bl.Services;
 using garage_app_entities;
 using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
-using WebApplication1.Filter;
 using WebApplication1.Mappers;
 
 namespace WebApplication1.Controllers
@@ -28,7 +26,12 @@ namespace WebApplication1.Controllers
         [Route("category")]
         public IHttpActionResult GetCategories()
         {
-            return Ok(_categoryService.GetCategories());
+            List<CategoryResponseDto> categoryResponseDtos = new List<CategoryResponseDto>();
+            foreach (Category category in _categoryService.GetCategories())
+            {
+                categoryResponseDtos.Add(_categoryMapper.ToDto(category));
+            }
+            return Ok(categoryResponseDtos);
         }
 
         [AllowAnonymous]

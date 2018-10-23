@@ -59,6 +59,11 @@ namespace garage_app_bl.Services
             _repository.UpdateCategory(category);
         }
 
+        public void DeleteCategory(int categoryId)
+        {
+            _repository.DeleteCategory(categoryId);
+        }
+
         private static void HasCategoryRequiredProps(Category category)
         {
             if (category.Id.Equals(null))

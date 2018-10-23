@@ -70,6 +70,24 @@ namespace DAL.Repositories
                 _context.Categories.Attach(category);
             }
 
+            // code to delete category from a product (delete entry in join table
+            var categoriesFromDb = _context.Products.Where(p => p.Id == product.Id).SelectMany(p => p.Categories);
+            List<Category> categoriesToDelete = new List<Category>();
+            foreach (Category categoryFromDb in categoriesFromDb)
+            {
+                if (!product.Categories.Contains(categoryFromDb))
+                {
+                    categoriesToDelete.Add(categoryFromDb);
+                }
+            }
+
+            _context.Entry(product).Collection("Categories").Load();
+            foreach (Category category in categoriesToDelete)
+            {
+                product.Categories.Remove(category);
+            }
+
+
             _context.SaveChanges();
         }
         public void DeleteProduct(int productId)

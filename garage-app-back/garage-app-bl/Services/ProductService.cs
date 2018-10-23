@@ -93,7 +93,7 @@ namespace garage_app_bl.Services
             _repository.UpdateProduct(findProduct);
         }
 
-        public void deleteProduct(int productId)
+        public void DeleteProduct(int productId)
         {
             _repository.DeleteProduct(productId);
         }

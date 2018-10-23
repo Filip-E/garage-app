@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Results;
 using garage_app_entities;
-using Swashbuckle.Swagger.Annotations;
 using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
 using WebApplication1.Filter;
@@ -124,7 +122,7 @@ namespace WebApplication1.Controllers
             {
                 if (idInsertedProduct != -1)
                 {
-                    _service.deleteProduct(idInsertedProduct);
+                    _service.DeleteProduct(idInsertedProduct);
                 }
                 return BadRequest(ex.Message);
 
@@ -157,7 +155,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                _service.deleteProduct(productId);
+                _service.DeleteProduct(productId);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
             }
             catch (ArgumentException ex)
