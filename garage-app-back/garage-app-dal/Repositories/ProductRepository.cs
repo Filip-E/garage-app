@@ -66,6 +66,7 @@ namespace DAL.Repositories
 
         public void UpdateProduct(Product product)
         {
+
             // help => http://www.entityframeworktutorial.net/EntityFramework4.3/update-many-to-many-entity-using-dbcontext.aspx
             // don't forget equals implementation for objects
 
@@ -75,7 +76,6 @@ namespace DAL.Repositories
             {
                 throw new ArgumentException("Product was not found");
             }
-
 
             var deleteCategories =
                 existingProduct.Categories.Except(product.Categories).ToList();
@@ -90,7 +90,15 @@ namespace DAL.Repositories
                 _context.Categories.Attach(category);
                 existingProduct.Categories.Add(category);
             }
+            //            Debug.WriteLine(product);
+            //            Debug.WriteLine(existingProduct);
+            //            existingProduct = product;
+            //            Debug.WriteLine(existingProduct);
 
+            //            Debug.WriteLine(_context.Entry(product).State);
+            //            _context.Products.Attach(product);
+            //            _context.Entry(product).State = EntityState.Modified;
+            //            Debug.WriteLine(_context.Entry(product).State);
             _context.SaveChanges();
         }
 

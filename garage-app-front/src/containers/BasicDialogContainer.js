@@ -21,8 +21,8 @@ class BasicDialogContainer extends Component {
         this.submit = this.submit.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot){
-        if(prevProps !== this.props){
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
             let productState = {};
             this.props.products.forEach((p) => {
                 if (p.Id === this.props.productId) {
@@ -35,6 +35,7 @@ class BasicDialogContainer extends Component {
             this.setState(productState);
         }
     }
+
     handleChange(event) {
         const id = event.target.id;
         this.setState({[id]: event.target.value});
@@ -42,16 +43,19 @@ class BasicDialogContainer extends Component {
 
     submit(event) {
         event.preventDefault();
-        console.log("categories on submit");
-        console.log(this.props.categoriesForServer);
+        let categories = [];
+        if (this.props.categoriesForServer.length !== 0) {
+            categories = this.props.categoriesForServer;
+        } else {
+            categories = this.props.productCategory;
+        }
+        console.log(categories);
         let product = {
             Name: this.state.Name,
             Price: this.state.Price,
             Stock: this.state.Stock,
             CategoryTypes: [
-                // todo fix this for retro vintage. it's not yet setting categoriesForServer
-                ...this.props.categoriesForServer
-                // this.props.productCategory
+                ...categories
             ]
         };
         console.log(product);
