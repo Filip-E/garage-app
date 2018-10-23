@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import TextField from "@material-ui/core/TextField/TextField";
 import Typography from "@material-ui/core/Typography/Typography";
-import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import Select from "@material-ui/core/Select/Select";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
@@ -15,7 +13,6 @@ class ExtensionDialogCategories extends Component {
     }
 
     renderTextFields() {
-        console.log(this.props.allCategories);
         let categories = this.props.allCategories;
         // start loop from 1 !!! don't care about first category in the array
         let fields = [];
@@ -37,19 +34,19 @@ class ExtensionDialogCategories extends Component {
                 </MenuItem>)
         }
         fields.push(
-        <div>
-            {/*<InputLabel htmlFor="select-multiple-checkbox">Tag</InputLabel>*/}
-            <Select
-                multiple
-                value={this.props.categoriesProduct}
-                onChange={this.props.handleChange}
-                input={<Input id="select-multiple-checkbox"/>}
-                renderValue={selected => selected.join(', ')}
-                // MenuProps={MenuProps}
-            >
-                {menuItems}
-            </Select>
-        </div>);
+            <div>
+                {/*<InputLabel htmlFor="select-multiple-checkbox">Tag</InputLabel>*/}
+                <Select
+                    multiple
+                    value={this.props.categoriesProduct}
+                    onChange={this.props.handleChange}
+                    input={<Input id="select-multiple-checkbox"/>}
+                    renderValue={selected => selected.join(', ')}
+                    // MenuProps={MenuProps}
+                >
+                    {menuItems}
+                </Select>
+            </div>);
         return (fields);
     }
 

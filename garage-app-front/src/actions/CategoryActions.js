@@ -40,3 +40,9 @@ export function fetchProductCategories(productId) {
             });
     }
 }
+
+export function setCategoriesForServer(categories){
+    return (dispatch) =>{
+        dispatch({type: actionTypes.EDIT_CATEGORIES_FOR_SERVER, payload: categories})
+    }
+}

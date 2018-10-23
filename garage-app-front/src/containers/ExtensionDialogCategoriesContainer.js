@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ExtensionDialogCategories from "../components/ExtensionDialogCategories";
-import {fetchCategories, fetchProductCategories} from "../actions/CategoryActions";
+import {fetchCategories, fetchProductCategories, setCategoriesForServer} from "../actions/CategoryActions";
 
 
 class ExtensionDialogCategoriesContainer extends Component {
@@ -14,11 +14,14 @@ class ExtensionDialogCategoriesContainer extends Component {
     }
     handleChange(event){
         this.setState({ categoriesProduct: event.target.value });
+        this.props.setCategoriesForServer(event.target.value);
     };
 
     componentDidMount(){
         this.props.fetchProductCategories(this.props.productId);
         this.props.fetchCategories();
+        this.props.setCategoriesForServer(this.props.categoryTypes);
+
     }
     render() {
         return (
@@ -27,6 +30,7 @@ class ExtensionDialogCategoriesContainer extends Component {
                 handleChange={this.handleChange}
                 categoriesProduct={this.state.categoriesProduct}
                 allCategories={this.props.categories}
+                setCategories={this.props.setCategoriesForServer}
             />
         );
     }
@@ -47,6 +51,9 @@ function mapDispatchToProps(dispatch) {
         },
         fetchProductCategories: (productId) => {
             dispatch(fetchProductCategories(productId));
+        },
+        setCategoriesForServer: (categories) =>{
+            dispatch(setCategoriesForServer(categories))
         }
     }
 }

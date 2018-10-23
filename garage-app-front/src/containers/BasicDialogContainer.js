@@ -42,15 +42,19 @@ class BasicDialogContainer extends Component {
 
     submit(event) {
         event.preventDefault();
+        console.log("categories on submit");
+        console.log(this.props.categoriesForServer);
         let product = {
             Name: this.state.Name,
             Price: this.state.Price,
             Stock: this.state.Stock,
             CategoryTypes: [
-                // todo fix this only send one category to server. see log when editing a part
-                this.props.productCategory
+                // todo fix this for retro vintage. it's not yet setting categoriesForServer
+                ...this.props.categoriesForServer
+                // this.props.productCategory
             ]
         };
+        console.log(product);
         if (event.target.textContent === "ADD") {
             delete product.Id;
             this.props.addProduct(product, this.props.token);
@@ -86,7 +90,8 @@ const mapStateToProps = (state) => {
         response: state.product.response,
         open: state.product.open,
         token: state.auth.token,
-        productId: state.product.storeProductId
+        productId: state.product.storeProductId,
+        categoriesForServer: state.category.categoriesForServer
     }
 };
 

@@ -7,6 +7,7 @@ const initialState = {
     categories: {},
     error: null,
     response: null,
+    categoriesForServer: [],
 };
 
 export default function productReducer(state = initialState, action) {
@@ -63,6 +64,12 @@ export default function productReducer(state = initialState, action) {
                 fetching: false,
                 fetched: true,
                 error: action.payload.response
+            }
+        }
+        case actionTypes.EDIT_CATEGORIES_FOR_SERVER: {
+            return {
+                ...state,
+                categoriesForServer: action.payload
             }
         }
         default:
