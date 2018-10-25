@@ -11,7 +11,6 @@ import DialogContentText from "@material-ui/core/DialogContentText/DialogContent
 class Login extends Component {
 
     render() {
-        console.log(this.props.errorText);
         return (
             <Dialog
                 open

@@ -24,7 +24,6 @@ class ProductCard extends Component {
         if (categories[0] !== "Retro_Vintage") {
             renderResult.push(<Typography key="titleCategoriesList"><br/> Categories: </Typography>);
             for (let i = 1; i < categories.length; i++) {
-                console.log(categories[i]);
                 renderResult.push(<Typography key={categories[i]} component="p">{categories[i]}</Typography>)
             }
         }
@@ -39,6 +38,7 @@ class ProductCard extends Component {
         } else {
             actions = (<div/>);
         }
+
         return (
             <Grid item>
                 <Card>

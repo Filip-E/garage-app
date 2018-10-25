@@ -17,6 +17,19 @@ namespace DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public void DetachAllEntities()
+        {
+            var changedEntriesCopy = this.ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added ||
+                            e.State == EntityState.Modified ||
+                            e.State == EntityState.Deleted ||
+                            e.State == EntityState.Unchanged)
+                .ToList();
+
+            foreach (var entry in changedEntriesCopy)
+                entry.State = EntityState.Detached;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()

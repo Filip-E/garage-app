@@ -18,6 +18,11 @@ namespace garage_app_entities
             Categories = new List<Category>();
         }
 
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Price)}: {Price}, {nameof(Stock)}: {Stock}";
+        }
+
         protected bool Equals(Product other)
         {
             return Id == other.Id;

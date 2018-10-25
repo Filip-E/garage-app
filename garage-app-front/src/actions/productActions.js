@@ -71,8 +71,6 @@ export function addProduct(productWithCategoryTypes, token) {
 export function editProduct(productWithCategoryTypes, token) {
     return (dispatch) => {
         dispatch({type: actionTypes.EDIT_PRODUCT_START});
-        console.log("product send to server to edit:");
-        console.log(productWithCategoryTypes);
         return axios
             .put(
                 apiLocation + "/product",
@@ -85,6 +83,7 @@ export function editProduct(productWithCategoryTypes, token) {
                     type: actionTypes.EDIT_PRODUCT_SUCCESS,
                     payload: response
                 });
+                fetchProducts(productWithCategoryTypes.CategoryTypes[0])(dispatch);
             }).catch(error =>{
                 dispatch({
                     type: actionTypes.EDIT_PRODUCT_FAIL,
@@ -104,6 +103,7 @@ export function deleteProduct(productId, token) {
                     headers: { Authorization: "Bearer " + token }
                 }
             ).then(response =>{
+                console.log(response);
                 dispatch({
                     type: actionTypes.DELETE_PRODUCT_SUCCESS,
                     payload: response

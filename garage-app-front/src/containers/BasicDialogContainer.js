@@ -21,8 +21,8 @@ class BasicDialogContainer extends Component {
         this.submit = this.submit.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot){
-        if(prevProps !== this.props){
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
             let productState = {};
             this.props.products.forEach((p) => {
                 if (p.Id === this.props.productId) {
@@ -35,6 +35,7 @@ class BasicDialogContainer extends Component {
             this.setState(productState);
         }
     }
+
     handleChange(event) {
         const id = event.target.id;
         this.setState({[id]: event.target.value});
@@ -42,13 +43,17 @@ class BasicDialogContainer extends Component {
 
     submit(event) {
         event.preventDefault();
+        let categories = [];
+        if (this.props.categoriesForServer.length !== 0) {
+            categories = [...this.props.categoriesForServer];
+        } else {
+            categories = [this.props.productCategory];
+        }
         let product = {
             Name: this.state.Name,
             Price: this.state.Price,
             Stock: this.state.Stock,
-            CategoryTypes: [
-                this.props.productCategory
-            ]
+            CategoryTypes: categories
         };
         if (event.target.textContent === "ADD") {
             delete product.Id;
@@ -85,7 +90,8 @@ const mapStateToProps = (state) => {
         response: state.product.response,
         open: state.product.open,
         token: state.auth.token,
-        productId: state.product.storeProductId
+        productId: state.product.storeProductId,
+        categoriesForServer: state.category.categoriesForServer
     }
 };
 

@@ -140,7 +140,7 @@ namespace WebApplication1.Controllers
                 _service.UpdateProduct(product, productRequestDto.CategoryTypes);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
             {
 //                Console.WriteLine(ex.StackTrace);
                 Debug.WriteLine(ex.StackTrace);
