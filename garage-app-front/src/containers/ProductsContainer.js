@@ -44,7 +44,6 @@ class ProductsContainer extends Component {
         if (this.props.fetched) {
             if (this.props.response !== null) {
                 if (this.props.response.status === 201) {
-                    console.log("201 fetch");
                     this.props.fetchProducts(this.props.productCategory);
                 }
             }

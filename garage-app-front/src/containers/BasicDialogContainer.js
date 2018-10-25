@@ -45,20 +45,16 @@ class BasicDialogContainer extends Component {
         event.preventDefault();
         let categories = [];
         if (this.props.categoriesForServer.length !== 0) {
-            categories = this.props.categoriesForServer;
+            categories = [...this.props.categoriesForServer];
         } else {
-            categories = this.props.productCategory;
+            categories = [this.props.productCategory];
         }
-        console.log(categories);
         let product = {
             Name: this.state.Name,
             Price: this.state.Price,
             Stock: this.state.Stock,
-            CategoryTypes: [
-                ...categories
-            ]
+            CategoryTypes: categories
         };
-        console.log(product);
         if (event.target.textContent === "ADD") {
             delete product.Id;
             this.props.addProduct(product, this.props.token);

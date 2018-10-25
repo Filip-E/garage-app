@@ -21,7 +21,6 @@ class ExtensionDialogCategoriesContainer extends Component {
         this.props.fetchProductCategories(this.props.productId);
         this.props.fetchCategories();
         this.props.setCategoriesForServer(this.props.categoryTypes);
-
     }
     render() {
         return (

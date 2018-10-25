@@ -90,15 +90,19 @@ namespace DAL.Repositories
                 _context.Categories.Attach(category);
                 existingProduct.Categories.Add(category);
             }
+            _context.SaveChanges();
+
             //            Debug.WriteLine(product);
             //            Debug.WriteLine(existingProduct);
             //            existingProduct = product;
             //            Debug.WriteLine(existingProduct);
 
-            //            Debug.WriteLine(_context.Entry(product).State);
-            //            _context.Products.Attach(product);
-            //            _context.Entry(product).State = EntityState.Modified;
-            //            Debug.WriteLine(_context.Entry(product).State);
+//            Debug.WriteLine( "existing product: " + _context.Entry(existingProduct).State);
+//            _context.Entry(existingProduct).State = EntityState.Detached;
+            _context.DetachAllEntities();
+            product.Categories.Clear();
+            _context.Products.Attach(product);
+            _context.Entry(product).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

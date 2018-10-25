@@ -38,6 +38,7 @@ class ProductCard extends Component {
         } else {
             actions = (<div/>);
         }
+
         return (
             <Grid item>
                 <Card>
