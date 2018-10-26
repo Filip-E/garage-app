@@ -10,29 +10,26 @@ export default function authReducer(state = initialState, action) {
     switch (action.type) {
         case actionTypes.AUTH_SUCCESS:{
             setSessionCookie('garage_app_token',action.payload.data);
-            return{
-                ...state,
+            return Object.assign({}, state,{
                 error: null,
                 response: action.payload,
                 token: action.payload.data
-            }
+            })
         }
         case actionTypes.AUTH_FAIL:{
-            return{
-                ...state,
+            return Object.assign({}, state,{
                 error: action.payload.error,
                 response: null,
                 token: ''
-            }
+            })
         }
         case actionTypes.LOG_OUT:{
             setSessionCookie('garage_app_token', '');
-            return{
-                ...state,
+            return Object.assign({}, state,{
                 error: null,
                 response: null,
                 token: ''
-            }
+            })
         }
         default:
             return state;

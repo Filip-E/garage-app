@@ -21,8 +21,6 @@ class ProductCard extends Component {
     renderCategories() {
         let renderResult = [];
         let categories = this.props.categories;
-        console.log("categories to render:");
-        console.log(categories);
         if (categories[0] !== "Retro_Vintage") {
             renderResult.push(<Typography key="titleCategoriesList"><br/> Categories: </Typography>);
             for (let i = 1; i < categories.length; i++) {
