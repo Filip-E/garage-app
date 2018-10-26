@@ -22,6 +22,17 @@ class ExtensionDialogCategoriesContainer extends Component {
         this.props.fetchCategories();
         this.props.setCategoriesForServer(this.props.categoryTypes);
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if(prevProps !== this.props){
+            // check if the categories in the store are the ones for the productCard that is currently rendering
+            let categoryCallUrl = [ ...this.props.response.config.url];
+            let categoryCallUrlId = parseInt(categoryCallUrl[categoryCallUrl.length - 1], 10);
+            if(this.props.productId === categoryCallUrlId){
+                this.setState({categoriesProduct: this.props.categoryTypes});
+            }
+        }
+    }
     render() {
         return (
             <ExtensionDialogCategories
@@ -39,7 +50,8 @@ function mapStateToProps(state) {
     return {
         productId: state.product.storeProductId,
         categoryTypes: state.category.types,
-        categories: state.category.categories
+        categories: state.category.categories,
+        response: state.category.response
     };
 }
 

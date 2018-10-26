@@ -19,14 +19,6 @@ class ExtensionDialogCategories extends Component {
         let menuItems = [];
         for (let i = 0; i < categories.length; i++) {
             let category = categories[i].Type;
-            /*            fields.push(
-                            <TextField
-                                margin="dense"
-                                fullWidth
-                                key={category}
-                                defaultValue={category}
-                            />
-                        );*/
             menuItems.push(
                 <MenuItem key={category} value={category}>
                     <Checkbox checked={this.props.categoriesProduct.indexOf(category) > -1}/>
