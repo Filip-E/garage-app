@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using garage_app_entities;
@@ -16,9 +17,14 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public void InsertProduct(Product product)
+        public void InsertProduct(Product product, List<Category> categories)
         {
             _context.Products.Add(product);
+            foreach (Category category in categories)
+            {
+                _context.Categories.Attach(category);
+            }
+            product.Categories.AddRange(categories);
             _context.SaveChanges();
         }
 
@@ -92,13 +98,6 @@ namespace DAL.Repositories
             }
             _context.SaveChanges();
 
-            //            Debug.WriteLine(product);
-            //            Debug.WriteLine(existingProduct);
-            //            existingProduct = product;
-            //            Debug.WriteLine(existingProduct);
-
-//            Debug.WriteLine( "existing product: " + _context.Entry(existingProduct).State);
-//            _context.Entry(existingProduct).State = EntityState.Detached;
             _context.DetachAllEntities();
             product.Categories.Clear();
             _context.Products.Attach(product);

@@ -114,8 +114,8 @@ namespace WebApplication1.Controllers
             try
             {
                 Product product = _productsMapper.ToProduct(productRequestDto);
-                idInsertedProduct = _service.InsertProduct(product);
-                _service.AddCategoryToProduct(productRequestDto.CategoryTypes, productRequestDto.Name);
+                idInsertedProduct = _service.InsertProduct(product, productRequestDto.CategoryTypes);
+//                _service.AddCategoryToProduct(productRequestDto.CategoryTypes, productRequestDto.Name);
                 return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
             }
             catch (Exception ex)

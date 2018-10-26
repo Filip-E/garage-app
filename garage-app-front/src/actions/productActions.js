@@ -47,6 +47,8 @@ export function fetchProductsAndFilter(category) {
 export function addProduct(productWithCategoryTypes, token) {
     return (dispatch) => {
         dispatch({type: actionTypes.ADD_PRODUCT_START});
+        console.log("add product send to server: ");
+        console.log(productWithCategoryTypes);
         return axios
             .post(
                 apiLocation + "/product",
@@ -103,7 +105,6 @@ export function deleteProduct(productId, token) {
                     headers: { Authorization: "Bearer " + token }
                 }
             ).then(response =>{
-                console.log(response);
                 dispatch({
                     type: actionTypes.DELETE_PRODUCT_SUCCESS,
                     payload: response

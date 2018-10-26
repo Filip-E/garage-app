@@ -1,6 +1,7 @@
 ﻿using System;
 using DAL.Repositories;
 using System.Collections.Generic;
+using System.Diagnostics;
 using garage_app_entities;
 
 namespace garage_app_bl.Services
@@ -45,7 +46,7 @@ namespace garage_app_bl.Services
         /// </summary>
         /// <param name="product">product to be inserted</param>
         /// <returns>Id of the created product</returns>
-        public int InsertProduct(Product product)
+        public int InsertProduct(Product product, string[] categoryTypes)
         {
             HasProductRequiredProps(product, false);
             try
@@ -55,12 +56,19 @@ namespace garage_app_bl.Services
                 {
                     throw new Exception($"product {product.Name} already exists");
                 }
-
                 return -1;
             }
             catch (ArgumentException)
             {
-                _repository.InsertProduct(product);
+                List<Category> categories = new List<Category>();
+                foreach (string categoryType in categoryTypes)
+                {
+                    Category findCategory = _categoryService.FindCategory(categoryType);
+                    Debug.WriteLine($"found category: {findCategory}");
+                    categories.Add(findCategory);
+                }
+
+                _repository.InsertProduct(product, categories);
                 return _repository.FindProduct(product.Name).Id;
             }
         }
