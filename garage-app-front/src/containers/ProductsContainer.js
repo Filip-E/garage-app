@@ -15,7 +15,18 @@ import {withRouter} from "react-router-dom";
 class ProductsContainer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            openAddCategoryDialogState: false,
+        };
         this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.handleCloseAddCategory = this.handleCloseAddCategory.bind(this);
+        this.handleOpenAddCategory = this.handleOpenAddCategory.bind(this);
+    }
+    handleCloseAddCategory(){
+        this.setState({openAddCategoryDialogState : false})
+    }
+    handleOpenAddCategory(){
+        this.setState({openAddCategoryDialogState: true})
     }
 
     componentDidMount() {
@@ -32,6 +43,12 @@ class ProductsContainer extends Component {
                 this.props.fetchProducts(this.props.productCategory);
             } else {
                 this.props.fetchProductsAndFilter(this.props.productCategory);
+            }
+
+        }
+        if(prevProps.responseAddCategory !== this.props.responseAddCategory){
+            if(this.props.responseAddCategory !== null){
+                this.setState({openAddCategoryDialogState: false})
             }
         }
     }
@@ -61,6 +78,9 @@ class ProductsContainer extends Component {
                             editDialog={this.props.editDialogState}
                             pageTitle={this.props.pageTitle}
                             productCategory={this.props.productCategory}
+                            openAddCategoryDialogState={this.state.openAddCategoryDialogState}
+                            handleCloseAddCategory={this.handleCloseAddCategory}
+                            handleOpenAddCategory={this.handleOpenAddCategory}
                         />
                     )
                 }
@@ -73,6 +93,9 @@ class ProductsContainer extends Component {
                         editDialog={this.props.editDialogState}
                         pageTitle={this.props.pageTitle}
                         productCategory={this.props.productCategory}
+                        openAddCategoryDialogState={this.state.openAddCategoryDialogState}
+                        handleCloseAddCategory={this.handleCloseAddCategory}
+                        handleOpenAddCategory={this.handleOpenAddCategory}
                     />
                 )
             }
@@ -92,7 +115,8 @@ const mapStateToProps = (state) => {
         response: state.product.response,
         open: state.product.open,
         token: state.auth.token,
-        editDialogState: state.product.editDialogState
+        editDialogState: state.product.editDialogState,
+        responseAddCategory: state.category.responseAddCategory
     }
 };
 

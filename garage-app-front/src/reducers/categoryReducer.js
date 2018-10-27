@@ -7,6 +7,8 @@ const initialState = {
     categories: {},
     error: null,
     response: null,
+    errorAddCategory: null,
+    responseAddCategory: null,
     categoriesForServer: [],
 };
 
@@ -63,6 +65,31 @@ export default function productReducer(state = initialState, action) {
         case actionTypes.EDIT_CATEGORIES_FOR_SERVER: {
             return Object.assign({}, state, {
                 categoriesForServer: action.payload
+            })
+        }
+        case actionTypes.ADD_CATEGORIES_START:{
+            return Object.assign({}, state,{
+                fetching: true,
+                fetched: false,
+                responseAddCategory: null,
+                errorAddCategory: null,
+            })
+        }
+        case actionTypes.ADD_CATEGORIES_SUCCESS:{
+            return Object.assign({}, state,{
+                fetching: false,
+                fetched: true,
+                responseAddCategory: action.payload,
+                errorAddCategory: null,
+                openAddCategory: false
+            })
+        }
+        case actionTypes.ADD_CATEGORIES_FAIL:{
+            return Object.assign({}, state,{
+                fetching: false,
+                fetched: true,
+                responseAddCategory: null,
+                errorAddCategory: action.payload
             })
         }
         default:

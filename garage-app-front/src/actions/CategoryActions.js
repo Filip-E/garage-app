@@ -46,3 +46,30 @@ export function setCategoriesForServer(categories){
         dispatch({type: actionTypes.EDIT_CATEGORIES_FOR_SERVER, payload: categories})
     }
 }
+
+export function addCategory(category, token){
+    return (dispatch) =>{
+        dispatch({type: actionTypes.ADD_CATEGORIES_START});
+        console.log("add category send to server: ");
+        let categoryObject = {Type: category};
+        console.log(categoryObject);
+        return axios
+            .post(
+                apiLocation + "/category",
+                categoryObject,
+                {
+                    headers: { Authorization: "Bearer " + token }
+                }
+            ).then(response =>{
+                dispatch({
+                    type: actionTypes.ADD_CATEGORIES_SUCCESS,
+                    payload: response
+                });
+            }).catch(error =>{
+                dispatch({
+                    type: actionTypes.ADD_CATEGORIES_FAIL,
+                    payload: error.response.data.Message
+                })
+            });
+    }
+}
