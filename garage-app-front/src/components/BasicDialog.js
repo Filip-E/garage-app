@@ -59,7 +59,7 @@ class BasicDialog extends Component {
     }
 
     renderExtensionCategories() {
-        if (this.props.productCategory === "Parts" && this.props.edit) {
+        if (this.props.productCategory === "Parts") {
             return (<ExtensionDialogCategoriesContainer/>)
         }
     }
