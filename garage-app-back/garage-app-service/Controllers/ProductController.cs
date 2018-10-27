@@ -148,7 +148,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [JwtAuthentication]
+        [AllowAnonymous]
         [HttpDelete]
         [Route("product/{productId}")]
         public IHttpActionResult DeleteProduct(int productId)
