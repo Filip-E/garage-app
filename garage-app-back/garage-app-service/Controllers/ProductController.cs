@@ -3,8 +3,10 @@ using garage_app_bl.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Web.Security;
 using garage_app_entities;
 using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
@@ -159,6 +161,28 @@ namespace WebApplication1.Controllers
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("product/category/categories")]
+        public IHttpActionResult FilterProductBasedOnCategories(FilterBasedOnCategoriesRequestDto categoryRequestDto)
+        {
+            try
+            {
+                List<Product> productsList = _service.FilterProductBasedOnCategories(categoryRequestDto.Types);
+                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
+
+                foreach (Product product in productsList)
+                {
+                    responseList.Add(_productsMapper.ToDto(product));
+                }
+                return Ok(responseList);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }

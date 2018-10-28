@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS filterProductsBasedOnCategories;
 DELIMITER //
 CREATE  PROCEDURE `filterProductsBasedOnCategories`(IN arrayCategories VARCHAR(100), IN amountOfCategories int(16))
 BEGIN
-    select Product_Id, Name, Price, Stock from productcategories
+    select products.Id, products.Name, products.Price, products.Stock from productcategories
 	inner join categories on productcategories.Category_Id = categories.Id
     inner join products on products.Id = productcategories.Product_Id
     WHERE FIND_IN_SET(categories.Type, arrayCategories)

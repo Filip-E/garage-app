@@ -26,6 +26,7 @@ namespace garage_app_bl.Services
         {
             return _repository.FindProduct(id);
         }
+
         public Product FindProduct(string name)
         {
             return _repository.FindProduct(name);
@@ -56,6 +57,7 @@ namespace garage_app_bl.Services
                 {
                     throw new Exception($"product {product.Name} already exists");
                 }
+
                 return -1;
             }
             catch (ArgumentException)
@@ -106,6 +108,15 @@ namespace garage_app_bl.Services
             _repository.DeleteProduct(productId);
         }
 
+        public List<Product> FilterProductBasedOnCategories(string[] categories)
+        {
+            foreach (string category in categories)
+            {
+                _categoryService.FindCategory(category);
+            }
+            return _repository.FilterProductBasedOnCategories(categories);
+        }
+
         private static void HasProductRequiredProps(Product product, bool isIdRequired)
         {
             if (isIdRequired)
@@ -115,7 +126,7 @@ namespace garage_app_bl.Services
                     throw new ArgumentException("name can not be null");
                 }
             }
-            
+
             if (product.Name.Equals(null))
             {
                 throw new ArgumentException("name can not be null");

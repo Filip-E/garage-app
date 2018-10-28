@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using garage_app_entities;
+using MySql.Data.MySqlClient;
 
 namespace DAL.Repositories
 {
@@ -117,6 +119,18 @@ namespace DAL.Repositories
             {
                 throw new ArgumentException("Product was not found!");
             }
+        }
+
+        public List<Product> FilterProductBasedOnCategories(string[] categories)
+        {
+            string categoriesAsOneString = "";
+            foreach (string category in categories)
+            {
+                categoriesAsOneString += category + ",";
+            }
+
+            object[] storedProcedureParams = { new MySqlParameter("@arrayCategories",categoriesAsOneString), new MySqlParameter("@amountOfCategories",categories.Length)};
+            return _context.Database.SqlQuery<Product>("filterProductsBasedOnCategories(@arrayCategories,@amountOfCategories)", storedProcedureParams).ToList();
         }
     }
 }
