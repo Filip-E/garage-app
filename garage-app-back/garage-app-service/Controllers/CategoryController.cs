@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -76,6 +77,23 @@ namespace WebApplication1.Controllers
 
                 return BadRequest(ex.Message);
 
+            }
+        }
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("category")]
+        public IHttpActionResult UpdateCategory(UpdateCategoryRequestDto updateCategoryRequestDto)
+        {
+            try
+            {
+                Category category = _categoryMapper.ToCategory(updateCategoryRequestDto);
+                _categoryService.UpdateCategory(category);
+                return new StatusCodeResult(HttpStatusCode.NoContent, this);
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                return BadRequest(ex.Message);
             }
         }
 

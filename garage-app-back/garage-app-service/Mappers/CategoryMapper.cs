@@ -26,5 +26,14 @@ namespace WebApplication1.Mappers
                 Type = insertCategoryRequestDto.Type
             };
         }
+
+        public Category ToCategory(UpdateCategoryRequestDto updateCategoryRequestDto)
+        {
+            return new Category()
+            {
+                Id = updateCategoryRequestDto.Id,
+                Type = updateCategoryRequestDto.Type
+            };
+        }
     }
 }
