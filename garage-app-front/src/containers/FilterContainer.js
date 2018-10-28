@@ -35,9 +35,12 @@ class FilterContainer extends Component {
         this.props.products.forEach((element) => {
             suggestions.push({label: element.Name})
         });
-        this.props.categories.forEach((element) => {
-            suggestions.push({label: element.Type})
-        });
+        if (this.props.categories) {
+            this.props.categories.forEach((element) => {
+                suggestions.push({label: element.Type})
+            });
+        }
+
         return suggestions;
     }
 
