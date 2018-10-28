@@ -115,7 +115,6 @@ namespace WebApplication1.Controllers
             {
                 Product product = _productsMapper.ToProduct(productRequestDto);
                 idInsertedProduct = _service.InsertProduct(product, productRequestDto.CategoryTypes);
-//                _service.AddCategoryToProduct(productRequestDto.CategoryTypes, productRequestDto.Name);
                 return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
             }
             catch (Exception ex)
@@ -142,7 +141,6 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
             {
-//                Console.WriteLine(ex.StackTrace);
                 Debug.WriteLine(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
