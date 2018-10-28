@@ -3,5 +3,7 @@
     public class FilterBasedOnNamesRequestDto
     {
         public string[] Names { get; set; }
+        public string Category { get; set; }
+
     }
 }

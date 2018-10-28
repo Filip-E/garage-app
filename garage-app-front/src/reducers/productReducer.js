@@ -142,6 +142,11 @@ export default function productReducer(state = initialState, action) {
                 storeProductId: action.payload
             })
         }
+        case actionTypes.SET_PRODUCTS:{
+            return Object.assign({},state,{
+                products: action.payload
+            })
+        }
         default:
             return state;
     }

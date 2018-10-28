@@ -92,6 +92,11 @@ export default function productReducer(state = initialState, action) {
                 errorAddCategory: action.payload
             })
         }
+        // case actionTypes.SET_CATEGORIES:{
+        //     return Object.assign({}, state,{
+        //        categories: action.payload
+        //     });
+        // }
         default:
             return state;
     }

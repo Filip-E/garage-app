@@ -1,4 +1,5 @@
 import actionTypes from "./CategoryActionTypes";
+import productActionTypes from "./ProductActionTypes";
 import axios from "axios";
 import {apiLocation} from "./serverUrl";
 
@@ -69,6 +70,32 @@ export function addCategory(category, token){
                 dispatch({
                     type: actionTypes.ADD_CATEGORIES_FAIL,
                     payload: error.response.data.Message
+                })
+            });
+    }
+}
+
+export function filterProductsBasedOnCategory(categories, categoryType) {
+    return (dispatch) => {
+        let data = {
+            "Types": categories,
+            "Category": categoryType
+        };
+        console.log("category filter data");
+        console.log(data);
+        return axios
+            .post(apiLocation + "/product/category/categories", data)
+            .then(response => {
+                console.log(response);
+                dispatch({
+                    type: productActionTypes.FETCH_PRODUCTS_SUCCESS,
+                    payload: response
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: productActionTypes.FETCH_PRODUCTS_FAIL,
+                    payload: error
                 })
             });
     }

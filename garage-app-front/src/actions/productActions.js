@@ -21,6 +21,7 @@ export function fetchProducts(category) {
             });
     }
 }
+
 export function fetchProductsAndFilter(category) {
     return (dispatch) => {
         dispatch({type: actionTypes.FETCH_PRODUCTS});
@@ -54,14 +55,14 @@ export function addProduct(productWithCategoryTypes, token) {
                 apiLocation + "/product",
                 productWithCategoryTypes,
                 {
-                    headers: { Authorization: "Bearer " + token }
+                    headers: {Authorization: "Bearer " + token}
                 }
-            ).then(response =>{
+            ).then(response => {
                 dispatch({
                     type: actionTypes.ADD_PRODUCT_SUCCESS,
                     payload: response
                 });
-            }).catch(error =>{
+            }).catch(error => {
                 dispatch({
                     type: actionTypes.ADD_PRODUCT_FAIL,
                     payload: error.response.data.Message
@@ -78,15 +79,15 @@ export function editProduct(productWithCategoryTypes, token) {
                 apiLocation + "/product",
                 productWithCategoryTypes,
                 {
-                    headers: { Authorization: "Bearer " + token }
+                    headers: {Authorization: "Bearer " + token}
                 }
-            ).then(response =>{
+            ).then(response => {
                 dispatch({
                     type: actionTypes.EDIT_PRODUCT_SUCCESS,
                     payload: response
                 });
                 fetchProducts(productWithCategoryTypes.CategoryTypes[0])(dispatch);
-            }).catch(error =>{
+            }).catch(error => {
                 dispatch({
                     type: actionTypes.EDIT_PRODUCT_FAIL,
                     payload: error.response.data.Message
@@ -102,14 +103,14 @@ export function deleteProduct(productId, token) {
             .delete(
                 apiLocation + "/product/" + productId,
                 {
-                    headers: { Authorization: "Bearer " + token }
+                    headers: {Authorization: "Bearer " + token}
                 }
-            ).then(response =>{
+            ).then(response => {
                 dispatch({
                     type: actionTypes.DELETE_PRODUCT_SUCCESS,
                     payload: response
                 });
-            }).catch(error =>{
+            }).catch(error => {
                 dispatch({
                     type: actionTypes.DELETE_PRODUCT_FAIL,
                     payload: error
@@ -118,41 +119,63 @@ export function deleteProduct(productId, token) {
     }
 }
 
-export function handleClickOpenDialog(){
-    return (dispatch) =>{
+export function handleClickOpenDialog() {
+    return (dispatch) => {
         dispatch({type: actionTypes.DIALOG_OPEN});
     }
 }
 
-export function handleClose(){
-    return (dispatch) =>{
-        dispatch({type: actionTypes.DIALOG_CLOSE})
+export function handleClose() {
+    return (dispatch) => {
+        dispatch({type: actionTypes.DIALOG_CLOSE});
     }
 }
 
-export function makeEditDialogTrue(){
-    return (dispatch) =>{
-        dispatch({type: actionTypes.EDIT_DIALOG_TRUE})
+export function makeEditDialogTrue() {
+    return (dispatch) => {
+        dispatch({type: actionTypes.EDIT_DIALOG_TRUE});
     }
 }
 
-export function makeEditDialogFalse(){
-    return (dispatch) =>{
-        dispatch({type: actionTypes.EDIT_DIALOG_FALSE})
+export function makeEditDialogFalse() {
+    return (dispatch) => {
+        dispatch({type: actionTypes.EDIT_DIALOG_FALSE});
     }
 }
 
-export function setProductId(productId){
-    return (dispatch) =>{
-        dispatch({type: actionTypes.SET_PRODUCT_ID, payload: productId})
+export function setProductId(productId) {
+    return (dispatch) => {
+        dispatch({type: actionTypes.SET_PRODUCT_ID, payload: productId});
     }
 }
-
-
-
 
 export function filterStock() {
     return (dispatch) => {
         dispatch({type: actionTypes.FILTER_STOCK});
+    }
+}
+
+
+export function filterProductsBasedOnName(names, categoryType) {
+    return (dispatch) => {
+        let data = {
+            "Names": names,
+            "Category": categoryType
+        };
+        console.log(data);
+        return axios
+            .post(apiLocation + "/product/names/", data)
+            .then(response => {
+                dispatch({
+                    type: actionTypes.FETCH_PRODUCTS_SUCCESS,
+                    payload: response
+                })
+            })
+            .catch(error => {
+                dispatch({
+                    type: actionTypes.FETCH_PRODUCTS_FAIL,
+                    payload: error
+                })
+            });
     }
 }

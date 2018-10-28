@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Select from 'react-select';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
-import { emphasize } from '@material-ui/core/styles/colorManipulator';
+import {emphasize} from '@material-ui/core/styles/colorManipulator';
 
 // const suggestions = [
 //     { label: 'Afghanistan' },
@@ -57,8 +57,8 @@ import { emphasize } from '@material-ui/core/styles/colorManipulator';
 const styles = theme => ({
     root: {
         flexGrow: 1,
-         height: 100,
-         width: '80%',
+        height: 100,
+        width: '80%',
     },
     input: {
         display: 'flex',
@@ -114,7 +114,7 @@ function NoOptionsMessage(props) {
     );
 }
 
-function inputComponent({ inputRef, ...props }) {
+function inputComponent({inputRef, ...props}) {
     return <div ref={inputRef} {...props} />;
 }
 
@@ -212,17 +212,33 @@ const components = {
 class Filter extends React.Component {
     state = {
         single: null,
-        multi: null,
+        multi: [],
     };
 
     handleChange = name => value => {
         this.setState({
             [name]: value,
+        }, () => {
+            let filterArrayProducts = [];
+            this.state.multi.forEach((product) => {
+                if (product.type === "product") {
+                    filterArrayProducts.push(product.value);
+                }
+            });
+            let filterArrayProductsCategory = [];
+            this.state.multi.forEach((product) => {
+                console.log(product);
+                if (product.type === "category") {
+                    filterArrayProductsCategory.push(product.value);
+                }
+            });
+            this.props.filterProducts(filterArrayProducts, this.props.productCategory);
+            this.props.filterProductsCategory(filterArrayProductsCategory, this.props.productCategory);
         });
     };
 
     render() {
-        const { classes, theme } = this.props;
+        const {classes, theme} = this.props;
 
         const selectStyles = {
             input: base => ({
@@ -237,12 +253,12 @@ class Filter extends React.Component {
         return (
             <div className={classes.root}>
                 <NoSsr>
-                    <div className={classes.divider} />
+                    <div className={classes.divider}/>
                     <Select
                         classes={classes}
                         styles={selectStyles}
                         textFieldProps={{
-                            label: 'Label',
+                            label: 'Filter',
                             InputLabelProps: {
                                 shrink: true,
                             },
@@ -250,11 +266,12 @@ class Filter extends React.Component {
                         options={this.props.suggestions.map(suggestion => ({
                             value: suggestion.label,
                             label: suggestion.label,
+                            type: suggestion.type
                         }))}
                         components={components}
                         value={this.state.multi}
                         onChange={this.handleChange('multi')}
-                        placeholder="Select multiple countries"
+                        placeholder="Selecteer een naam of categorie uit de beschikbare lijst"
                         isMulti
                     />
                 </NoSsr>
@@ -268,4 +285,4 @@ Filter.propTypes = {
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Filter);
+export default withStyles(styles, {withTheme: true})(Filter);
