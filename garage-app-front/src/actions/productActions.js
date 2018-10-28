@@ -162,7 +162,6 @@ export function filterProductsBasedOnName(names, categoryType) {
             "Names": names,
             "Category": categoryType
         };
-        console.log(data);
         return axios
             .post(apiLocation + "/product/names/", data)
             .then(response => {
