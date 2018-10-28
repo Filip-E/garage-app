@@ -132,5 +132,17 @@ namespace DAL.Repositories
             object[] storedProcedureParams = { new MySqlParameter("@arrayCategories",categoriesAsOneString), new MySqlParameter("@amountOfCategories",categories.Length)};
             return _context.Database.SqlQuery<Product>("filterProductsBasedOnCategories(@arrayCategories,@amountOfCategories)", storedProcedureParams).ToList();
         }
+
+        public List<Product> FilterProductBasedOnNames(string[] names)
+        {
+            string namesAsOneString = "";
+            foreach (string name in names)
+            {
+                namesAsOneString += name + ",";
+            }
+
+            object[] storedProcedureParams = { new MySqlParameter("@arrayNames",namesAsOneString), new MySqlParameter("@amountOfNames",names.Length)};
+            return _context.Database.SqlQuery<Product>("filterProductsBasedOnNames(@arrayNames,@amountOfNames)", storedProcedureParams).ToList();
+        }
     }
 }

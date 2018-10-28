@@ -108,13 +108,30 @@ namespace garage_app_bl.Services
             _repository.DeleteProduct(productId);
         }
 
-        public List<Product> FilterProductBasedOnCategories(string[] categories)
+        public List<Product> FilterProductBasedOnCategories(string[] categories, string categoryType)
         {
+            if (categories.Length == 0)
+            {
+                return _repository.GetProductsByCategory(categoryType);
+            }
             foreach (string category in categories)
             {
                 _categoryService.FindCategory(category);
             }
             return _repository.FilterProductBasedOnCategories(categories);
+        }
+
+        public List<Product> FilterProductBasedOnNames(string[] names, string categoryType)
+        {
+            if (names.Length == 0)
+            {
+                return _repository.GetProductsByCategory(categoryType);
+            }
+            foreach (string name in names)
+            {
+                this.FindProduct(name);
+            }
+            return _repository.FilterProductBasedOnNames(names);
         }
 
         private static void HasProductRequiredProps(Product product, bool isIdRequired)

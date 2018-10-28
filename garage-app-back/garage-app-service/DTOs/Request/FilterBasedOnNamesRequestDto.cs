@@ -1,8 +1,8 @@
 ﻿namespace WebApplication1.DTOs.Request
 {
-    public class FilterBasedOnCategoriesRequestDto
+    public class FilterBasedOnNamesRequestDto
     {
-        public string[] Types { get; set; }
+        public string[] Names { get; set; }
         public string Category { get; set; }
 
     }
