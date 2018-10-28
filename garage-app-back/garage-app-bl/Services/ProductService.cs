@@ -117,6 +117,15 @@ namespace garage_app_bl.Services
             return _repository.FilterProductBasedOnCategories(categories);
         }
 
+        public List<Product> FilterProductBasedOnNames(string[] Names)
+        {
+            foreach (string name in Names)
+            {
+                this.FindProduct(name);
+            }
+            return _repository.FilterProductBasedOnNames(Names);
+        }
+
         private static void HasProductRequiredProps(Product product, bool isIdRequired)
         {
             if (isIdRequired)

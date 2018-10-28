@@ -185,5 +185,27 @@ namespace WebApplication1.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("product/names")]
+        public IHttpActionResult FilterProductBasedOnNames(FilterBasedOnNamesRequestDto namesRequestDto)
+        {
+            try
+            {
+                List<Product> productsList = _service.FilterProductBasedOnNames(namesRequestDto.Names);
+                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
+
+                foreach (Product product in productsList)
+                {
+                    responseList.Add(_productsMapper.ToDto(product));
+                }
+                return Ok(responseList);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

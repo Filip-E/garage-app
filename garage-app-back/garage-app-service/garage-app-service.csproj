@@ -153,6 +153,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="DTOs\Request\FilterBasedOnCategoriesRequestDto.cs" />
+    <Compile Include="DTOs\Request\FilterBasedOnNamesRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateCategoryRequestDto.cs" />
