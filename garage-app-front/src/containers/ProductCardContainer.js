@@ -18,7 +18,7 @@ class ProductCardContainer extends Component{
     componentDidUpdate(prevProps,prevState,snapshot){
         if(prevProps !== this.props){
             // check if the categories in the store are the ones for the productCard that is currently rendering
-            let categoryCallUrl = [ ...this.props.response.config.url];
+            let categoryCallUrl = this.props.response.config.url.split("/");
             let categoryCallUrlId = parseInt(categoryCallUrl[categoryCallUrl.length - 1], 10);
             if(this.props.product.Id === categoryCallUrlId){
                 this.setState({categories: this.props.categories});
