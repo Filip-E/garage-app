@@ -158,12 +158,15 @@
     <Compile Include="DTOs\Request\FilterBasedOnNamesRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
+    <Compile Include="DTOs\Request\InsertSpecificationRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertSpecificationTypeRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateProductRequestDto.cs" />
+    <Compile Include="DTOs\Request\UpdateSpecificationRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateSpecificationTypeRequestDto.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
+    <Compile Include="DTOs\Response\SpecificationResponseDto.cs" />
     <Compile Include="DTOs\Response\SpecificationTypeResponseDto.cs" />
     <Compile Include="Filter\AddChallengeOnUnauthorizedResult.cs" />
     <Compile Include="Filter\AuthenticationFailureResult.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="JwtManager.cs" />
     <Compile Include="Mappers\CategoryMapper.cs" />
     <Compile Include="Mappers\ProductsMapper.cs" />
+    <Compile Include="Mappers\SpecificationMapper.cs" />
     <Compile Include="Mappers\SpecificationTypeMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

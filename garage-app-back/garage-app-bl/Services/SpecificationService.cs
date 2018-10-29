@@ -1,48 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DAL;
 using DAL.Repositories;
 using garage_app_entities;
 
 namespace garage_app_bl.Services
 {
-    class SpecificationService
+    public class SpecificationService
     {
-        private readonly SpecificationRepository _repository;
+        private readonly SpecificationRepository _specificationRepository;
+        private readonly SpecificationTypeRepository _specificationTypeRepository;
 
         public SpecificationService()
         {
-            _repository = new SpecificationRepository(new MyDbContext());
+            _specificationRepository = new SpecificationRepository(new MyDbContext());
+            _specificationTypeRepository = new SpecificationTypeRepository(new MyDbContext());
         }
 
         public int InsertSpecification(Specification specification)
         {
             HasRequiredProps(specification, false);
-            return _repository.InsertSpecification(specification);
+            specification.SpecificationType =
+                _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
+            return _specificationRepository.InsertSpecification(specification);
         }
 
         public List<Specification> GetSpecifications()
         {
-            return _repository.GetSpecifications();
+            return _specificationRepository.GetSpecifications();
         }
 
         public Specification FindSpecification(int id)
         {
-            return _repository.FindSpecification(id);
+            Specification findSpecification = _specificationRepository.FindSpecification(id);
+            if (findSpecification != null)
+            {
+                return findSpecification;
+            }
+            else
+            {
+                throw new ArgumentException($"Specification with Id: {id} was not found");
+            }
         }
 
         public void UpdateSpecification(Specification specification)
         {
             HasRequiredProps(specification, true);
-            _repository.UpdateSpecification(specification);
+            specification.SpecificationType =
+                _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
+            _specificationRepository.UpdateSpecification(specification);
         }
 
         public void DeleteSpecification(int id)
         {
-            _repository.DeleteSpecification(id);
+            _specificationRepository.DeleteSpecification(id);
         }
 
         private static void HasRequiredProps(Specification specification, bool isIdRequired)
