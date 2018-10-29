@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using garage_app_bl.Services;
 using garage_app_entities;
@@ -32,6 +33,38 @@ namespace WebApplication1.Controllers
             }
 
             return Ok(carResponseDtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("car/{productId}")]
+        public IHttpActionResult GetCars(int productId)
+        {
+            try
+            {
+                Product product = _carService.FindCar(productId);
+                return Ok(_carsMapper.ToDto(product));
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("car/name/{productName}")]
+        public IHttpActionResult GetCars(string productName)
+        {
+            try
+            {
+                Product product = _carService.FindCar(productName);
+                return Ok(_carsMapper.ToDto(product));
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
