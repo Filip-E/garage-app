@@ -13,9 +13,12 @@ namespace garage_app_entities
         public int Stock { get; set; }
 
         public List<Category> Categories { get; set; }
+
+        public List<Specification> Specifications { get; set; }
         public Product()
         {
             Categories = new List<Category>();
+            Specifications = new List<Specification>();
         }
 
         public override string ToString()

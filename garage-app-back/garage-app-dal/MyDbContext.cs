@@ -16,6 +16,8 @@ namespace DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Specification> Specifications { get; set; }
+        public DbSet<SpecificationType> SpecificationTypes { get; set; }
 
         public void DetachAllEntities()
         {
@@ -46,6 +48,15 @@ namespace DAL
             modelBuilder.Entity<Category>()
                 .Property(category => category.Type)
                 .HasMaxLength(32)
+                .IsRequired();
+
+            modelBuilder.Entity<Specification>()
+                .Property(specification => specification.Value)
+                .HasMaxLength(64);
+
+            modelBuilder.Entity<SpecificationType>()
+                .Property(specificationType => specificationType.Type)
+                .HasMaxLength(64)
                 .IsRequired();
 
             modelBuilder.Entity<User>()

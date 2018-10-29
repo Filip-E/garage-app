@@ -1,20 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace garage_app_entities
 {
-    public class Category
+    public class SpecificationType
     {
         public int Id { get; set; }
 
         public string Type { get; set; }
 
-        public List<Product> Products { get; set; }
-        public Category()
+        public List<Specification> Specifications { get; set; }
+
+        public SpecificationType()
         {
-            Products = new List<Product>();
+            Specifications = new List<Specification>();
         }
 
-        protected bool Equals(Category other)
+        protected bool Equals(SpecificationType other)
         {
             return Id == other.Id;
         }
@@ -24,7 +29,7 @@ namespace garage_app_entities
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Category) obj);
+            return Equals((SpecificationType) obj);
         }
 
         public override int GetHashCode()
