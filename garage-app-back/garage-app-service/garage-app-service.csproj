@@ -149,6 +149,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SpecificationController.cs" />
@@ -156,14 +157,17 @@
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="DTOs\Request\FilterBasedOnCategoriesRequestDto.cs" />
     <Compile Include="DTOs\Request\FilterBasedOnNamesRequestDto.cs" />
+    <Compile Include="DTOs\Request\InsertCarRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertSpecificationRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertSpecificationTypeRequestDto.cs" />
+    <Compile Include="DTOs\Request\UpdateCarRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateProductRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateSpecificationRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateSpecificationTypeRequestDto.cs" />
+    <Compile Include="DTOs\Response\CarResponseDto.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
     <Compile Include="DTOs\Response\SpecificationResponseDto.cs" />
@@ -176,6 +180,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JwtManager.cs" />
+    <Compile Include="Mappers\CarsMapper.cs" />
     <Compile Include="Mappers\CategoryMapper.cs" />
     <Compile Include="Mappers\ProductsMapper.cs" />
     <Compile Include="Mappers\SpecificationMapper.cs" />

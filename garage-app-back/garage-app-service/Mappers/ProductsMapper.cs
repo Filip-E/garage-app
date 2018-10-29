@@ -10,7 +10,7 @@ namespace WebApplication1.Mappers
 {
     public class ProductsMapper
     {
-        public ProductResponseDto ToDto(Product product)
+        public virtual ProductResponseDto ToDto(Product product)
         {
             return new ProductResponseDto
             {

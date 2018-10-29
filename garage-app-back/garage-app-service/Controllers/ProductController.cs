@@ -2,6 +2,7 @@
 using garage_app_bl.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Http;
@@ -20,7 +21,7 @@ namespace WebApplication1.Controllers
         private readonly ProductService _service;
         private readonly ProductsMapper _productsMapper;
 
-        ProductController()
+        public ProductController()
         {
             _service = new ProductService();
             _productsMapper = new ProductsMapper();
@@ -115,6 +116,10 @@ namespace WebApplication1.Controllers
             int idInsertedProduct = -1;
             try
             {
+                if (productRequestDto.CategoryTypes.Contains("Cars"))
+                {
+                    throw new ArgumentException("this endpoint can not be used to create products with the cars category please use /cars");
+                }
                 Product product = _productsMapper.ToProduct(productRequestDto);
                 idInsertedProduct = _service.InsertProduct(product, productRequestDto.CategoryTypes);
                 return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));

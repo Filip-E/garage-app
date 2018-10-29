@@ -12,7 +12,7 @@ namespace DAL.Repositories
 {
     public class ProductRepository
     {
-        private readonly MyDbContext _context;
+        protected readonly MyDbContext _context;
 
         public ProductRepository(MyDbContext context)
         {

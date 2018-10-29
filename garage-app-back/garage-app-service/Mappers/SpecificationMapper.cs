@@ -6,14 +6,14 @@ namespace WebApplication1.Mappers
 {
     public class SpecificationMapper
     {
-        public SpecificationResponseDto ToDto(Specification specificationType)
+        public SpecificationResponseDto ToDto(Specification specification)
         {
             return new SpecificationResponseDto()
             {
-                Id = specificationType.Id,
-                Value = specificationType.Value,
-                SpecificationTypeId = specificationType.SpecificationTypeId,
-                SpecificationType = specificationType.SpecificationType.Type
+                Id = specification.Id,
+                Value = specification.Value,
+                SpecificationTypeId = specification.SpecificationTypeId,
+                SpecificationType = specification.SpecificationType.Type
             };
         }
 
