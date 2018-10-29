@@ -8,26 +8,37 @@ namespace garage_app_bl.Services
 {
     public class CarService
     {
-        private readonly CarRepository _repository;
+        private readonly CarRepository _carRepository;
+        private readonly CategoryRepository _categoryRepository;
 
         public CarService()
         {
-            _repository = new CarRepository(new MyDbContext());
+            _carRepository = new CarRepository(new MyDbContext());
+            _categoryRepository = new CategoryRepository(new MyDbContext());
         }
 
         public List<Product> GetCars()
         {
-            return _repository.GetCars();
+            return _carRepository.GetCars();
         }
 
         public Product FindCar(int id)
         {
-            return _repository.FindCar(id);
+            return _carRepository.FindCar(id);
         }
 
         public Product FindCar(string name)
         {
-            return _repository.FindCar(name);
+            return _carRepository.FindCar(name);
+        }
+
+        public void InsertCar(Product product, List<Specification> specifications)
+        {
+            List<Category> categories = new List<Category>();
+            Category car = _categoryRepository.FindCategory("Cars");
+            categories.Add(car);
+
+            _carRepository.InsertCar(product,categories,specifications);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
 using garage_app_entities;
 
 namespace DAL.Repositories
@@ -23,7 +22,6 @@ namespace DAL.Repositories
                 FindSpecificationsForProduct(product);
             }
             
-
             return productsByCategory;
         }
 
@@ -47,6 +45,18 @@ namespace DAL.Repositories
                 throw new ArgumentException($"Car with Id: {findProduct.Id} and name: {findProduct.Name} is not a car please use /product endpoint");
             }
             return findProduct;
+        }
+
+        public void InsertCar(Product product, List<Category> categories, List<Specification> specifications)
+        {
+            base.InsertProduct(product,categories);
+            foreach (Specification specification in specifications)
+            {
+                _context.Specifications.Attach(specification);
+            }
+
+            product.Specifications.AddRange(specifications);
+            _context.SaveChanges();
         }
 
         private void FindSpecificationsForProduct(Product product)

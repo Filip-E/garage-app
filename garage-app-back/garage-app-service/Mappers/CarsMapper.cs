@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using garage_app_entities;
+using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
 
 namespace WebApplication1.Mappers
@@ -25,6 +26,16 @@ namespace WebApplication1.Mappers
             {
                 Product = base.ToDto(product),
                 Specifications = specificationResponseDtos
+            };
+        }
+
+        public Product ToProduct(InsertCarRequestDto carRequestDto)
+        {
+            return new Product()
+            {
+                Name = carRequestDto.Name,
+                Price = carRequestDto.Price,
+                Stock = carRequestDto.Stock
             };
         }
     }

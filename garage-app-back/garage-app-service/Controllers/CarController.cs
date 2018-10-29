@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using garage_app_bl.Services;
 using garage_app_entities;
+using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
 using WebApplication1.Mappers;
 
@@ -12,11 +13,13 @@ namespace WebApplication1.Controllers
     {
         private readonly CarService _carService;
         private readonly CarsMapper _carsMapper;
+        private readonly SpecificationMapper _specificationMapper;
 
         public CarController()
         {
             _carService = new CarService();
             _carsMapper = new CarsMapper();
+            _specificationMapper = new SpecificationMapper();
         }
 
         [AllowAnonymous]
@@ -65,6 +68,17 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("car/")]
+        public IHttpActionResult InsertCar(InsertCarRequestDto carRequestDto)
+        {
+            List<Specification> specifications = new List<Specification>();
+            specifications.Add(_specificationMapper.ToSpecification(carRequestDto.UpdateSpecificationRequestDto)); 
+            _carService.InsertCar(_carsMapper.ToProduct(carRequestDto),specifications);
+            return Ok();
         }
     }
 }
