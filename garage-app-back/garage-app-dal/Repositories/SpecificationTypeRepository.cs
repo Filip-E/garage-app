@@ -34,15 +34,7 @@ namespace DAL.Repositories
 
         public SpecificationType FindSpecificationType(string type)
         {
-            SpecificationType specificationType = _context.SpecificationTypes.FirstOrDefault(c => c.Type.Equals(type));
-            if (specificationType != null)
-            {
-                return specificationType;
-            }
-            else
-            {
-                throw new ArgumentException($"specification type: {type} was not found");
-            }
+            return _context.SpecificationTypes.FirstOrDefault(c => c.Type.Equals(type));
         }
 
         public void UpdateSpecificationType(SpecificationType specificationType)

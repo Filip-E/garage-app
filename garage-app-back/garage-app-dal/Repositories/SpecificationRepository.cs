@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using garage_app_entities;
 
 namespace DAL.Repositories
 {
-    class SpecificationRepository
+    public class SpecificationRepository
     {
         private readonly MyDbContext _context;
 
@@ -17,10 +15,13 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public void InsertSpecification(Specification specification)
+        public int InsertSpecification(Specification specification)
         {
             _context.Specifications.Add(specification);
             _context.SaveChanges();
+            // todo debug this possible nullreference
+            var find = _context.Specifications.Find(specification);
+            return find.Id;
         }
 
         public List<Specification> GetSpecifications()

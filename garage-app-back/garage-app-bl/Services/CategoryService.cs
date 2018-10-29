@@ -35,6 +35,7 @@ namespace garage_app_bl.Services
         public int InsertCategory(Category category)
         {
             HasCategoryRequiredProps(category);
+            // todo clean up => see SpecificationTypeService + repo
             try
             {
                 if (_repository.FindCategory(category.Type) != null)
@@ -68,7 +69,7 @@ namespace garage_app_bl.Services
         {
             if (category.Id.Equals(null))
             {
-                throw new ArgumentException("name can not be null");
+                throw new ArgumentException("Id can not be null");
             }
             if (category.Type.Equals(null))
             {
