@@ -6,7 +6,7 @@ using garage_app_entities;
 
 namespace garage_app_bl.Services
 {
-    class SpecificationTypeService
+    public class SpecificationTypeService
     {
         private readonly SpecificationTypeRepository _repository;
 
@@ -37,12 +37,28 @@ namespace garage_app_bl.Services
 
         public SpecificationType FindSpecificationType(int id)
         {
-            return _repository.FindSpecificationType(id);
+            SpecificationType findSpecificationType = _repository.FindSpecificationType(id);
+            if (findSpecificationType != null)
+            {
+                return findSpecificationType;
+            }
+            else
+            {
+                throw new ArgumentException($"SpecificationType with Id: {id} was not found");
+            }
         }
 
-        public SpecificationType FindSpecificationType(string value)
+        public SpecificationType FindSpecificationType(string type)
         {
-            return _repository.FindSpecificationType(value);
+            SpecificationType findSpecificationType = _repository.FindSpecificationType(type);
+            if (findSpecificationType != null)
+            {
+                return findSpecificationType;
+            }
+            else
+            {
+                throw new ArgumentException($"SpecificationType with Type: {type} was not found");
+            }
         }
 
         public void UpdateSpecificationType(SpecificationType specificationType)

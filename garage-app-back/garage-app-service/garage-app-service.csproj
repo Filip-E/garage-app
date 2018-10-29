@@ -151,15 +151,20 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SpecificationController.cs" />
+    <Compile Include="Controllers\SpecificationTypeController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="DTOs\Request\FilterBasedOnCategoriesRequestDto.cs" />
     <Compile Include="DTOs\Request\FilterBasedOnNamesRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
+    <Compile Include="DTOs\Request\InsertSpecificationTypeRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\UpdateProductRequestDto.cs" />
+    <Compile Include="DTOs\Request\UpdateSpecificationTypeRequestDto.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
+    <Compile Include="DTOs\Response\SpecificationTypeResponseDto.cs" />
     <Compile Include="Filter\AddChallengeOnUnauthorizedResult.cs" />
     <Compile Include="Filter\AuthenticationFailureResult.cs" />
     <Compile Include="Filter\HttpAuthenticationChallengeContextExtensions.cs" />
@@ -170,6 +175,7 @@
     <Compile Include="JwtManager.cs" />
     <Compile Include="Mappers\CategoryMapper.cs" />
     <Compile Include="Mappers\ProductsMapper.cs" />
+    <Compile Include="Mappers\SpecificationTypeMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -44,6 +44,8 @@
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\SpecificationService.cs" />
+    <Compile Include="Services\SpecificationTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\garage-app-dal\garage-app-dal.csproj">
