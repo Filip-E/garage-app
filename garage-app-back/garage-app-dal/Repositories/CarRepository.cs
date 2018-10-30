@@ -8,9 +8,12 @@ namespace DAL.Repositories
     public class CarRepository : ProductRepository
     {
         private readonly SpecificationRepository _specificationRepository;
+        private readonly SpecificationTypeRepository _specificationTypeRepository;
+
         public CarRepository(MyDbContext context) : base(context)
         {
             _specificationRepository = new SpecificationRepository(context);
+            _specificationTypeRepository = new SpecificationTypeRepository(context);
         }
 
         public List<Product> GetCars()
@@ -21,7 +24,7 @@ namespace DAL.Repositories
             {
                 FindSpecificationsForProduct(product);
             }
-            
+
             return productsByCategory;
         }
 
@@ -31,8 +34,10 @@ namespace DAL.Repositories
             this.FindSpecificationsForProduct(findProduct);
             if (findProduct.Specifications.Count == 0)
             {
-                throw new ArgumentException($"Car with Id: {findProduct.Id} and name: {findProduct.Name} is not a car please use /product endpoint");
+                throw new ArgumentException(
+                    $"Car with Id: {findProduct.Id} and name: {findProduct.Name} is not a car please use /product endpoint");
             }
+
             return findProduct;
         }
 
@@ -42,17 +47,20 @@ namespace DAL.Repositories
             this.FindSpecificationsForProduct(findProduct);
             if (findProduct.Specifications.Count == 0)
             {
-                throw new ArgumentException($"Car with Id: {findProduct.Id} and name: {findProduct.Name} is not a car please use /product endpoint");
+                throw new ArgumentException(
+                    $"Car with Id: {findProduct.Id} and name: {findProduct.Name} is not a car please use /product endpoint");
             }
+
             return findProduct;
         }
 
         public void InsertCar(Product product, List<Category> categories, List<Specification> specifications)
         {
-            base.InsertProduct(product,categories);
+            base.InsertProduct(product, categories);
             foreach (Specification specification in specifications)
             {
-                _context.Specifications.Attach(specification);
+                    _context.Specifications.Attach(specification);
+
             }
 
             product.Specifications.AddRange(specifications);
@@ -72,7 +80,5 @@ namespace DAL.Repositories
                     .FindSpecification(productSpecification.SpecificationTypeId).SpecificationType;
             }
         }
-
-
     }
 }

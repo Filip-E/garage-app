@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.DTOs.Request
+﻿using System.Collections.Generic;
+
+namespace WebApplication1.DTOs.Request
 {
     public class InsertCarRequestDto
     {
@@ -8,6 +10,6 @@
 
         public int Stock { get; set; }
 
-        public UpdateSpecificationRequestDto UpdateSpecificationRequestDto { get; set; }
+        public List<InsertSpecificationRequestDto> Specifications { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.Http;
 using garage_app_bl.Services;
 using garage_app_entities;
@@ -77,16 +78,19 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                List<Specification> specifications = new List<Specification>
+                List<Specification> specifications = new List<Specification>();
+                foreach (var insertSpecificationRequestDto in carRequestDto.Specifications)
                 {
-                    _specificationMapper.ToSpecification(carRequestDto.UpdateSpecificationRequestDto)
-                };
+                    specifications.Add(_specificationMapper.ToSpecification(insertSpecificationRequestDto));
+                }
 
                 _carService.InsertCar(_carsMapper.ToProduct(carRequestDto), specifications);
                 return Ok();
             }
             catch (ArgumentException ex)
             {
+                Debug.WriteLine("++++++++++++++++ STACKTRACE ++++++++++++++++");
+                Debug.WriteLine(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }

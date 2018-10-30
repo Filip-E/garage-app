@@ -44,6 +44,12 @@ namespace DAL.Repositories
                 .FirstOrDefault(specification => specification.Id == id);
         }
 
+        public Specification FindSpecification(int specificationTypeId,string specificationValue)
+        {
+            return _context.Specifications.Include("SpecificationType")
+                .FirstOrDefault(specification => specification.SpecificationTypeId == specificationTypeId && specification.Value == specificationValue);
+        }
+
         public void UpdateSpecification(Specification specification)
         {
             _context.Specifications.Attach(specification);
