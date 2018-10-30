@@ -82,11 +82,23 @@
     <Compile Include="Migrations\201810091334401_addsUser.Designer.cs">
       <DependentUpon>201810091334401_addsUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810290916403_addsSpecifications.cs" />
+    <Compile Include="Migrations\201810290916403_addsSpecifications.Designer.cs">
+      <DependentUpon>201810290916403_addsSpecifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810301053516_addsUniqueConstraintOnProductName.cs" />
+    <Compile Include="Migrations\201810301053516_addsUniqueConstraintOnProductName.Designer.cs">
+      <DependentUpon>201810301053516_addsUniqueConstraintOnProductName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyDbContext.cs" />
+    <Compile Include="MyMigrationSQLGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CarRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\SpecificationRepository.cs" />
+    <Compile Include="Repositories\SpecificationTypeRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +114,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810091334401_addsUser.resx">
       <DependentUpon>201810091334401_addsUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290916403_addsSpecifications.resx">
+      <DependentUpon>201810290916403_addsSpecifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810301053516_addsUniqueConstraintOnProductName.resx">
+      <DependentUpon>201810301053516_addsUniqueConstraintOnProductName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

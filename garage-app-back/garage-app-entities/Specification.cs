@@ -2,19 +2,22 @@
 
 namespace garage_app_entities
 {
-    public class Category
+    public class Specification
     {
         public int Id { get; set; }
 
-        public string Type { get; set; }
+        public string Value { get; set; }
+        public int SpecificationTypeId { get; set; }
+        public SpecificationType SpecificationType { get; set; }
 
         public List<Product> Products { get; set; }
-        public Category()
+
+        public Specification()
         {
             Products = new List<Product>();
         }
 
-        protected bool Equals(Category other)
+        protected bool Equals(Specification other)
         {
             return Id == other.Id;
         }
@@ -24,7 +27,7 @@ namespace garage_app_entities
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Category) obj);
+            return Equals((Specification) obj);
         }
 
         public override int GetHashCode()
