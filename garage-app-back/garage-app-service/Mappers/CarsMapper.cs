@@ -8,10 +8,12 @@ namespace WebApplication1.Mappers
     public class CarsMapper: ProductsMapper
     {
         private readonly SpecificationMapper _specificationMapper;
+        private readonly ProductsMapper _productsMapper;
 
         public CarsMapper()
         {
             _specificationMapper = new SpecificationMapper();
+            _productsMapper = new ProductsMapper();
         }
         public new CarResponseDto ToDto(Product product)
         {
@@ -37,6 +39,17 @@ namespace WebApplication1.Mappers
                 Price = carRequestDto.Price,
                 Stock = carRequestDto.Stock
             };
+        }
+
+        public Product ToProduct(UpdateCarRequestDto carRequestDto)
+        {
+            Product product = _productsMapper.ToProduct(carRequestDto.Product);
+            foreach (UpdateSpecificationRequestDto updateSpecificationRequestDto in carRequestDto.Specifications)
+            {
+                product.Specifications.Add(_specificationMapper.ToSpecification(updateSpecificationRequestDto));
+            }
+
+            return product;
         }
     }
 }

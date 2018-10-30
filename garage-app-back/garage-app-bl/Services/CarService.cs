@@ -77,6 +77,22 @@ namespace garage_app_bl.Services
             return _carRepository.FindCar(product.Name);
         }
 
+        public void UpdateCar(Product product)
+        {
+            CheckRequiredSpecificationTypes(product.Specifications);
+            foreach (Specification productSpecification in product.Specifications)
+            {
+                SpecificationType findSpecificationType = _specificationTypeRepository.FindSpecificationType(productSpecification.SpecificationTypeId);
+                int index = product.Specifications.FindIndex(specification => specification.Id == productSpecification.Id);
+                product.Specifications[index].SpecificationType = findSpecificationType;
+            }
+            List<Category> categories = new List<Category>();
+            Category car = _categoryRepository.FindCategory("Cars");
+            categories.Add(car);
+
+            _carRepository.UpdateCar(product);
+        }
+
         private void CheckRequiredSpecificationTypes(List<Specification> specifications)
         {
             List<SpecificationType> requiredSpecificationTypes = new List<SpecificationType>();

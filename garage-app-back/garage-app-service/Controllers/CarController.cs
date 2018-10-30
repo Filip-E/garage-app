@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Web.Http;
+using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
 using WebApplication1.DTOs.Request;
@@ -73,7 +75,7 @@ namespace WebApplication1.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("car/")]
+        [Route("car")]
         public IHttpActionResult InsertCar(InsertCarRequestDto carRequestDto)
         {
             try
@@ -89,10 +91,26 @@ namespace WebApplication1.Controllers
             }
             catch (ArgumentException ex)
             {
-                Debug.WriteLine("++++++++++++++++ STACKTRACE ++++++++++++++++");
-                Debug.WriteLine(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
+
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("car")]
+        public IHttpActionResult UpdateCar(UpdateCarRequestDto carRequestDto)
+        {
+            try
+            {
+                _carService.UpdateCar(_carsMapper.ToProduct(carRequestDto));
+                return new StatusCodeResult(HttpStatusCode.NoContent, this);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }

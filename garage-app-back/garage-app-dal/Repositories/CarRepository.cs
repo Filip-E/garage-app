@@ -8,12 +8,10 @@ namespace DAL.Repositories
     public class CarRepository : ProductRepository
     {
         private readonly SpecificationRepository _specificationRepository;
-        private readonly SpecificationTypeRepository _specificationTypeRepository;
 
         public CarRepository(MyDbContext context) : base(context)
         {
             _specificationRepository = new SpecificationRepository(context);
-            _specificationTypeRepository = new SpecificationTypeRepository(context);
         }
 
         public List<Product> GetCars()
@@ -65,6 +63,16 @@ namespace DAL.Repositories
 
             product.Specifications.AddRange(specifications);
             _context.SaveChanges();
+        }
+
+        public void UpdateCar(Product product)
+        {
+            base.UpdateProduct(product);
+
+            foreach (Specification productSpecification in product.Specifications)
+            {
+                _specificationRepository.UpdateSpecification(productSpecification);
+            }
         }
 
         private void FindSpecificationsForProduct(Product product)
