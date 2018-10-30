@@ -75,10 +75,20 @@ namespace WebApplication1.Controllers
         [Route("car/")]
         public IHttpActionResult InsertCar(InsertCarRequestDto carRequestDto)
         {
-            List<Specification> specifications = new List<Specification>();
-            specifications.Add(_specificationMapper.ToSpecification(carRequestDto.UpdateSpecificationRequestDto)); 
-            _carService.InsertCar(_carsMapper.ToProduct(carRequestDto),specifications);
-            return Ok();
+            try
+            {
+                List<Specification> specifications = new List<Specification>
+                {
+                    _specificationMapper.ToSpecification(carRequestDto.UpdateSpecificationRequestDto)
+                };
+
+                _carService.InsertCar(_carsMapper.ToProduct(carRequestDto), specifications);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

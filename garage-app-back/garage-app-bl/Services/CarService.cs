@@ -10,11 +10,14 @@ namespace garage_app_bl.Services
     {
         private readonly CarRepository _carRepository;
         private readonly CategoryRepository _categoryRepository;
+        private readonly SpecificationTypeRepository _specificationTypeRepository;
 
         public CarService()
         {
-            _carRepository = new CarRepository(new MyDbContext());
-            _categoryRepository = new CategoryRepository(new MyDbContext());
+            MyDbContext myDbContext = new MyDbContext();
+            _carRepository = new CarRepository(myDbContext);
+            _categoryRepository = new CategoryRepository(myDbContext);
+            _specificationTypeRepository = new SpecificationTypeRepository(myDbContext);
         }
 
         public List<Product> GetCars()
@@ -34,11 +37,47 @@ namespace garage_app_bl.Services
 
         public void InsertCar(Product product, List<Specification> specifications)
         {
+            CheckRequiredSpecificationTypes(specifications);
+
             List<Category> categories = new List<Category>();
             Category car = _categoryRepository.FindCategory("Cars");
             categories.Add(car);
 
-            _carRepository.InsertCar(product,categories,specifications);
+            _carRepository.InsertCar(product, categories, specifications);
+        }
+
+        private void CheckRequiredSpecificationTypes(List<Specification> specifications)
+        {
+            List<string> requiredSpecificationTypes = new List<string>()
+            {
+                "Merk",
+                "Model",
+                "Bouwjaar",
+                "Cilinderhoud",
+                "Brandstoftype",
+                "Kleur"
+            };
+
+            // remove specificationType from the required list if it exists
+            foreach (Specification specification in specifications)
+            {
+                SpecificationType findSpecificationType =
+                    _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
+                requiredSpecificationTypes.Remove(findSpecificationType.Type);
+            }
+
+            // if not all the required SpecificationTypes are removed throw new ArgumentException
+            if (requiredSpecificationTypes.Count != 0)
+            {
+                string errorMessage = "The following specifications of a car are missing: ";
+                foreach (string s in requiredSpecificationTypes)
+                {
+                    errorMessage += $"{s}, ";
+                }
+
+                errorMessage = errorMessage.Remove(errorMessage.Length - 2);
+                throw new ArgumentException(errorMessage);
+            }
         }
     }
 }
