@@ -23,8 +23,10 @@ namespace DAL.Repositories
                 s.Value == specification.Value && s.SpecificationTypeId == specification.SpecificationTypeId);
             if (specificationWithSameValueAndTypeIdCombination != null)
             {
-                throw new ArgumentException($"specification with value {specification.Value} and specificationTypeId: {specification.SpecificationTypeId} already exists");
+                throw new ArgumentException(
+                    $"specification with value {specification.Value} and specificationTypeId: {specification.SpecificationTypeId} already exists");
             }
+
             _context.SpecificationTypes.Attach(specification.SpecificationType);
             specification.SpecificationType.Specifications.Add(specification);
             _context.SaveChanges();
@@ -44,10 +46,37 @@ namespace DAL.Repositories
                 .FirstOrDefault(specification => specification.Id == id);
         }
 
-        public Specification FindSpecification(int specificationTypeId,string specificationValue)
+        public List<Product> FindProductsForSpecification(int id)
+        {
+            return _context.Specifications.Include("Products").First(specification => specification.Id == id).Products;
+        }
+        public Specification FindSpecification(int specificationTypeId, string specificationValue)
         {
             return _context.Specifications.Include("SpecificationType")
-                .FirstOrDefault(specification => specification.SpecificationTypeId == specificationTypeId && specification.Value == specificationValue);
+                .FirstOrDefault(specification =>
+                    specification.SpecificationTypeId == specificationTypeId &&
+                    specification.Value == specificationValue);
+        }
+
+        public List<Specification> FindSpecificationsForProduct(int productId)
+        {
+            Product findProduct = _context.Products.Include("Specifications")
+                .FirstOrDefault(p => p.Id == productId);
+            if (findProduct == null)
+            {
+                throw new ArgumentException("Product was not found");
+            }
+
+            foreach (Specification findProductSpecification in findProduct.Specifications)
+            {
+                int index = findProduct.Specifications.FindIndex(specification =>
+                    specification.Id == findProductSpecification.Id);
+
+                findProduct.Specifications[index].SpecificationType =
+                    _specificationTypeRepository.FindSpecificationType(findProductSpecification.SpecificationTypeId);
+            }
+            
+            return findProduct.Specifications;
         }
 
         public void UpdateSpecification(Specification specification)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using garage_app_entities;
 
@@ -73,6 +74,26 @@ namespace DAL.Repositories
             {
                 _specificationRepository.UpdateSpecification(productSpecification);
             }
+        }
+
+        public void DeleteCar(int productId)
+        {
+            Product findProduct = base.FindProduct(productId);
+            findProduct.Specifications = _specificationRepository.FindSpecificationsForProduct(productId);
+
+            int specificationsCount = findProduct.Specifications.Count;
+            // inverse loop through the list and remove the specification if there is no other product using that specification
+            for (int i = specificationsCount - 1; i >= 0; i--)
+            {
+                Specification specification = findProduct.Specifications[i];
+                List<Product> findProductsForSpecification = _specificationRepository.FindProductsForSpecification(specification.Id);
+                if (findProductsForSpecification.Count == 1)
+                {
+                    _specificationRepository.DeleteSpecification(findProduct.Specifications.First().Id);
+                }
+            }
+
+            base.DeleteProduct(productId);
         }
 
         private void FindSpecificationsForProduct(Product product)

@@ -93,6 +93,11 @@ namespace garage_app_bl.Services
             _carRepository.UpdateCar(product);
         }
 
+        public void DeleteCar(int productId)
+        {
+            _carRepository.DeleteCar(productId);
+        }
+
         private void CheckRequiredSpecificationTypes(List<Specification> specifications)
         {
             List<SpecificationType> requiredSpecificationTypes = new List<SpecificationType>();

@@ -111,6 +111,21 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpDelete]
+        [Route("car/{productId}")]
+        public IHttpActionResult DeleteCar(int productId)
+        {
+            try
+            {
+                _carService.DeleteCar(productId);
+                return new StatusCodeResult(HttpStatusCode.NoContent, this);
 
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

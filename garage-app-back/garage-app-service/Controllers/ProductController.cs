@@ -169,6 +169,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        // todo add /filter before endpoints
         [AllowAnonymous]
         [HttpPost]
         [Route("product/category/categories")]

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using garage_app_entities;
 using MySql.Data.MySqlClient;
@@ -18,10 +20,10 @@ namespace DAL.Repositories
 
         public void InsertProduct(Product product, List<Category> categories)
         {
-            Product findProduct = new Product();
 
             try
             {
+                Product findProduct = new Product();
                 findProduct = this.FindProduct(product.Name);
                 if (findProduct != null)
                 {
@@ -37,8 +39,8 @@ namespace DAL.Repositories
                     {
                         _context.Categories.Attach(category);
                     }
-
                     product.Categories.AddRange(categories);
+
                     _context.SaveChanges();
                 }
             }
