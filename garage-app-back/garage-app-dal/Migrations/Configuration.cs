@@ -14,6 +14,7 @@ namespace DAL.Migrations
         {
             AutomaticMigrationsEnabled = false;
             SetSqlGenerator("MySql.Data.MySqlClient", new MyMigrationSqlGenerator());
+            // todo uncomment this line when problems with creating indexes ( exception: "Input String not in the correct format")
             // SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator());
         }
 
