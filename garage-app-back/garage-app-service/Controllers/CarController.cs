@@ -84,8 +84,8 @@ namespace WebApplication1.Controllers
                     specifications.Add(_specificationMapper.ToSpecification(insertSpecificationRequestDto));
                 }
 
-                _carService.InsertCar(_carsMapper.ToProduct(carRequestDto), specifications);
-                return Ok();
+                Product insertCar = _carService.InsertCar(_carsMapper.ToProduct(carRequestDto), specifications);
+                return Created($"car/{insertCar.Id}", _carsMapper.ToDto(insertCar));
             }
             catch (ArgumentException ex)
             {

@@ -44,6 +44,9 @@ namespace DAL
            modelBuilder.Entity<Product>()
                 .Property(product => product.Stock)
                 .IsRequired();
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.Name)
+                .IsUnique();
 
             modelBuilder.Entity<Category>()
                 .Property(category => category.Type)

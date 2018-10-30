@@ -39,7 +39,7 @@ namespace garage_app_bl.Services
             return _carRepository.FindCar(name);
         }
 
-        public void InsertCar(Product product, List<Specification> specifications)
+        public Product InsertCar(Product product, List<Specification> specifications)
         {
             CheckRequiredSpecificationTypes(specifications);
 
@@ -73,6 +73,8 @@ namespace garage_app_bl.Services
             categories.Add(car);
 
             _carRepository.InsertCar(product, categories, updatedSpecifications);
+
+            return _carRepository.FindCar(product.Name);
         }
 
         private void CheckRequiredSpecificationTypes(List<Specification> specifications)

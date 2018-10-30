@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using garage_app_entities;
 using MySql.Data.MySqlClient;
@@ -21,13 +18,30 @@ namespace DAL.Repositories
 
         public void InsertProduct(Product product, List<Category> categories)
         {
-            _context.Products.Add(product);
-            foreach (Category category in categories)
+            Product findProduct = new Product();
+
+            try
             {
-                _context.Categories.Attach(category);
+                findProduct = this.FindProduct(product.Name);
+                if (findProduct != null)
+                {
+                    throw new ArgumentException($"A product with name: {product.Name} already exists");
+                }
             }
-            product.Categories.AddRange(categories);
-            _context.SaveChanges();
+            catch (ArgumentException ex)
+            {
+                if (ex.Message.Equals("Product was not found!"))
+                {
+                    _context.Products.Add(product);
+                    foreach (Category category in categories)
+                    {
+                        _context.Categories.Attach(category);
+                    }
+
+                    product.Categories.AddRange(categories);
+                    _context.SaveChanges();
+                }
+            }
         }
 
         public List<Product> GetProducts()
@@ -74,7 +88,6 @@ namespace DAL.Repositories
 
         public void UpdateProduct(Product product)
         {
-
             // help => http://www.entityframeworktutorial.net/EntityFramework4.3/update-many-to-many-entity-using-dbcontext.aspx
             // don't forget equals implementation for objects
 
@@ -98,6 +111,7 @@ namespace DAL.Repositories
                 _context.Categories.Attach(category);
                 existingProduct.Categories.Add(category);
             }
+
             _context.SaveChanges();
 
             _context.DetachAllEntities();
@@ -129,8 +143,14 @@ namespace DAL.Repositories
                 categoriesAsOneString += category + ",";
             }
 
-            object[] storedProcedureParams = { new MySqlParameter("@arrayCategories",categoriesAsOneString), new MySqlParameter("@amountOfCategories",categories.Length)};
-            return _context.Database.SqlQuery<Product>("filterProductsBasedOnCategories(@arrayCategories,@amountOfCategories)", storedProcedureParams).ToList();
+            object[] storedProcedureParams =
+            {
+                new MySqlParameter("@arrayCategories", categoriesAsOneString),
+                new MySqlParameter("@amountOfCategories", categories.Length)
+            };
+            return _context.Database
+                .SqlQuery<Product>("filterProductsBasedOnCategories(@arrayCategories,@amountOfCategories)",
+                    storedProcedureParams).ToList();
         }
 
         public List<Product> FilterProductBasedOnNames(string[] names)
@@ -141,8 +161,13 @@ namespace DAL.Repositories
                 namesAsOneString += name + ",";
             }
 
-            object[] storedProcedureParams = { new MySqlParameter("@arrayNames",namesAsOneString), new MySqlParameter("@amountOfNames",names.Length)};
-            return _context.Database.SqlQuery<Product>("filterProductsBasedOnNames(@arrayNames,@amountOfNames)", storedProcedureParams).ToList();
+            object[] storedProcedureParams =
+            {
+                new MySqlParameter("@arrayNames", namesAsOneString), new MySqlParameter("@amountOfNames", names.Length)
+            };
+            return _context.Database
+                .SqlQuery<Product>("filterProductsBasedOnNames(@arrayNames,@amountOfNames)", storedProcedureParams)
+                .ToList();
         }
     }
 }
