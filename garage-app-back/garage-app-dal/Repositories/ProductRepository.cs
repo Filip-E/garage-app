@@ -20,7 +20,6 @@ namespace DAL.Repositories
 
         public void InsertProduct(Product product, List<Category> categories)
         {
-
             try
             {
                 Product findProduct = new Product();

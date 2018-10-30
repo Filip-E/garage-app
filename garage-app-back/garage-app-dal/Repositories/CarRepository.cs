@@ -55,45 +55,82 @@ namespace DAL.Repositories
 
         public void InsertCar(Product product, List<Category> categories, List<Specification> specifications)
         {
-            base.InsertProduct(product, categories);
-            foreach (Specification specification in specifications)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                    _context.Specifications.Attach(specification);
+                try
+                {
+                    base.InsertProduct(product, categories);
+                    foreach (Specification specification in specifications)
+                    {
+                        _context.Specifications.Attach(specification);
+                    }
 
+                    product.Specifications.AddRange(specifications);
+                    _context.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
-
-            product.Specifications.AddRange(specifications);
-            _context.SaveChanges();
         }
 
         public void UpdateCar(Product product)
         {
-            base.UpdateProduct(product);
-
-            foreach (Specification productSpecification in product.Specifications)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                _specificationRepository.UpdateSpecification(productSpecification);
+                try
+                {
+                    base.UpdateProduct(product);
+
+                    foreach (Specification productSpecification in product.Specifications)
+                    {
+                        _specificationRepository.UpdateSpecification(productSpecification);
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
         }
 
         public void DeleteCar(int productId)
         {
-            Product findProduct = base.FindProduct(productId);
-            findProduct.Specifications = _specificationRepository.FindSpecificationsForProduct(productId);
-
-            int specificationsCount = findProduct.Specifications.Count;
-            // inverse loop through the list and remove the specification if there is no other product using that specification
-            for (int i = specificationsCount - 1; i >= 0; i--)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                Specification specification = findProduct.Specifications[i];
-                List<Product> findProductsForSpecification = _specificationRepository.FindProductsForSpecification(specification.Id);
-                if (findProductsForSpecification.Count == 1)
+                try
                 {
-                    _specificationRepository.DeleteSpecification(findProduct.Specifications.First().Id);
+                    Product findProduct = base.FindProduct(productId);
+                    findProduct.Specifications = _specificationRepository.FindSpecificationsForProduct(productId);
+
+                    int specificationsCount = findProduct.Specifications.Count;
+                    // inverse loop through the list and remove the specification if there is no other product using that specification
+                    for (int i = specificationsCount - 1; i >= 0; i--)
+                    {
+                        Specification specification = findProduct.Specifications[i];
+                        List<Product> findProductsForSpecification =
+                            _specificationRepository.FindProductsForSpecification(specification.Id);
+                        if (findProductsForSpecification.Count == 1)
+                        {
+                            _specificationRepository.DeleteSpecification(findProduct.Specifications.First().Id);
+                        }
+                    }
+
+                    base.DeleteProduct(productId);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
                 }
             }
-
-            base.DeleteProduct(productId);
         }
 
         private void FindSpecificationsForProduct(Product product)
