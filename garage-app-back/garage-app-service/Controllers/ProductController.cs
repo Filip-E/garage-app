@@ -228,58 +228,11 @@ namespace WebApplication1.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("product/image/")]
-        public async Task<HttpResponseMessage> PostFile()
-        {
-            // Check if the request contains multipart/form-data. 
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
-
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
-            var provider = new MultipartFormDataStreamProvider(root);
-
-            try
-            {
-                StringBuilder sb = new StringBuilder(); // Holds the response body 
-
-                // Read the form data and return an async task. 
-                await Request.Content.ReadAsMultipartAsync(provider);
-
-                // This illustrates how to get the form data. 
-                foreach (var key in provider.FormData.AllKeys)
-                {
-                    foreach (var val in provider.FormData.GetValues(key))
-                    {
-                        sb.Append($"{key}: {val}\n");
-                    }
-                }
-
-                // This illustrates how to get the file names for uploaded files. 
-                foreach (var file in provider.FileData)
-                {
-                    FileInfo fileInfo = new FileInfo(file.LocalFileName);
-                    sb.Append($"Uploaded file: {fileInfo.Name} ({fileInfo.Length} bytes)\n");
-                }
-
-
-                return new HttpResponseMessage()
-                {
-                    Content = new StringContent(sb.ToString())
-                };
-            }
-            catch (System.Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
-            }
-        }
-
-        [Route("user/PostUserImage")]
-        [AllowAnonymous]
-        public async Task<HttpResponseMessage> PostUserImage()
+        public HttpResponseMessage PostFile()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
+
             {
                 var httpRequest = HttpContext.Current.Request;
 
@@ -290,14 +243,14 @@ namespace WebApplication1.Controllers
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-                        int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
+                        int MaxContentLength = 1024 * 1024 * 2; //Size = 1 MB  
 
-                        IList<string> AllowedFileExtensions = new List<string> {".jpg", ".gif", ".png"};
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
                         if (!AllowedFileExtensions.Contains(extension))
                         {
-                            var message = string.Format("Please Upload image of type .jpg,.gif,.png.");
+                            var message = string.Format("Please Upload image of type .jpg,.png.");
 
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
@@ -327,7 +280,7 @@ namespace WebApplication1.Controllers
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 var res = string.Format("some Message");
                 dict.Add("error", res);

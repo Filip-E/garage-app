@@ -39,6 +39,15 @@ namespace garage_app_bl.Services
             return _carRepository.FindCar(name);
         }
 
+        public List<Specification> FindCarSpecifications(int productId)
+        {
+            // throws error if productId is not a car
+            this.FindCar(productId);
+
+            return _carRepository.FindSpecificationsForProduct(productId);
+
+        }
+
         public Product InsertCar(Product product, List<Specification> specifications)
         {
             CheckRequiredSpecificationTypes(specifications);
