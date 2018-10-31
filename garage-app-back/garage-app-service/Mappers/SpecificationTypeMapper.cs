@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using garage_app_entities;
+﻿using garage_app_entities;
 using WebApplication1.DTOs.Request;
 using WebApplication1.DTOs.Response;
 
@@ -15,7 +11,8 @@ namespace WebApplication1.Mappers
             return new SpecificationTypeResponseDto()
             {
                 Id = specificationType.Id,
-                Type = specificationType.Type
+                Type = specificationType.Type,
+                IsRequiredForCar = specificationType.IsRequiredForCar
             };
         }
 
@@ -23,7 +20,8 @@ namespace WebApplication1.Mappers
         {
             return new SpecificationType()
             {
-                Type = requestDto.Type
+                Type = requestDto.Type,
+                IsRequiredForCar = requestDto.IsRequiredForCar
             };
         }
 
@@ -32,7 +30,8 @@ namespace WebApplication1.Mappers
             return new SpecificationType()
             {
                 Id = requestDto.Id,
-                Type = requestDto.Type
+                Type = requestDto.Type,
+                IsRequiredForCar = requestDto.IsRequiredForCar
             };
         }
     }

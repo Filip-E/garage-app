@@ -109,23 +109,8 @@ namespace garage_app_bl.Services
 
         private void CheckRequiredSpecificationTypes(List<Specification> specifications)
         {
-            List<SpecificationType> requiredSpecificationTypes = new List<SpecificationType>();
-            List<string> requiredSpecificationTypeNames = new List<string>()
-            {
-                "Merk",
-                "Model",
-                "Bouwjaar",
-                "Cilinderhoud",
-                "Brandstoftype",
-                "Kleur"
-            };
-
-            foreach (string name in requiredSpecificationTypeNames)
-            {
-                SpecificationType findSpecificationType =
-                    _specificationTypeRepository.FindSpecificationType(name);
-                requiredSpecificationTypes.Add(findSpecificationType);
-            }
+            List<SpecificationType> requiredSpecificationTypes =
+                _specificationTypeRepository.GetRequiredCarSpecificationTypes();
 
             foreach (SpecificationType requiredSpecificationType in requiredSpecificationTypes)
             {

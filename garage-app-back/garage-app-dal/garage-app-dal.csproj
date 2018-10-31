@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201810301053516_addsUniqueConstraintOnProductName.Designer.cs">
       <DependentUpon>201810301053516_addsUniqueConstraintOnProductName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810311700233_addsIsRequiredForCarProperty.cs" />
+    <Compile Include="Migrations\201810311700233_addsIsRequiredForCarProperty.Designer.cs">
+      <DependentUpon>201810311700233_addsIsRequiredForCarProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyDbContext.cs" />
     <Compile Include="MyMigrationSQLGenerator.cs" />
@@ -120,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810301053516_addsUniqueConstraintOnProductName.resx">
       <DependentUpon>201810301053516_addsUniqueConstraintOnProductName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810311700233_addsIsRequiredForCarProperty.resx">
+      <DependentUpon>201810311700233_addsIsRequiredForCarProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

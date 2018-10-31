@@ -31,12 +31,13 @@ namespace DAL.Migrations
             Category car = new Category {Id = 2, Type = "Cars"};
             Category lamp = new Category {Id = 4, Type = "Lamps"};
 
-            SpecificationType merk = new SpecificationType {Id = 1, Type = "Merk"};
-            SpecificationType model = new SpecificationType {Id = 2, Type = "Model"};
-            SpecificationType bouwjaar = new SpecificationType {Id = 3, Type = "Bouwjaar"};
-            SpecificationType cilinderhoud = new SpecificationType {Id = 4, Type = "Cilinderhoud"};
-            SpecificationType brandstoftype = new SpecificationType {Id = 5, Type = "Brandstoftype"};
-            SpecificationType kleur = new SpecificationType {Id = 6, Type = "Kleur"};
+            SpecificationType merk = new SpecificationType {Id = 1, Type = "Merk",IsRequiredForCar = true};
+            SpecificationType model = new SpecificationType {Id = 2, Type = "Model", IsRequiredForCar = true };
+            SpecificationType bouwjaar = new SpecificationType {Id = 3, Type = "Bouwjaar", IsRequiredForCar = true };
+            SpecificationType cilinderhoud = new SpecificationType {Id = 4, Type = "Cilinderhoud", IsRequiredForCar = true };
+            SpecificationType brandstoftype = new SpecificationType {Id = 5, Type = "Brandstoftype", IsRequiredForCar = true };
+            SpecificationType kleur = new SpecificationType {Id = 6, Type = "Kleur", IsRequiredForCar = true};
+            SpecificationType oldTimer = new SpecificationType {Id = 7, Type = "old timer", IsRequiredForCar = false};
 
 
             Product p1 = new Product {Id = 1, Name = "Bowling kegels", Price = 12.99M, Stock = 10};
@@ -80,7 +81,7 @@ namespace DAL.Migrations
             }
 
             SpecificationType[] specificationTypeSeed = new SpecificationType[]
-                {merk, model, bouwjaar, cilinderhoud, brandstoftype, kleur};
+                {merk, model, bouwjaar, cilinderhoud, brandstoftype, kleur, oldTimer};
             foreach (SpecificationType s in specificationTypeSeed)
             {
                 context.SpecificationTypes.AddOrUpdate(s);

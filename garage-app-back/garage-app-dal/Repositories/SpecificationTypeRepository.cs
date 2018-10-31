@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -27,6 +26,11 @@ namespace DAL.Repositories
             return _context.SpecificationTypes.ToList();
         }
 
+        public List<SpecificationType> GetRequiredCarSpecificationTypes()
+        {
+            return _context.SpecificationTypes.Where(specificationType => specificationType.IsRequiredForCar)
+                .ToList();
+        }
         public SpecificationType FindSpecificationType(int id)
         {
             return _context.SpecificationTypes.Find(id);

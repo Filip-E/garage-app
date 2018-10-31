@@ -11,6 +11,7 @@ namespace garage_app_entities
         public int Id { get; set; }
 
         public string Type { get; set; }
+        public bool IsRequiredForCar { get; set; }
 
         public List<Specification> Specifications { get; set; }
 

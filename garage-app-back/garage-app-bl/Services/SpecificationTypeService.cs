@@ -35,6 +35,10 @@ namespace garage_app_bl.Services
             return _repository.GetSpecificationTypes();
         }
 
+        public List<SpecificationType> GetGetRequiredCarSpecificationTypes()
+        {
+            return _repository.GetRequiredCarSpecificationTypes();
+        }
         public SpecificationType FindSpecificationType(int id)
         {
             SpecificationType findSpecificationType = _repository.FindSpecificationType(id);

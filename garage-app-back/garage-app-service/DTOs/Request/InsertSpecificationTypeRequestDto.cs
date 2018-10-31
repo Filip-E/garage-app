@@ -3,5 +3,6 @@
     public class InsertSpecificationTypeRequestDto
     {
         public string Type { get; set; }
+        public bool IsRequiredForCar { get; set; }
     }
 }
