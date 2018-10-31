@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using garage_app_entities;
-using WebApplication1.DTOs.Request;
-using WebApplication1.DTOs.Response;
+using garage_app_service.DTOs.Request;
+using garage_app_service.DTOs.Response;
 
-namespace WebApplication1.Mappers
+namespace garage_app_service.Mappers
 {
     public class ProductsMapper
     {

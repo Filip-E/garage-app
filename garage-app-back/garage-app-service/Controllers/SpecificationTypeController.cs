@@ -7,11 +7,11 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
-using WebApplication1.DTOs.Request;
-using WebApplication1.DTOs.Response;
-using WebApplication1.Mappers;
+using garage_app_service.DTOs.Request;
+using garage_app_service.DTOs.Response;
+using garage_app_service.Mappers;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class SpecificationTypeController : ApiController
     {

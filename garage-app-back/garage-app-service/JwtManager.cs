@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Web;
 using Microsoft.IdentityModel.Tokens;
 
-namespace WebApplication1
+namespace garage_app_service
 {
     public class JwtManager
     {

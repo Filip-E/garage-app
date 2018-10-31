@@ -1,12 +1,12 @@
 using System.Web.Http;
 using WebActivatorEx;
-using WebApplication1;
+using garage_app_service;
 using System.Linq;
 using Swashbuckle.Application;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace WebApplication1
+namespace garage_app_service
 {
     public class SwaggerConfig
     {

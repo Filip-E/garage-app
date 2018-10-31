@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace WebApplication1
+namespace garage_app_service
 {
     public static class WebApiConfig
     {

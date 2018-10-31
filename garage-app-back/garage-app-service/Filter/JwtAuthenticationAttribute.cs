@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Filters;
 
-namespace WebApplication1.Filter
+namespace garage_app_service.Filter
 {
     public class JwtAuthenticationAttribute: Attribute, IAuthenticationFilter
     {

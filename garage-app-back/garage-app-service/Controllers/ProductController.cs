@@ -13,12 +13,12 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.Security;
 using garage_app_entities;
-using WebApplication1.DTOs.Request;
-using WebApplication1.DTOs.Response;
-using WebApplication1.Filter;
-using WebApplication1.Mappers;
+using garage_app_service.DTOs.Request;
+using garage_app_service.DTOs.Response;
+using garage_app_service.Mappers;
+using garage_app_service.Filter;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class ProductController : ApiController
     {

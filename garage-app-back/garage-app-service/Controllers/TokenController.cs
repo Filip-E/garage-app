@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Http;
 using garage_app_bl.Services;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class TokenController : ApiController
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApplication1.DTOs.Response
+namespace garage_app_service.DTOs.Response
 {
     public class SpecificationResponseDto
     {
