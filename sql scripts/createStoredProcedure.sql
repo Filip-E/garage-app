@@ -1,3 +1,4 @@
+USE garagedb;
 DROP PROCEDURE IF EXISTS filterProductsBasedOnCategories;
 DELIMITER //
 CREATE  PROCEDURE `filterProductsBasedOnCategories`(IN arrayCategories VARCHAR(100), IN amountOfCategories int(16))

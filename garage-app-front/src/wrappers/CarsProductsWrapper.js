@@ -3,12 +3,12 @@ import {Component} from "react";
 import ProductsContainer from "../containers/ProductsContainer";
 import MainCategories from "../utils/MainCategories";
 
-class PartsProductsWrapper extends Component{
+class CarsProductsWrapper extends Component{
     render(){
         return(
-            <ProductsContainer pageTitle="Parts" productCategory={MainCategories.PARTS}/>
+            <ProductsContainer pageTitle="Cars" productCategory={MainCategories.CARS}/>
         )
     }
 }
 
-export default PartsProductsWrapper;
+export default CarsProductsWrapper;
