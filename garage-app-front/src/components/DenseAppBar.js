@@ -9,11 +9,11 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import Home from "./Home";
 import Service from "./Service";
 import Contact from "./Contact";
-import Cars from "./Cars";
 import LoginContainer from "../containers/LoginContainer";
 import {getCookie} from "../utils/CookieManager";
 import RetroVintageProductsWrapper from "../wrappers/RetroVintageProductsWrapper";
 import PartsProductsWrapper from "../wrappers/PartsProductsWrapper";
+import CarsProductsWrapper from "../wrappers/CarsProductsWrapper";
 
 const styles = {
     root: {
@@ -79,7 +79,7 @@ class DenseAppBar extends Component {
                     <Route exact path={service} component={Service}/>
                     <Route exact path={retroVintage} component={RetroVintageProductsWrapper}/>
                     <Route exact path={parts} component={PartsProductsWrapper}/>
-                    <Route exact path={cars} component={Cars}/>
+                    <Route exact path={cars} component={CarsProductsWrapper}/>
                     <Route exact path={contact} component={Contact}/>
                     <Route exact path={login} component={LoginContainer}/>
                     <Redirect to={home}/>

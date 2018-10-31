@@ -21,7 +21,7 @@ namespace DAL.Repositories
 
             foreach (Product product in productsByCategory)
             {
-                FindSpecificationsForProduct(product);
+                product.Specifications = FindSpecificationsForProduct(product.Id);
             }
 
             return productsByCategory;
@@ -30,7 +30,7 @@ namespace DAL.Repositories
         public Product FindCar(int id)
         {
             Product findProduct = base.FindProduct(id);
-            this.FindSpecificationsForProduct(findProduct);
+            findProduct.Specifications = this.FindSpecificationsForProduct(findProduct.Id);
             if (findProduct.Specifications.Count == 0)
             {
                 throw new ArgumentException(
@@ -43,7 +43,7 @@ namespace DAL.Repositories
         public Product FindCar(string name)
         {
             Product findProduct = base.FindProduct(name);
-            this.FindSpecificationsForProduct(findProduct);
+            findProduct.Specifications = this.FindSpecificationsForProduct(findProduct.Id);
             if (findProduct.Specifications.Count == 0)
             {
                 throw new ArgumentException(
@@ -133,18 +133,20 @@ namespace DAL.Repositories
             }
         }
 
-        private void FindSpecificationsForProduct(Product product)
+        public List<Specification> FindSpecificationsForProduct(int productId)
         {
-            product.Specifications = _context.Products
+            List<Specification> specifications = _context.Products
                 .Include("Specifications")
-                .First(p => p.Id == product.Id)
+                .First(p => p.Id == productId)
                 .Specifications;
 
-            foreach (Specification productSpecification in product.Specifications)
+            foreach (Specification productSpecification in specifications)
             {
                 productSpecification.SpecificationType = _specificationRepository
                     .FindSpecification(productSpecification.SpecificationTypeId).SpecificationType;
             }
+
+            return specifications;
         }
     }
 }

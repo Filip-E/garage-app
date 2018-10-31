@@ -74,6 +74,30 @@ namespace WebApplication1.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
+        [Route("car/specification/{productId}")]
+        public IHttpActionResult FindCarSpecifications(int productId)
+        {
+            try
+            {
+                List<Specification> findCarSpecifications = _carService.FindCarSpecifications(productId);
+
+                List<SpecificationResponseDto> responseDtos = new List<SpecificationResponseDto>();
+
+                foreach (Specification findCarSpecification in findCarSpecifications)
+                {
+                    responseDtos.Add(_specificationMapper.ToDto(findCarSpecification));
+                }
+
+                return Ok(responseDtos);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         [Route("car")]
         public IHttpActionResult InsertCar(InsertCarRequestDto carRequestDto)
@@ -120,7 +144,6 @@ namespace WebApplication1.Controllers
             {
                 _carService.DeleteCar(productId);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
-
             }
             catch (ArgumentException ex)
             {
