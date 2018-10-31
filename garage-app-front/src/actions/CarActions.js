@@ -15,3 +15,17 @@ export function fetchCarSpecifications(productId){
             });
     }
 }
+
+export function fetchRequiredCarSpecifications(){
+    return(dispatch) =>{
+        dispatch({type: CarActionTypes.FETCH_REQUIRED_CAR_SPECIFICATIONS});
+        return axios
+            .get(apiLocation + "/specificationType/car")
+            .then(response =>{
+                dispatch({type: CarActionTypes.FETCH_REQUIRED_CAR_SPECIFICATIONS_SUCCESS, payload: response});
+            })
+            .catch(error =>{
+                dispatch({type: CarActionTypes.FETCH_REQUIRED_CAR_SPECIFICATIONS_FAIL, payload: error});
+            });
+    }
+}

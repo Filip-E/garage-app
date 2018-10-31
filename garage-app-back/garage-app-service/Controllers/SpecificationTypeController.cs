@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
@@ -31,6 +29,20 @@ namespace garage_app_service.Controllers
         {
             List<SpecificationTypeResponseDto> responseDtos = new List<SpecificationTypeResponseDto>();
             foreach (SpecificationType specificationType in _specificationTypeService.GetSpecificationTypes())
+            {
+                responseDtos.Add(_specificationTypeMapper.ToDto(specificationType));
+            }
+
+            return Ok(responseDtos);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("specificationType/car")]
+        public IHttpActionResult GetRequiredCarSpecificationTypes()
+        {
+            List<SpecificationTypeResponseDto> responseDtos = new List<SpecificationTypeResponseDto>();
+            foreach (SpecificationType specificationType in _specificationTypeService.GetRequiredCarSpecificationTypes())
             {
                 responseDtos.Add(_specificationTypeMapper.ToDto(specificationType));
             }
