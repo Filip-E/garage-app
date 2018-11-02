@@ -23,7 +23,7 @@ namespace garage_app_service.Controllers
         
         [AllowAnonymous]
         [HttpPost]
-        [Route("product/category/categories")]
+        [Route("product/categories")]
         public IHttpActionResult FilterProductBasedOnCategories(FilterBasedOnCategoriesRequestDto categoryRequestDto)
         {
             try
