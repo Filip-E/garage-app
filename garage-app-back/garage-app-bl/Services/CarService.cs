@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
 using DAL;
 using DAL.Repositories;
 using garage_app_entities;
@@ -153,6 +150,7 @@ namespace garage_app_bl.Services
         public List<Product> FilterCarsOnPrice(decimal? lowerBound, decimal? upperBound)
         {
             var productsByCategory = _productRepository.GetProductsByCategory("Cars");
+            _carRepository.GetCars();
 
             List<Product> filteredProducts;
             if (upperBound == null)
@@ -167,8 +165,42 @@ namespace garage_app_bl.Services
             {
                 filteredProducts = productsByCategory.Where(p => p.Price >= lowerBound && p.Price <= upperBound).ToList();
             }
-
+            foreach (Product product in filteredProducts)
+            {
+                product.Specifications = _specificationRepository.FindSpecificationsForProduct(product.Id);
+            }
             return filteredProducts;
+        }
+
+        public List<Product> FilterCarsOnBouwJaar(int? lowerBound, int? upperBound)
+        {
+            List<Product> cars = _carRepository.GetCars();
+
+            List<Product> filteredCars = new List<Product>();
+            foreach (Product car in cars)
+            {
+                Specification bouwJaar = car.Specifications.Find(specification => specification.SpecificationType.Type.Equals("Bouwjaar"));
+                bool isWithinLimits;
+                if (upperBound == null)
+                {
+                    isWithinLimits = int.Parse(bouwJaar.Value) >= lowerBound;
+                }
+                else if (lowerBound == null)
+                {
+                    isWithinLimits = int.Parse(bouwJaar.Value) <= upperBound;
+                }
+                else
+                {
+                    isWithinLimits = int.Parse(bouwJaar.Value) >= lowerBound && int.Parse(bouwJaar.Value) <= upperBound;
+                }
+
+                if (isWithinLimits)
+                {
+                    filteredCars.Add(car);
+                }
+            }
+
+            return filteredCars;
         }
     }
 }

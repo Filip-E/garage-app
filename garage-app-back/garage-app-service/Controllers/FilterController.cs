@@ -15,7 +15,7 @@ namespace garage_app_service.Controllers
     {
         private readonly ProductService _productService;
         private readonly CarService _carService;
-        
+
         private readonly ProductsMapper _productsMapper;
         private readonly CarsMapper _carsMapper;
 
@@ -25,9 +25,9 @@ namespace garage_app_service.Controllers
             _carService = new CarService();
 
             _productsMapper = new ProductsMapper();
-            _carsMapper= new CarsMapper();
+            _carsMapper = new CarsMapper();
         }
-        
+
         [AllowAnonymous]
         [HttpPost]
         [Route("product/categories")]
@@ -36,7 +36,8 @@ namespace garage_app_service.Controllers
             try
             {
                 List<Product> productsList =
-                    _productService.FilterProductBasedOnCategories(categoryRequestDto.Types, categoryRequestDto.Category);
+                    _productService.FilterProductBasedOnCategories(categoryRequestDto.Types,
+                        categoryRequestDto.Category);
                 List<ProductResponseDto> responseList = new List<ProductResponseDto>();
 
                 foreach (Product product in productsList)
@@ -87,14 +88,58 @@ namespace garage_app_service.Controllers
                 {
                     return BadRequest();
                 }
+
                 if (filterDecimalValues.LowerBound == null && filterDecimalValues.UpperBound == null)
                 {
                     return BadRequest("lower bound and upper bound can't both be NULL");
                 }
 
-                return Ok(_carService.FilterCarsOnPrice(filterDecimalValues.LowerBound,
-                    filterDecimalValues.UpperBound));
+                List<Product> filterCarsOnPrice = _carService.FilterCarsOnPrice(filterDecimalValues.LowerBound,
+                    filterDecimalValues.UpperBound);
 
+                List<CarResponseDto> responseDtos = new List<CarResponseDto>();
+                foreach (Product car in filterCarsOnPrice)
+                {
+                    responseDtos.Add(_carsMapper.ToDto(car));
+                }
+
+                return Ok(responseDtos);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.StackTrace);
+                return InternalServerError();
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("car/bouwjaar")]
+        public IHttpActionResult FilterCarOnBouwJaar(FilterIntValues filterIntValues)
+        {
+            try
+            {
+                if (filterIntValues == null)
+                {
+                    return BadRequest();
+                }
+
+                if (filterIntValues.LowerBound == null && filterIntValues.UpperBound == null)
+                {
+                    return BadRequest("lower bound and upper bound can't both be NULL");
+                }
+
+                List<Product> filterCarsOnBouwJaar = _carService.FilterCarsOnBouwJaar(filterIntValues.LowerBound,
+                    filterIntValues.UpperBound);
+
+                List<CarResponseDto> responseDtos = new List<CarResponseDto>();
+                foreach (Product car in filterCarsOnBouwJaar)
+                {
+                    responseDtos.Add(_carsMapper.ToDto(car));
+                }
+
+                return Ok(responseDtos);
             }
             catch (Exception ex)
             {
