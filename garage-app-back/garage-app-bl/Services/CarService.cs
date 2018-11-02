@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography;
 using DAL;
 using DAL.Repositories;
@@ -12,16 +14,18 @@ namespace garage_app_bl.Services
     {
         private readonly CarRepository _carRepository;
         private readonly CategoryRepository _categoryRepository;
+        private readonly ProductRepository _productRepository;
         private readonly SpecificationTypeRepository _specificationTypeRepository;
         private readonly SpecificationRepository _specificationRepository;
 
         public CarService()
         {
-            MyDbContext myDbContext = new MyDbContext();
-            _carRepository = new CarRepository(myDbContext);
-            _categoryRepository = new CategoryRepository(myDbContext);
-            _specificationTypeRepository = new SpecificationTypeRepository(myDbContext);
-            _specificationRepository = new SpecificationRepository(myDbContext);
+            MyDbContext dbContext = new MyDbContext();
+            _carRepository = new CarRepository(dbContext);
+            _categoryRepository = new CategoryRepository(dbContext);
+            _productRepository = new ProductRepository(dbContext);
+            _specificationTypeRepository = new SpecificationTypeRepository(dbContext);
+            _specificationRepository = new SpecificationRepository(dbContext);
         }
 
         public List<Product> GetCars()
@@ -45,7 +49,6 @@ namespace garage_app_bl.Services
             this.FindCar(productId);
 
             return _carRepository.FindSpecificationsForProduct(productId);
-
         }
 
         public Product InsertCar(Product product, List<Specification> specifications)
@@ -66,7 +69,8 @@ namespace garage_app_bl.Services
                 // if specification does not exist: insert specification and add to updated list
                 else
                 {
-                    specification.SpecificationType = _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
+                    specification.SpecificationType =
+                        _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
 
                     int newSpecificationId = _specificationRepository.InsertSpecification(specification);
 
@@ -91,10 +95,13 @@ namespace garage_app_bl.Services
             CheckRequiredSpecificationTypes(product.Specifications);
             foreach (Specification productSpecification in product.Specifications)
             {
-                SpecificationType findSpecificationType = _specificationTypeRepository.FindSpecificationType(productSpecification.SpecificationTypeId);
-                int index = product.Specifications.FindIndex(specification => specification.Id == productSpecification.Id);
+                SpecificationType findSpecificationType =
+                    _specificationTypeRepository.FindSpecificationType(productSpecification.SpecificationTypeId);
+                int index = product.Specifications.FindIndex(specification =>
+                    specification.Id == productSpecification.Id);
                 product.Specifications[index].SpecificationType = findSpecificationType;
             }
+
             List<Category> categories = new List<Category>();
             Category car = _categoryRepository.FindCategory("Cars");
             categories.Add(car);
@@ -141,6 +148,27 @@ namespace garage_app_bl.Services
                 errorMessage = errorMessage.Remove(errorMessage.Length - 2);
                 throw new ArgumentException(errorMessage);
             }
+        }
+
+        public List<Product> FilterCarsOnPrice(decimal? lowerBound, decimal? upperBound)
+        {
+            var productsByCategory = _productRepository.GetProductsByCategory("Cars");
+
+            List<Product> filteredProducts;
+            if (upperBound == null)
+            {
+                filteredProducts = productsByCategory.Where(p => p.Price >= lowerBound).ToList();
+            }
+            else if (lowerBound == null)
+            {
+                filteredProducts = productsByCategory.Where(p => p.Price <= upperBound).ToList();
+            }
+            else
+            {
+                filteredProducts = productsByCategory.Where(p => p.Price >= lowerBound && p.Price <= upperBound).ToList();
+            }
+
+            return filteredProducts;
         }
     }
 }

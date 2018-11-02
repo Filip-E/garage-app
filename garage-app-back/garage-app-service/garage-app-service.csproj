@@ -156,8 +156,10 @@
     <Compile Include="Controllers\SpecificationController.cs" />
     <Compile Include="Controllers\SpecificationTypeController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
-    <Compile Include="DTOs\Request\FilterBasedOnCategoriesRequestDto.cs" />
-    <Compile Include="DTOs\Request\FilterBasedOnNamesRequestDto.cs" />
+    <Compile Include="DTOs\Request\Filters\FilterBasedOnCategoriesRequestDto.cs" />
+    <Compile Include="DTOs\Request\Filters\FilterBasedOnNamesRequestDto.cs" />
+    <Compile Include="DTOs\Request\Filters\FilterDecimalValues.cs" />
+    <Compile Include="DTOs\Request\Filters\FilterIntValues.cs" />
     <Compile Include="DTOs\Request\InsertCarRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertCategoryRequestDto.cs" />
     <Compile Include="DTOs\Request\InsertProductRequestDto.cs" />
@@ -173,10 +175,10 @@
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
     <Compile Include="DTOs\Response\SpecificationResponseDto.cs" />
     <Compile Include="DTOs\Response\SpecificationTypeResponseDto.cs" />
-    <Compile Include="Filter\AddChallengeOnUnauthorizedResult.cs" />
-    <Compile Include="Filter\AuthenticationFailureResult.cs" />
-    <Compile Include="Filter\HttpAuthenticationChallengeContextExtensions.cs" />
-    <Compile Include="Filter\JwtAuthenticationAttribute.cs" />
+    <Compile Include="AuthFilter\AddChallengeOnUnauthorizedResult.cs" />
+    <Compile Include="AuthFilter\AuthenticationFailureResult.cs" />
+    <Compile Include="AuthFilter\HttpAuthenticationChallengeContextExtensions.cs" />
+    <Compile Include="AuthFilter\JwtAuthenticationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
