@@ -2,32 +2,27 @@
 using garage_app_bl.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Web.Security;
 using garage_app_entities;
 using garage_app_service.DTOs.Request;
 using garage_app_service.DTOs.Response;
 using garage_app_service.Mappers;
-using garage_app_service.Filter;
 
 namespace garage_app_service.Controllers
 {
     public class ProductController : ApiController
     {
-        private readonly ProductService _service;
+        private readonly ProductService _productService;
         private readonly ProductsMapper _productsMapper;
 
         public ProductController()
         {
-            _service = new ProductService();
+            _productService = new ProductService();
             _productsMapper = new ProductsMapper();
         }
 
@@ -37,7 +32,7 @@ namespace garage_app_service.Controllers
         public IHttpActionResult GetAllProducts()
         {
             List<ProductResponseDto> response = new List<ProductResponseDto>();
-            List<Product> products = _service.GetProducts();
+            List<Product> products = _productService.GetProducts();
             foreach (Product p in products)
             {
                 response.Add(_productsMapper.ToDto(p));
@@ -53,7 +48,7 @@ namespace garage_app_service.Controllers
         {
             try
             {
-                ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productId));
+                ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productId));
                 if (product == null)
                 {
                     return NotFound();
@@ -74,7 +69,7 @@ namespace garage_app_service.Controllers
         {
             try
             {
-                ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productName));
+                ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productName));
                 if (product == null)
                 {
                     return NotFound();
@@ -95,7 +90,7 @@ namespace garage_app_service.Controllers
         {
             try
             {
-                List<Product> productsByCategory = _service.GetProductsByCategory(category);
+                List<Product> productsByCategory = _productService.GetProductsByCategory(category);
 
                 List<ProductResponseDto> productResponseDtos = new List<ProductResponseDto>();
 
@@ -127,14 +122,14 @@ namespace garage_app_service.Controllers
                 }
 
                 Product product = _productsMapper.ToProduct(productRequestDto);
-                idInsertedProduct = _service.InsertProduct(product, productRequestDto.CategoryTypes);
+                idInsertedProduct = _productService.InsertProduct(product, productRequestDto.CategoryTypes);
                 return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
             }
             catch (Exception ex)
             {
                 if (idInsertedProduct != -1)
                 {
-                    _service.DeleteProduct(idInsertedProduct);
+                    _productService.DeleteProduct(idInsertedProduct);
                 }
 
                 return BadRequest(ex.Message);
@@ -149,7 +144,7 @@ namespace garage_app_service.Controllers
             try
             {
                 Product product = _productsMapper.ToProduct(productRequestDto);
-                _service.UpdateProduct(product, productRequestDto.CategoryTypes);
+                _productService.UpdateProduct(product, productRequestDto.CategoryTypes);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
             }
             catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
@@ -166,7 +161,7 @@ namespace garage_app_service.Controllers
         {
             try
             {
-                _service.DeleteProduct(productId);
+                _productService.DeleteProduct(productId);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
             }
             catch (ArgumentException ex)
@@ -174,56 +169,6 @@ namespace garage_app_service.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        // todo add /filter before endpoints
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("product/category/categories")]
-        public IHttpActionResult FilterProductBasedOnCategories(FilterBasedOnCategoriesRequestDto categoryRequestDto)
-        {
-            try
-            {
-                List<Product> productsList =
-                    _service.FilterProductBasedOnCategories(categoryRequestDto.Types, categoryRequestDto.Category);
-                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
-
-                foreach (Product product in productsList)
-                {
-                    responseList.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(responseList);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("product/names")]
-        public IHttpActionResult FilterProductBasedOnNames(FilterBasedOnNamesRequestDto namesRequestDto)
-        {
-            try
-            {
-                List<Product> productsList =
-                    _service.FilterProductBasedOnNames(namesRequestDto.Names, namesRequestDto.Category);
-                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
-
-                foreach (Product product in productsList)
-                {
-                    responseList.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(responseList);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
 
         [AllowAnonymous]
         [HttpPost]

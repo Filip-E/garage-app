@@ -82,7 +82,7 @@ export function filterProductsBasedOnCategory(categories, categoryType) {
             "Category": categoryType
         };
         return axios
-            .post(apiLocation + "/product/category/categories", data)
+            .post(apiLocation + "/filter/product/category/categories", data)
             .then(response => {
                 dispatch({
                     type: productActionTypes.FETCH_PRODUCTS_SUCCESS,
