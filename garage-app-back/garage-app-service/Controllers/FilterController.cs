@@ -15,6 +15,7 @@ namespace garage_app_service.Controllers
     {
         private readonly ProductService _productService;
         private readonly CarService _carService;
+        private readonly SpecificationTypeService _specificationTypeService;
 
         private readonly ProductsMapper _productsMapper;
         private readonly CarsMapper _carsMapper;
@@ -23,6 +24,7 @@ namespace garage_app_service.Controllers
         {
             _productService = new ProductService();
             _carService = new CarService();
+            _specificationTypeService = new SpecificationTypeService();
 
             _productsMapper = new ProductsMapper();
             _carsMapper = new CarsMapper();
@@ -146,6 +148,39 @@ namespace garage_app_service.Controllers
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
                 return InternalServerError();
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("car/specification")]
+        public IHttpActionResult FilterCarOnSpecification(FilterBasedOnSpecification filterBasedOnSpecification)
+        {
+            try
+            {
+                if (filterBasedOnSpecification.SpecificationType.Equals("Bouwjaar"))
+                {
+                    return BadRequest("please use filter/car/bouwjaar when wanting to filter on 'Bouwjaar'");
+                }
+
+                // throws exception if not found
+                _specificationTypeService.FindSpecificationType(filterBasedOnSpecification.SpecificationType);
+
+                List<Product> filterCarsOnSpecification = _carService.FilterCarsOnSpecification(
+                    filterBasedOnSpecification.SpecificationType,
+                    filterBasedOnSpecification.Value);
+
+                List<CarResponseDto> responseDtos = new List<CarResponseDto>();
+                foreach (Product product in filterCarsOnSpecification)
+                {
+                    responseDtos.Add(_carsMapper.ToDto(product));
+                }
+
+                return Ok(responseDtos);
+            }
+            catch (ArgumentException argException)
+            {
+                return BadRequest(argException.Message);
             }
         }
     }

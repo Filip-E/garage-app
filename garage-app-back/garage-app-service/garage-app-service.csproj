@@ -158,6 +158,7 @@
     <Compile Include="Controllers\TokenController.cs" />
     <Compile Include="DTOs\Request\Filters\FilterBasedOnCategoriesRequestDto.cs" />
     <Compile Include="DTOs\Request\Filters\FilterBasedOnNamesRequestDto.cs" />
+    <Compile Include="DTOs\Request\Filters\FilterBasedOnSpecification.cs" />
     <Compile Include="DTOs\Request\Filters\FilterDecimalValues.cs" />
     <Compile Include="DTOs\Request\Filters\FilterIntValues.cs" />
     <Compile Include="DTOs\Request\InsertCarRequestDto.cs" />

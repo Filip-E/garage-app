@@ -61,7 +61,7 @@ namespace garage_app_bl.Services
             }
             else
             {
-                throw new ArgumentException($"SpecificationType with Type: {type} was not found");
+                throw new ArgumentException($"SpecificationType with Type: '{type}' was not found");
             }
         }
 
