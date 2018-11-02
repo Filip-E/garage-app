@@ -1,4 +1,4 @@
-﻿namespace garage_app_service.DTOs.Request
+﻿namespace garage_app_service.DTOs.Request.Filters
 {
     public class FilterBasedOnNamesRequestDto
     {
