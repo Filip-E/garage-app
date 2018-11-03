@@ -42,7 +42,8 @@ namespace garage_app_service.Controllers
         public IHttpActionResult GetRequiredCarSpecificationTypes()
         {
             List<SpecificationTypeResponseDto> responseDtos = new List<SpecificationTypeResponseDto>();
-            foreach (SpecificationType specificationType in _specificationTypeService.GetRequiredCarSpecificationTypes())
+            foreach (SpecificationType specificationType in _specificationTypeService.GetRequiredCarSpecificationTypes()
+            )
             {
                 responseDtos.Add(_specificationTypeMapper.ToDto(specificationType));
             }
@@ -55,18 +56,11 @@ namespace garage_app_service.Controllers
         [Route("specificationType/{specificationTypeId}")]
         public IHttpActionResult FindSpecificationType(int specificationTypeId)
         {
-            try
-            {
-                return Ok(
-                    _specificationTypeMapper.ToDto(
-                        _specificationTypeService.FindSpecificationType(specificationTypeId)
-                    )
-                );
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(
+                _specificationTypeMapper.ToDto(
+                    _specificationTypeService.FindSpecificationType(specificationTypeId)
+                )
+            );
         }
 
         [AllowAnonymous]
@@ -74,18 +68,12 @@ namespace garage_app_service.Controllers
         [Route("specificationType/type/{type}")]
         public IHttpActionResult FindSpecificationTypeByType(string type)
         {
-            try
-            {
+            
                 return Ok(
                     _specificationTypeMapper.ToDto(
                         _specificationTypeService.FindSpecificationType(type)
                     )
                 );
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
         }
 
         [AllowAnonymous]
@@ -93,17 +81,10 @@ namespace garage_app_service.Controllers
         [Route("specificationType")]
         public IHttpActionResult InsertSpecificationType(InsertSpecificationTypeRequestDto requestDto)
         {
-            try
-            {
                 SpecificationType specificationType = _specificationTypeMapper.ToSpecificationType(requestDto);
                 specificationType.Id = _specificationTypeService.InsertSpecificationType(specificationType);
                 return Created($"specificationType/{specificationType.Id}",
                     _specificationTypeMapper.ToDto(specificationType));
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
         }
 
 
@@ -112,16 +93,9 @@ namespace garage_app_service.Controllers
         [Route("specificationType")]
         public IHttpActionResult UpdateSpecificationType(UpdateSpecificationTypeRequestDto requestDto)
         {
-            try
-            {
                 SpecificationType specificationType = _specificationTypeMapper.ToSpecificationType(requestDto);
                 _specificationTypeService.UpdateSpecificationType(specificationType);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
         }
 
         [AllowAnonymous]
@@ -129,15 +103,8 @@ namespace garage_app_service.Controllers
         [Route("specificationType/{specificationTypeId}")]
         public IHttpActionResult DeleteSpecificationType(int specificationTypeId)
         {
-            try
-            {
                 _specificationTypeService.DeleteSpecificationType(specificationTypeId);
                 return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
     }
 }

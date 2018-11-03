@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Web.Http;
 using garage_app_bl.Services;
 using garage_app_entities;
@@ -35,24 +34,17 @@ namespace garage_app_service.Controllers
         [Route("product/categories")]
         public IHttpActionResult FilterProductBasedOnCategories(FilterBasedOnCategoriesRequestDto categoryRequestDto)
         {
-            try
-            {
-                List<Product> productsList =
-                    _productService.FilterProductBasedOnCategories(categoryRequestDto.Types,
-                        categoryRequestDto.Category);
-                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
+            List<Product> productsList =
+                _productService.FilterProductBasedOnCategories(categoryRequestDto.Types,
+                    categoryRequestDto.Category);
+            List<ProductResponseDto> responseList = new List<ProductResponseDto>();
 
-                foreach (Product product in productsList)
-                {
-                    responseList.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(responseList);
-            }
-            catch (ArgumentException e)
+            foreach (Product product in productsList)
             {
-                return BadRequest(e.Message);
+                responseList.Add(_productsMapper.ToDto(product));
             }
+
+            return Ok(responseList);
         }
 
         [AllowAnonymous]
@@ -60,23 +52,16 @@ namespace garage_app_service.Controllers
         [Route("product/names")]
         public IHttpActionResult FilterProductBasedOnNames(FilterBasedOnNamesRequestDto namesRequestDto)
         {
-            try
-            {
-                List<Product> productsList =
-                    _productService.FilterProductBasedOnNames(namesRequestDto.Names, namesRequestDto.Category);
-                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
+            List<Product> productsList =
+                _productService.FilterProductBasedOnNames(namesRequestDto.Names, namesRequestDto.Category);
+            List<ProductResponseDto> responseList = new List<ProductResponseDto>();
 
-                foreach (Product product in productsList)
-                {
-                    responseList.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(responseList);
-            }
-            catch (ArgumentException e)
+            foreach (Product product in productsList)
             {
-                return BadRequest(e.Message);
+                responseList.Add(_productsMapper.ToDto(product));
             }
+
+            return Ok(responseList);
         }
 
         [AllowAnonymous]
@@ -84,35 +69,21 @@ namespace garage_app_service.Controllers
         [Route("car/price")]
         public IHttpActionResult FilterCarOnPrice(FilterDecimalValues filterDecimalValues)
         {
-            try
+            if (filterDecimalValues.LowerBound == null && filterDecimalValues.UpperBound == null)
             {
-                if (filterDecimalValues == null)
-                {
-                    return BadRequest();
-                }
-
-                if (filterDecimalValues.LowerBound == null && filterDecimalValues.UpperBound == null)
-                {
-                    return BadRequest("lower bound and upper bound can't both be NULL");
-                }
-
-                List<Product> filterCarsOnPrice = _carService.FilterCarsOnPrice(filterDecimalValues.LowerBound,
-                    filterDecimalValues.UpperBound);
-
-                List<CarResponseDto> responseDtos = new List<CarResponseDto>();
-                foreach (Product car in filterCarsOnPrice)
-                {
-                    responseDtos.Add(_carsMapper.ToDto(car));
-                }
-
-                return Ok(responseDtos);
+                return BadRequest("lower bound and upper bound can't both be NULL");
             }
-            catch (Exception ex)
+
+            List<Product> filterCarsOnPrice = _carService.FilterCarsOnPrice(filterDecimalValues.LowerBound,
+                filterDecimalValues.UpperBound);
+
+            List<CarResponseDto> responseDtos = new List<CarResponseDto>();
+            foreach (Product car in filterCarsOnPrice)
             {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-                return InternalServerError();
+                responseDtos.Add(_carsMapper.ToDto(car));
             }
+
+            return Ok(responseDtos);
         }
 
         [AllowAnonymous]
@@ -120,35 +91,26 @@ namespace garage_app_service.Controllers
         [Route("car/bouwjaar")]
         public IHttpActionResult FilterCarOnBouwJaar(FilterIntValues filterIntValues)
         {
-            try
+            if (filterIntValues == null)
             {
-                if (filterIntValues == null)
-                {
-                    return BadRequest();
-                }
-
-                if (filterIntValues.LowerBound == null && filterIntValues.UpperBound == null)
-                {
-                    return BadRequest("lower bound and upper bound can't both be NULL");
-                }
-
-                List<Product> filterCarsOnBouwJaar = _carService.FilterCarsOnBouwJaar(filterIntValues.LowerBound,
-                    filterIntValues.UpperBound);
-
-                List<CarResponseDto> responseDtos = new List<CarResponseDto>();
-                foreach (Product car in filterCarsOnBouwJaar)
-                {
-                    responseDtos.Add(_carsMapper.ToDto(car));
-                }
-
-                return Ok(responseDtos);
+                return BadRequest();
             }
-            catch (Exception ex)
+
+            if (filterIntValues.LowerBound == null && filterIntValues.UpperBound == null)
             {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.StackTrace);
-                return InternalServerError();
+                return BadRequest("lower bound and upper bound can't both be NULL");
             }
+
+            List<Product> filterCarsOnBouwJaar = _carService.FilterCarsOnBouwJaar(filterIntValues.LowerBound,
+                filterIntValues.UpperBound);
+
+            List<CarResponseDto> responseDtos = new List<CarResponseDto>();
+            foreach (Product car in filterCarsOnBouwJaar)
+            {
+                responseDtos.Add(_carsMapper.ToDto(car));
+            }
+
+            return Ok(responseDtos);
         }
 
         [AllowAnonymous]
@@ -156,32 +118,25 @@ namespace garage_app_service.Controllers
         [Route("car/specification")]
         public IHttpActionResult FilterCarOnSpecification(FilterBasedOnSpecification filterBasedOnSpecification)
         {
-            try
+            if (filterBasedOnSpecification.SpecificationType.Equals("Bouwjaar"))
             {
-                if (filterBasedOnSpecification.SpecificationType.Equals("Bouwjaar"))
-                {
-                    return BadRequest("please use filter/car/bouwjaar when wanting to filter on 'Bouwjaar'");
-                }
-
-                // throws exception if not found
-                _specificationTypeService.FindSpecificationType(filterBasedOnSpecification.SpecificationType);
-
-                List<Product> filterCarsOnSpecification = _carService.FilterCarsOnSpecification(
-                    filterBasedOnSpecification.SpecificationType,
-                    filterBasedOnSpecification.Value);
-
-                List<CarResponseDto> responseDtos = new List<CarResponseDto>();
-                foreach (Product product in filterCarsOnSpecification)
-                {
-                    responseDtos.Add(_carsMapper.ToDto(product));
-                }
-
-                return Ok(responseDtos);
+                return BadRequest("please use filter/car/bouwjaar when wanting to filter on 'Bouwjaar'");
             }
-            catch (ArgumentException argException)
+
+            // throws exception if not found
+            _specificationTypeService.FindSpecificationType(filterBasedOnSpecification.SpecificationType);
+
+            List<Product> filterCarsOnSpecification = _carService.FilterCarsOnSpecification(
+                filterBasedOnSpecification.SpecificationType,
+                filterBasedOnSpecification.Value);
+
+            List<CarResponseDto> responseDtos = new List<CarResponseDto>();
+            foreach (Product product in filterCarsOnSpecification)
             {
-                return BadRequest(argException.Message);
+                responseDtos.Add(_carsMapper.ToDto(product));
             }
+
+            return Ok(responseDtos);
         }
     }
 }

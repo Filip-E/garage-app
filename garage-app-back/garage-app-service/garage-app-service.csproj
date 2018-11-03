@@ -183,6 +183,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalExceptionHandlers\GlobalExceptionHandler.cs" />
     <Compile Include="JwtManager.cs" />
     <Compile Include="Mappers\CarsMapper.cs" />
     <Compile Include="Mappers\CategoryMapper.cs" />

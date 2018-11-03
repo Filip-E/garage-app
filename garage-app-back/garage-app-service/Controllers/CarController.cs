@@ -45,15 +45,8 @@ namespace garage_app_service.Controllers
         [Route("car/{productId}")]
         public IHttpActionResult GetCars(int productId)
         {
-            try
-            {
-                Product product = _carService.FindCar(productId);
-                return Ok(_carsMapper.ToDto(product));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            Product product = _carService.FindCar(productId);
+            return Ok(_carsMapper.ToDto(product));
         }
 
         [AllowAnonymous]
@@ -61,15 +54,8 @@ namespace garage_app_service.Controllers
         [Route("car/name/{productName}")]
         public IHttpActionResult GetCars(string productName)
         {
-            try
-            {
-                Product product = _carService.FindCar(productName);
-                return Ok(_carsMapper.ToDto(product));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            Product product = _carService.FindCar(productName);
+            return Ok(_carsMapper.ToDto(product));
         }
 
         [AllowAnonymous]
@@ -77,23 +63,16 @@ namespace garage_app_service.Controllers
         [Route("car/specification/{productId}")]
         public IHttpActionResult FindCarSpecifications(int productId)
         {
-            try
+            List<Specification> findCarSpecifications = _carService.FindCarSpecifications(productId);
+
+            List<SpecificationResponseDto> responseDtos = new List<SpecificationResponseDto>();
+
+            foreach (Specification findCarSpecification in findCarSpecifications)
             {
-                List<Specification> findCarSpecifications = _carService.FindCarSpecifications(productId);
-
-                List<SpecificationResponseDto> responseDtos = new List<SpecificationResponseDto>();
-
-                foreach (Specification findCarSpecification in findCarSpecifications)
-                {
-                    responseDtos.Add(_specificationMapper.ToDto(findCarSpecification));
-                }
-
-                return Ok(responseDtos);
+                responseDtos.Add(_specificationMapper.ToDto(findCarSpecification));
             }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            return Ok(responseDtos);
         }
 
         [AllowAnonymous]
@@ -101,21 +80,14 @@ namespace garage_app_service.Controllers
         [Route("car")]
         public IHttpActionResult InsertCar(InsertCarRequestDto carRequestDto)
         {
-            try
+            List<Specification> specifications = new List<Specification>();
+            foreach (var insertSpecificationRequestDto in carRequestDto.Specifications)
             {
-                List<Specification> specifications = new List<Specification>();
-                foreach (var insertSpecificationRequestDto in carRequestDto.Specifications)
-                {
-                    specifications.Add(_specificationMapper.ToSpecification(insertSpecificationRequestDto));
-                }
+                specifications.Add(_specificationMapper.ToSpecification(insertSpecificationRequestDto));
+            }
 
-                Product insertCar = _carService.InsertCar(_carsMapper.ToProduct(carRequestDto), specifications);
-                return Created($"car/{insertCar.Id}", _carsMapper.ToDto(insertCar));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            Product insertCar = _carService.InsertCar(_carsMapper.ToProduct(carRequestDto), specifications);
+            return Created($"car/{insertCar.Id}", _carsMapper.ToDto(insertCar));
         }
 
         [AllowAnonymous]
@@ -123,15 +95,8 @@ namespace garage_app_service.Controllers
         [Route("car")]
         public IHttpActionResult UpdateCar(UpdateCarRequestDto carRequestDto)
         {
-            try
-            {
-                _carService.UpdateCar(_carsMapper.ToProduct(carRequestDto));
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _carService.UpdateCar(_carsMapper.ToProduct(carRequestDto));
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
         [AllowAnonymous]
@@ -139,15 +104,8 @@ namespace garage_app_service.Controllers
         [Route("car/{productId}")]
         public IHttpActionResult DeleteCar(int productId)
         {
-            try
-            {
-                _carService.DeleteCar(productId);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _carService.DeleteCar(productId);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
     }
 }

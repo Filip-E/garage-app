@@ -46,20 +46,13 @@ namespace garage_app_service.Controllers
         [Route("product/{productId}")]
         public IHttpActionResult GetProduct(int productId)
         {
-            try
+            ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productId));
+            if (product == null)
             {
-                ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productId));
-                if (product == null)
-                {
-                    return NotFound();
-                }
+                return NotFound();
+            }
 
-                return Ok(product);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(product);
         }
 
         [AllowAnonymous]
@@ -67,20 +60,13 @@ namespace garage_app_service.Controllers
         [Route("product/name/{productName}")]
         public IHttpActionResult GetProduct(string productName)
         {
-            try
+            ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productName));
+            if (product == null)
             {
-                ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productName));
-                if (product == null)
-                {
-                    return NotFound();
-                }
+                return NotFound();
+            }
 
-                return Ok(product);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(product);
         }
 
         [AllowAnonymous]
@@ -88,23 +74,16 @@ namespace garage_app_service.Controllers
         [Route("product/category/{category}")]
         public IHttpActionResult GetProductsByCategory(string category)
         {
-            try
+            List<Product> productsByCategory = _productService.GetProductsByCategory(category);
+
+            List<ProductResponseDto> productResponseDtos = new List<ProductResponseDto>();
+
+            foreach (Product product in productsByCategory)
             {
-                List<Product> productsByCategory = _productService.GetProductsByCategory(category);
-
-                List<ProductResponseDto> productResponseDtos = new List<ProductResponseDto>();
-
-                foreach (Product product in productsByCategory)
-                {
-                    productResponseDtos.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(productResponseDtos);
+                productResponseDtos.Add(_productsMapper.ToDto(product));
             }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            return Ok(productResponseDtos);
         }
 
         [AllowAnonymous]
@@ -141,17 +120,9 @@ namespace garage_app_service.Controllers
         [Route("product")]
         public IHttpActionResult UpdateProduct(UpdateProductRequestDto productRequestDto)
         {
-            try
-            {
-                Product product = _productsMapper.ToProduct(productRequestDto);
-                _productService.UpdateProduct(product, productRequestDto.CategoryTypes);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
-            {
-                Debug.WriteLine(ex.StackTrace);
-                return BadRequest(ex.Message);
-            }
+            Product product = _productsMapper.ToProduct(productRequestDto);
+            _productService.UpdateProduct(product, productRequestDto.CategoryTypes);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
         [AllowAnonymous]
@@ -159,15 +130,8 @@ namespace garage_app_service.Controllers
         [Route("product/{productId}")]
         public IHttpActionResult DeleteProduct(int productId)
         {
-            try
-            {
-                _productService.DeleteProduct(productId);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _productService.DeleteProduct(productId);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
         [AllowAnonymous]
@@ -190,7 +154,7 @@ namespace garage_app_service.Controllers
                     {
                         int MaxContentLength = 1024 * 1024 * 2; //Size = 1 MB  
 
-                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".png" };
+                        IList<string> AllowedFileExtensions = new List<string> {".jpg", ".png"};
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
                         if (!AllowedFileExtensions.Contains(extension))
