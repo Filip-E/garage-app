@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace garage_app_entities
 {
@@ -11,6 +7,7 @@ namespace garage_app_entities
         public int Id { get; set; }
 
         public string Type { get; set; }
+        public bool IsRequiredForCar { get; set; }
 
         public List<Specification> Specifications { get; set; }
 

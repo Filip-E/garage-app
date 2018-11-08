@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
+using garage_app_service.GlobalExceptionHandlers;
 
-namespace WebApplication1
+namespace garage_app_service
 {
     public static class WebApiConfig
     {
@@ -26,6 +28,9 @@ namespace WebApplication1
             var cors = new EnableCorsAttribute("http://localhost:3000", "*", "*");
             config.EnableCors(cors);
             config.Filters.Add(new AuthorizeAttribute());
+
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+
         }
     }
 }

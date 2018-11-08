@@ -1,3 +1,7 @@
+# do not upload images to github
+garage-app-back/garage-app-service/App_Data/
+
+
 # Compiled source #
 ###################
 *.com

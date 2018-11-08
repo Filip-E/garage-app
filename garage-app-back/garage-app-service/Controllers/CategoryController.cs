@@ -6,11 +6,11 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
-using WebApplication1.DTOs.Request;
-using WebApplication1.DTOs.Response;
-using WebApplication1.Mappers;
+using garage_app_service.DTOs.Request;
+using garage_app_service.DTOs.Response;
+using garage_app_service.Mappers;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class CategoryController : ApiController
     {
@@ -24,6 +24,7 @@ namespace WebApplication1.Controllers
             _categoryService = new CategoryService();
             _categoryMapper = new CategoryMapper();
         }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("category")]
@@ -34,6 +35,7 @@ namespace WebApplication1.Controllers
             {
                 categoryResponseDtos.Add(_categoryMapper.ToDto(category));
             }
+
             return Ok(categoryResponseDtos);
         }
 
@@ -66,35 +68,19 @@ namespace WebApplication1.Controllers
         [Route("category")]
         public IHttpActionResult InsertCategory(InsertCategoryRequestDto productRequestDto)
         {
-            try
-            {
-                Category category = _categoryMapper.ToCategory(productRequestDto);
-                category.Id = _categoryService.InsertCategory(category);
-                return Created($"category/{category.Id}", _categoryMapper.ToDto(category));
-            }
-            catch (ArgumentException ex)
-            {
-
-                return BadRequest(ex.Message);
-
-            }
+            Category category = _categoryMapper.ToCategory(productRequestDto);
+            category.Id = _categoryService.InsertCategory(category);
+            return Created($"category/{category.Id}", _categoryMapper.ToDto(category));
         }
+
         [AllowAnonymous]
         [HttpPut]
         [Route("category")]
         public IHttpActionResult UpdateCategory(UpdateCategoryRequestDto updateCategoryRequestDto)
         {
-            try
-            {
-                Category category = _categoryMapper.ToCategory(updateCategoryRequestDto);
-                _categoryService.UpdateCategory(category);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
-            {
-                Debug.WriteLine(ex.StackTrace);
-                return BadRequest(ex.Message);
-            }
+            Category category = _categoryMapper.ToCategory(updateCategoryRequestDto);
+            _categoryService.UpdateCategory(category);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
         [AllowAnonymous]
@@ -102,15 +88,8 @@ namespace WebApplication1.Controllers
         [Route("category/{categoryId}")]
         public IHttpActionResult DeleteCategory(int categoryId)
         {
-            try
-            {
-                _categoryService.DeleteCategory(categoryId);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _categoryService.DeleteCategory(categoryId);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
     }
 }

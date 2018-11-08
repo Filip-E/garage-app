@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {
     fetchProducts,
-    fetchProductsAndFilter,
+    fetchProductsAndFilter, filterStock,
     handleClickOpenDialog,
     makeEditDialogFalse,
     setProductId
@@ -22,10 +22,12 @@ class ProductsContainer extends Component {
         this.handleCloseAddCategory = this.handleCloseAddCategory.bind(this);
         this.handleOpenAddCategory = this.handleOpenAddCategory.bind(this);
     }
-    handleCloseAddCategory(){
-        this.setState({openAddCategoryDialogState : false})
+
+    handleCloseAddCategory() {
+        this.setState({openAddCategoryDialogState: false})
     }
-    handleOpenAddCategory(){
+
+    handleOpenAddCategory() {
         this.setState({openAddCategoryDialogState: true})
     }
 
@@ -46,9 +48,14 @@ class ProductsContainer extends Component {
             }
 
         }
-        if(prevProps.responseAddCategory !== this.props.responseAddCategory){
-            if(this.props.responseAddCategory !== null){
+        if (prevProps.responseAddCategory !== this.props.responseAddCategory) {
+            if (this.props.responseAddCategory !== null) {
                 this.setState({openAddCategoryDialogState: false})
+            }
+        }
+        if (!this.props.token) {
+            if (!prevProps.products.equals(this.props.products)) {
+                this.props.filterStock();
             }
         }
     }
@@ -127,6 +134,9 @@ const mapDispatchToProps = dispatch => {
         },
         fetchProductsAndFilter: (category) => {
             dispatch(fetchProductsAndFilter(category));
+        },
+        filterStock: () => {
+            dispatch(filterStock());
         },
         prepareAddDialog: (productId) => {
             dispatch(makeEditDialogFalse());

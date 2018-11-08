@@ -2,6 +2,7 @@
 using DAL.Repositories;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using garage_app_entities;
 
 namespace garage_app_bl.Services
@@ -39,7 +40,7 @@ namespace garage_app_bl.Services
 
         public List<Product> GetProductsByCategory(string categoryType)
         {
-            return _repository.GetProductsByCategory(categoryType);
+            return _repository.GetProductsByCategory(categoryType).ToList();
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace garage_app_bl.Services
         {
             if (categories.Length == 0)
             {
-                return _repository.GetProductsByCategory(categoryType);
+                return _repository.GetProductsByCategory(categoryType).ToList();
             }
             foreach (string category in categories)
             {
@@ -125,7 +126,7 @@ namespace garage_app_bl.Services
         {
             if (names.Length == 0)
             {
-                return _repository.GetProductsByCategory(categoryType);
+                return _repository.GetProductsByCategory(categoryType).ToList();
             }
             foreach (string name in names)
             {

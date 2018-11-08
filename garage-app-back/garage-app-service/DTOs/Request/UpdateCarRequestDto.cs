@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApplication1.DTOs.Request
+namespace garage_app_service.DTOs.Request
 {
     public class UpdateCarRequestDto
     {

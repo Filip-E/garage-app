@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
-using WebApplication1.DTOs.Request;
-using WebApplication1.DTOs.Response;
-using WebApplication1.Mappers;
+using garage_app_service.DTOs.Request;
+using garage_app_service.DTOs.Response;
+using garage_app_service.Mappers;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class SpecificationController : ApiController
     {
@@ -43,18 +41,11 @@ namespace WebApplication1.Controllers
         [Route("specification/{specificationId}")]
         public IHttpActionResult FindSpecification(int specificationId)
         {
-            try
-            {
-                return Ok(
-                    _specificationMapper.ToDto(
-                        _specificationService.FindSpecification(specificationId)
-                    )
-                );
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(
+                _specificationMapper.ToDto(
+                    _specificationService.FindSpecification(specificationId)
+                )
+            );
         }
 
         [AllowAnonymous]
@@ -62,17 +53,10 @@ namespace WebApplication1.Controllers
         [Route("specification")]
         public IHttpActionResult InsertSpecification(InsertSpecificationRequestDto requestDto)
         {
-            try
-            {
-                Specification specificationType = _specificationMapper.ToSpecification(requestDto);
-                specificationType.Id = _specificationService.InsertSpecification(specificationType);
-                return Created($"specification/{specificationType.Id}",
-                    _specificationMapper.ToDto(specificationType));
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            Specification specificationType = _specificationMapper.ToSpecification(requestDto);
+            specificationType.Id = _specificationService.InsertSpecification(specificationType);
+            return Created($"specification/{specificationType.Id}",
+                _specificationMapper.ToDto(specificationType));
         }
 
 
@@ -81,16 +65,9 @@ namespace WebApplication1.Controllers
         [Route("specification")]
         public IHttpActionResult UpdateSpecification(UpdateSpecificationRequestDto requestDto)
         {
-            try
-            {
-                Specification specificationType = _specificationMapper.ToSpecification(requestDto);
-                _specificationService.UpdateSpecification(specificationType);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            Specification specificationType = _specificationMapper.ToSpecification(requestDto);
+            _specificationService.UpdateSpecification(specificationType);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
         [AllowAnonymous]
@@ -98,15 +75,8 @@ namespace WebApplication1.Controllers
         [Route("specification/{specificationId}")]
         public IHttpActionResult DeleteSpecification(int specificationId)
         {
-            try
-            {
-                _specificationService.DeleteSpecification(specificationId);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _specificationService.DeleteSpecification(specificationId);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using garage_app_entities;
 
@@ -9,15 +8,17 @@ namespace DAL.Repositories
     public class CarRepository : ProductRepository
     {
         private readonly SpecificationRepository _specificationRepository;
+        private readonly CategoryRepository _categoryRepository;
 
         public CarRepository(MyDbContext context) : base(context)
         {
             _specificationRepository = new SpecificationRepository(context);
+            _categoryRepository = new CategoryRepository(context);
         }
 
         public List<Product> GetCars()
         {
-            List<Product> productsByCategory = base.GetProductsByCategory("Cars");
+            List<Product> productsByCategory = base.GetProductsByCategory("Cars").ToList();
 
             foreach (Product product in productsByCategory)
             {

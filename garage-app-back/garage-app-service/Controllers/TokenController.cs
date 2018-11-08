@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using garage_app_bl.Services;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class TokenController : ApiController
     {
@@ -21,21 +16,14 @@ namespace WebApplication1.Controllers
         [Route("token/{username}/{password}")]
         public IHttpActionResult Get(string username, string password)
         {
-            try
+            bool isUserAuthenticated = _authService.ValidateUser(username, password);
+            if (isUserAuthenticated)
             {
-                bool isUserAuthenticated = _authService.ValidateUser(username, password);
-                if (isUserAuthenticated)
-                {
-                    return Ok(JwtManager.GenerateToken(username));
-                }
-                else
-                {
-                    return BadRequest("Wrong username and password combination");
-                }
+                return Ok(JwtManager.GenerateToken(username));
             }
-            catch (Exception)
+            else
             {
-                return InternalServerError();
+                return BadRequest("Wrong username and password combination");
             }
         }
     }

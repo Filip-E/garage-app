@@ -2,32 +2,27 @@
 using garage_app_bl.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Web.Security;
 using garage_app_entities;
-using WebApplication1.DTOs.Request;
-using WebApplication1.DTOs.Response;
-using WebApplication1.Filter;
-using WebApplication1.Mappers;
+using garage_app_service.DTOs.Request;
+using garage_app_service.DTOs.Response;
+using garage_app_service.Mappers;
 
-namespace WebApplication1.Controllers
+namespace garage_app_service.Controllers
 {
     public class ProductController : ApiController
     {
-        private readonly ProductService _service;
+        private readonly ProductService _productService;
         private readonly ProductsMapper _productsMapper;
 
         public ProductController()
         {
-            _service = new ProductService();
+            _productService = new ProductService();
             _productsMapper = new ProductsMapper();
         }
 
@@ -37,7 +32,7 @@ namespace WebApplication1.Controllers
         public IHttpActionResult GetAllProducts()
         {
             List<ProductResponseDto> response = new List<ProductResponseDto>();
-            List<Product> products = _service.GetProducts();
+            List<Product> products = _productService.GetProducts();
             foreach (Product p in products)
             {
                 response.Add(_productsMapper.ToDto(p));
@@ -51,20 +46,13 @@ namespace WebApplication1.Controllers
         [Route("product/{productId}")]
         public IHttpActionResult GetProduct(int productId)
         {
-            try
+            ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productId));
+            if (product == null)
             {
-                ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productId));
-                if (product == null)
-                {
-                    return NotFound();
-                }
+                return NotFound();
+            }
 
-                return Ok(product);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(product);
         }
 
         [AllowAnonymous]
@@ -72,20 +60,13 @@ namespace WebApplication1.Controllers
         [Route("product/name/{productName}")]
         public IHttpActionResult GetProduct(string productName)
         {
-            try
+            ProductResponseDto product = _productsMapper.ToDto(_productService.FindProduct(productName));
+            if (product == null)
             {
-                ProductResponseDto product = _productsMapper.ToDto(_service.FindProduct(productName));
-                if (product == null)
-                {
-                    return NotFound();
-                }
+                return NotFound();
+            }
 
-                return Ok(product);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(product);
         }
 
         [AllowAnonymous]
@@ -93,23 +74,16 @@ namespace WebApplication1.Controllers
         [Route("product/category/{category}")]
         public IHttpActionResult GetProductsByCategory(string category)
         {
-            try
+            List<Product> productsByCategory = _productService.GetProductsByCategory(category);
+
+            List<ProductResponseDto> productResponseDtos = new List<ProductResponseDto>();
+
+            foreach (Product product in productsByCategory)
             {
-                List<Product> productsByCategory = _service.GetProductsByCategory(category);
-
-                List<ProductResponseDto> productResponseDtos = new List<ProductResponseDto>();
-
-                foreach (Product product in productsByCategory)
-                {
-                    productResponseDtos.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(productResponseDtos);
+                productResponseDtos.Add(_productsMapper.ToDto(product));
             }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
+
+            return Ok(productResponseDtos);
         }
 
         [AllowAnonymous]
@@ -127,14 +101,14 @@ namespace WebApplication1.Controllers
                 }
 
                 Product product = _productsMapper.ToProduct(productRequestDto);
-                idInsertedProduct = _service.InsertProduct(product, productRequestDto.CategoryTypes);
+                idInsertedProduct = _productService.InsertProduct(product, productRequestDto.CategoryTypes);
                 return Created($"product/productName?productName={product.Name}", _productsMapper.ToDto(product));
             }
             catch (Exception ex)
             {
                 if (idInsertedProduct != -1)
                 {
-                    _service.DeleteProduct(idInsertedProduct);
+                    _productService.DeleteProduct(idInsertedProduct);
                 }
 
                 return BadRequest(ex.Message);
@@ -146,17 +120,9 @@ namespace WebApplication1.Controllers
         [Route("product")]
         public IHttpActionResult UpdateProduct(UpdateProductRequestDto productRequestDto)
         {
-            try
-            {
-                Product product = _productsMapper.ToProduct(productRequestDto);
-                _service.UpdateProduct(product, productRequestDto.CategoryTypes);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
-            {
-                Debug.WriteLine(ex.StackTrace);
-                return BadRequest(ex.Message);
-            }
+            Product product = _productsMapper.ToProduct(productRequestDto);
+            _productService.UpdateProduct(product, productRequestDto.CategoryTypes);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
         [AllowAnonymous]
@@ -164,71 +130,14 @@ namespace WebApplication1.Controllers
         [Route("product/{productId}")]
         public IHttpActionResult DeleteProduct(int productId)
         {
-            try
-            {
-                _service.DeleteProduct(productId);
-                return new StatusCodeResult(HttpStatusCode.NoContent, this);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _productService.DeleteProduct(productId);
+            return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
-        // todo add /filter before endpoints
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPost]
-        [Route("product/category/categories")]
-        public IHttpActionResult FilterProductBasedOnCategories(FilterBasedOnCategoriesRequestDto categoryRequestDto)
-        {
-            try
-            {
-                List<Product> productsList =
-                    _service.FilterProductBasedOnCategories(categoryRequestDto.Types, categoryRequestDto.Category);
-                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
-
-                foreach (Product product in productsList)
-                {
-                    responseList.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(responseList);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("product/names")]
-        public IHttpActionResult FilterProductBasedOnNames(FilterBasedOnNamesRequestDto namesRequestDto)
-        {
-            try
-            {
-                List<Product> productsList =
-                    _service.FilterProductBasedOnNames(namesRequestDto.Names, namesRequestDto.Category);
-                List<ProductResponseDto> responseList = new List<ProductResponseDto>();
-
-                foreach (Product product in productsList)
-                {
-                    responseList.Add(_productsMapper.ToDto(product));
-                }
-
-                return Ok(responseList);
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("product/image/")]
-        public HttpResponseMessage PostFile()
+        [Route("product/image/{productId}")]
+        public HttpResponseMessage PostFile(int productId)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
@@ -243,21 +152,21 @@ namespace WebApplication1.Controllers
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-                        int MaxContentLength = 1024 * 1024 * 2; //Size = 1 MB  
+                        int maxContentLength = 1024 * 1024 * 2; //Size = 2 MB  
 
-                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".png" };
+                        IList<string> allowedFileExtensions = new List<string> {".jpg", ".png"};
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
-                        if (!AllowedFileExtensions.Contains(extension))
+                        if (!allowedFileExtensions.Contains(extension))
                         {
-                            var message = string.Format("Please Upload image of type .jpg,.png.");
+                            var message = "Please Upload image of type .jpg,.png.";
 
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
                         }
-                        else if (postedFile.ContentLength > MaxContentLength)
+                        else if (postedFile.ContentLength > maxContentLength)
                         {
-                            var message = string.Format("Please Upload a file upto 1 mb.");
+                            var message = "Please Upload a file up to 1 mb.";
 
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
@@ -268,24 +177,27 @@ namespace WebApplication1.Controllers
                                 HttpContext.Current.Server.MapPath("~/App_Data/" + postedFile.FileName);
 
                             postedFile.SaveAs(filePath);
+                            Debug.WriteLine("+++++++++++PICS++++++++++++++");
+                            Debug.WriteLine(productId);
+                            Debug.WriteLine(filePath);
                         }
                     }
 
-                    var message1 = string.Format("Image Updated Successfully.");
+                    var message1 = "Image Updated Successfully.";
                     return Request.CreateErrorResponse(HttpStatusCode.Created, message1);
                     ;
                 }
 
-                var res = string.Format("Please Upload a image.");
+                var res = "Please Upload a image.";
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
             catch (Exception)
             {
-                var res = string.Format("some Message");
+                var res = "some Message";
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
-        }
+        }*/
     }
 }

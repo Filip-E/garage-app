@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Cryptography;
+using System.Linq;
 using DAL;
 using DAL.Repositories;
 using garage_app_entities;
@@ -12,16 +11,18 @@ namespace garage_app_bl.Services
     {
         private readonly CarRepository _carRepository;
         private readonly CategoryRepository _categoryRepository;
+        private readonly ProductRepository _productRepository;
         private readonly SpecificationTypeRepository _specificationTypeRepository;
         private readonly SpecificationRepository _specificationRepository;
 
         public CarService()
         {
-            MyDbContext myDbContext = new MyDbContext();
-            _carRepository = new CarRepository(myDbContext);
-            _categoryRepository = new CategoryRepository(myDbContext);
-            _specificationTypeRepository = new SpecificationTypeRepository(myDbContext);
-            _specificationRepository = new SpecificationRepository(myDbContext);
+            MyDbContext dbContext = new MyDbContext();
+            _carRepository = new CarRepository(dbContext);
+            _categoryRepository = new CategoryRepository(dbContext);
+            _productRepository = new ProductRepository(dbContext);
+            _specificationTypeRepository = new SpecificationTypeRepository(dbContext);
+            _specificationRepository = new SpecificationRepository(dbContext);
         }
 
         public List<Product> GetCars()
@@ -45,7 +46,6 @@ namespace garage_app_bl.Services
             this.FindCar(productId);
 
             return _carRepository.FindSpecificationsForProduct(productId);
-
         }
 
         public Product InsertCar(Product product, List<Specification> specifications)
@@ -66,7 +66,8 @@ namespace garage_app_bl.Services
                 // if specification does not exist: insert specification and add to updated list
                 else
                 {
-                    specification.SpecificationType = _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
+                    specification.SpecificationType =
+                        _specificationTypeRepository.FindSpecificationType(specification.SpecificationTypeId);
 
                     int newSpecificationId = _specificationRepository.InsertSpecification(specification);
 
@@ -91,10 +92,13 @@ namespace garage_app_bl.Services
             CheckRequiredSpecificationTypes(product.Specifications);
             foreach (Specification productSpecification in product.Specifications)
             {
-                SpecificationType findSpecificationType = _specificationTypeRepository.FindSpecificationType(productSpecification.SpecificationTypeId);
-                int index = product.Specifications.FindIndex(specification => specification.Id == productSpecification.Id);
+                SpecificationType findSpecificationType =
+                    _specificationTypeRepository.FindSpecificationType(productSpecification.SpecificationTypeId);
+                int index = product.Specifications.FindIndex(specification =>
+                    specification.Id == productSpecification.Id);
                 product.Specifications[index].SpecificationType = findSpecificationType;
             }
+
             List<Category> categories = new List<Category>();
             Category car = _categoryRepository.FindCategory("Cars");
             categories.Add(car);
@@ -107,25 +111,89 @@ namespace garage_app_bl.Services
             _carRepository.DeleteCar(productId);
         }
 
+        public List<Product> FilterCarsOnPrice(decimal? lowerBound, decimal? upperBound)
+        {
+            var productsByCategory = _productRepository.GetProductsByCategory("Cars");
+            _carRepository.GetCars();
+
+            List<Product> filteredProducts;
+            if (upperBound == null)
+            {
+                filteredProducts = productsByCategory.Where(p => p.Price >= lowerBound).ToList();
+            }
+            else if (lowerBound == null)
+            {
+                filteredProducts = productsByCategory.Where(p => p.Price <= upperBound).ToList();
+            }
+            else
+            {
+                filteredProducts = productsByCategory.Where(p => p.Price >= lowerBound && p.Price <= upperBound)
+                    .ToList();
+            }
+
+            foreach (Product product in filteredProducts)
+            {
+                product.Specifications = _specificationRepository.FindSpecificationsForProduct(product.Id);
+            }
+
+            return filteredProducts;
+        }
+
+        public List<Product> FilterCarsOnBouwJaar(int? lowerBound, int? upperBound)
+        {
+            List<Product> cars = _carRepository.GetCars();
+
+            List<Product> filteredCars = new List<Product>();
+            foreach (Product car in cars)
+            {
+                Specification bouwJaar = car.Specifications.Find(specification =>
+                    specification.SpecificationType.Type.Equals("Bouwjaar"));
+                bool isWithinLimits;
+                if (upperBound == null)
+                {
+                    isWithinLimits = int.Parse(bouwJaar.Value) >= lowerBound;
+                }
+                else if (lowerBound == null)
+                {
+                    isWithinLimits = int.Parse(bouwJaar.Value) <= upperBound;
+                }
+                else
+                {
+                    isWithinLimits = int.Parse(bouwJaar.Value) >= lowerBound && int.Parse(bouwJaar.Value) <= upperBound;
+                }
+
+                if (isWithinLimits)
+                {
+                    filteredCars.Add(car);
+                }
+            }
+
+            return filteredCars;
+        }
+
+        public List<Product> FilterCarsOnSpecification(string specificationType, string value)
+        {
+            List<Product> cars = _carRepository.GetCars();
+
+            List<Product> filteredProducts = new List<Product>();
+            foreach (Product car in cars)
+            {
+                Specification findSpecification = car.Specifications
+                    .Find(specification => specification.SpecificationType.Type.Equals(specificationType));
+
+                if (findSpecification.Value.Equals(value))
+                {
+                    filteredProducts.Add(car);
+                }
+            }
+
+            return filteredProducts;
+        }
+
         private void CheckRequiredSpecificationTypes(List<Specification> specifications)
         {
-            List<SpecificationType> requiredSpecificationTypes = new List<SpecificationType>();
-            List<string> requiredSpecificationTypeNames = new List<string>()
-            {
-                "Merk",
-                "Model",
-                "Bouwjaar",
-                "Cilinderhoud",
-                "Brandstoftype",
-                "Kleur"
-            };
-
-            foreach (string name in requiredSpecificationTypeNames)
-            {
-                SpecificationType findSpecificationType =
-                    _specificationTypeRepository.FindSpecificationType(name);
-                requiredSpecificationTypes.Add(findSpecificationType);
-            }
+            List<SpecificationType> requiredSpecificationTypes =
+                _specificationTypeRepository.GetRequiredCarSpecificationTypes();
 
             foreach (SpecificationType requiredSpecificationType in requiredSpecificationTypes)
             {

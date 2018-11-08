@@ -35,6 +35,10 @@ namespace garage_app_bl.Services
             return _repository.GetSpecificationTypes();
         }
 
+        public List<SpecificationType> GetRequiredCarSpecificationTypes()
+        {
+            return _repository.GetRequiredCarSpecificationTypes();
+        }
         public SpecificationType FindSpecificationType(int id)
         {
             SpecificationType findSpecificationType = _repository.FindSpecificationType(id);
@@ -57,7 +61,7 @@ namespace garage_app_bl.Services
             }
             else
             {
-                throw new ArgumentException($"SpecificationType with Type: {type} was not found");
+                throw new ArgumentException($"SpecificationType with Type: '{type}' was not found");
             }
         }
 

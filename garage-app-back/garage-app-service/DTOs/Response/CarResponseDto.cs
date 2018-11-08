@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApplication1.DTOs.Response
+namespace garage_app_service.DTOs.Response
 {
     public class CarResponseDto
     {

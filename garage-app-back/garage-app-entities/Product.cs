@@ -15,10 +15,13 @@ namespace garage_app_entities
         public List<Category> Categories { get; set; }
 
         public List<Specification> Specifications { get; set; }
+
+        public List<Image> Images { get; set; }
         public Product()
         {
             Categories = new List<Category>();
             Specifications = new List<Specification>();
+            Images = new List<Image>();
         }
 
         public override string ToString()

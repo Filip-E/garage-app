@@ -81,10 +81,10 @@ namespace DAL.Repositories
             return new List<Category>(_context.Products.Where(p => p.Id == productId).SelectMany(c => c.Categories));
         }
 
-        public List<Product> GetProductsByCategory(string categoryType)
+        public IQueryable<Product> GetProductsByCategory(string categoryType)
         {
-            return new List<Product>(_context.Categories.Where(c => c.Type == categoryType)
-                .SelectMany(c => c.Products));
+            return _context.Categories.Where(c => c.Type == categoryType)
+                .SelectMany(c => c.Products);
         }
 
         public void UpdateProduct(Product product)

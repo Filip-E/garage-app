@@ -1,10 +1,6 @@
 ﻿using MySql.Data.Entity;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using garage_app_entities;
 
 namespace DAL
@@ -18,6 +14,7 @@ namespace DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<SpecificationType> SpecificationTypes { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public void DetachAllEntities()
         {
@@ -60,6 +57,13 @@ namespace DAL
             modelBuilder.Entity<SpecificationType>()
                 .Property(specificationType => specificationType.Type)
                 .HasMaxLength(64)
+                .IsRequired();
+
+            modelBuilder.Entity<Image>()
+                .Property(image => image.FilePath)
+                .IsRequired();
+            modelBuilder.Entity<Image>()
+                .Property(image => image.ProductId)
                 .IsRequired();
 
             modelBuilder.Entity<User>()
