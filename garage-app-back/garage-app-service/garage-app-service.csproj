@@ -152,6 +152,7 @@
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\FilterController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SpecificationController.cs" />
     <Compile Include="Controllers\SpecificationTypeController.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="DTOs\Request\UpdateSpecificationTypeRequestDto.cs" />
     <Compile Include="DTOs\Response\CarResponseDto.cs" />
     <Compile Include="DTOs\Response\CategoryResponseDTO.cs" />
+    <Compile Include="DTOs\Response\ImageResponseDto.cs" />
     <Compile Include="DTOs\Response\ProductResponseDTO.cs" />
     <Compile Include="DTOs\Response\SpecificationResponseDto.cs" />
     <Compile Include="DTOs\Response\SpecificationTypeResponseDto.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="JwtManager.cs" />
     <Compile Include="Mappers\CarsMapper.cs" />
     <Compile Include="Mappers\CategoryMapper.cs" />
+    <Compile Include="Mappers\ImageMapper.cs" />
     <Compile Include="Mappers\ProductsMapper.cs" />
     <Compile Include="Mappers\SpecificationMapper.cs" />
     <Compile Include="Mappers\SpecificationTypeMapper.cs" />

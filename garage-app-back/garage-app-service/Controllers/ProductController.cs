@@ -134,10 +134,10 @@ namespace garage_app_service.Controllers
             return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPost]
-        [Route("product/image/")]
-        public HttpResponseMessage PostFile()
+        [Route("product/image/{productId}")]
+        public HttpResponseMessage PostFile(int productId)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
@@ -152,21 +152,21 @@ namespace garage_app_service.Controllers
                     var postedFile = httpRequest.Files[file];
                     if (postedFile != null && postedFile.ContentLength > 0)
                     {
-                        int MaxContentLength = 1024 * 1024 * 2; //Size = 1 MB  
+                        int maxContentLength = 1024 * 1024 * 2; //Size = 2 MB  
 
-                        IList<string> AllowedFileExtensions = new List<string> {".jpg", ".png"};
+                        IList<string> allowedFileExtensions = new List<string> {".jpg", ".png"};
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
-                        if (!AllowedFileExtensions.Contains(extension))
+                        if (!allowedFileExtensions.Contains(extension))
                         {
-                            var message = string.Format("Please Upload image of type .jpg,.png.");
+                            var message = "Please Upload image of type .jpg,.png.";
 
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
                         }
-                        else if (postedFile.ContentLength > MaxContentLength)
+                        else if (postedFile.ContentLength > maxContentLength)
                         {
-                            var message = string.Format("Please Upload a file upto 1 mb.");
+                            var message = "Please Upload a file up to 1 mb.";
 
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
@@ -177,24 +177,27 @@ namespace garage_app_service.Controllers
                                 HttpContext.Current.Server.MapPath("~/App_Data/" + postedFile.FileName);
 
                             postedFile.SaveAs(filePath);
+                            Debug.WriteLine("+++++++++++PICS++++++++++++++");
+                            Debug.WriteLine(productId);
+                            Debug.WriteLine(filePath);
                         }
                     }
 
-                    var message1 = string.Format("Image Updated Successfully.");
+                    var message1 = "Image Updated Successfully.";
                     return Request.CreateErrorResponse(HttpStatusCode.Created, message1);
                     ;
                 }
 
-                var res = string.Format("Please Upload a image.");
+                var res = "Please Upload a image.";
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
             catch (Exception)
             {
-                var res = string.Format("some Message");
+                var res = "some Message";
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
-        }
+        }*/
     }
 }

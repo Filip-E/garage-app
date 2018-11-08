@@ -94,12 +94,17 @@
     <Compile Include="Migrations\201810311700233_addsIsRequiredForCarProperty.Designer.cs">
       <DependentUpon>201810311700233_addsIsRequiredForCarProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811081538387_IntroducesImages.cs" />
+    <Compile Include="Migrations\201811081538387_IntroducesImages.Designer.cs">
+      <DependentUpon>201811081538387_IntroducesImages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyDbContext.cs" />
     <Compile Include="MyMigrationSQLGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CarRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\ImageRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SpecificationRepository.cs" />
     <Compile Include="Repositories\SpecificationTypeRepository.cs" />
@@ -127,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810311700233_addsIsRequiredForCarProperty.resx">
       <DependentUpon>201810311700233_addsIsRequiredForCarProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811081538387_IntroducesImages.resx">
+      <DependentUpon>201811081538387_IntroducesImages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
