@@ -7,6 +7,7 @@ import BasicDialogContainer from "../containers/BasicDialogContainer";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AddCategoryDialogContainer from "../containers/AddCategoryDialogContainer";
 import FilterContainer from "../containers/FilterContainer";
+import Typography from "@material-ui/core/Typography/Typography";
 
 const styles = () => ({
     root: {
@@ -36,8 +37,10 @@ class ProductsComponent extends Component {
         }
         return (
             <div>
-                <h1>{this.props.pageTitle} {actions}</h1>
-                <FilterContainer productCategory={this.props.productCategory} />
+                <Typography>
+                    <h1>{this.props.pageTitle} {actions}</h1><br/>
+                </Typography>
+                <FilterContainer productCategory={this.props.productCategory}/>
                 <Grid container spacing={24}>
                     {this.props.products.map(product => {
                         return (

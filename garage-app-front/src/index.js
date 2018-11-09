@@ -10,13 +10,14 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import Provider from "react-redux/es/components/Provider";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/es/styles/createMuiTheme";
+import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 
 
 const middleware = applyMiddleware(thunk);
 const store = createStore(rootReducer, composeWithDevTools(middleware));
 const theme = createMuiTheme({
     palette: {
-        type: 'light',
+        type: 'dark',
     },
     typography: {
         useNextVariants: true,
@@ -25,6 +26,7 @@ const theme = createMuiTheme({
 });
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
+        <CssBaseline/>
         <Provider store={store}>
             <App/>
         </Provider>

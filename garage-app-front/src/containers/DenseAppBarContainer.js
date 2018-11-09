@@ -8,7 +8,9 @@ import {withRouter} from "react-router-dom";
 class DenseAppBarContainer extends Component {
 
     render() {
-        return(<DenseAppBar auth={this.props.auth} logout={this.props.logout}/>)
+        return (
+            <DenseAppBar auth={this.props.auth} logout={this.props.logout}/>
+        )
     }
 }
 
@@ -20,7 +22,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () =>{
+        logout: () => {
             dispatch(logOut())
         }
     };

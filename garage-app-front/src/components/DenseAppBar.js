@@ -14,6 +14,7 @@ import {getCookie} from "../utils/CookieManager";
 import RetroVintageProductsWrapper from "../wrappers/RetroVintageProductsWrapper";
 import PartsProductsWrapper from "../wrappers/PartsProductsWrapper";
 import CarsProductsWrapper from "../wrappers/CarsProductsWrapper";
+import logo from "../images/j-cars.png";
 
 const styles = {
     root: {
@@ -48,6 +49,7 @@ class DenseAppBar extends Component {
 
         return (
             <div className={classes.root}>
+                <img src={logo} alt="j-cars logo"/>
                 <AppBar position="static">
                     <Toolbar variant="dense">
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={home}>

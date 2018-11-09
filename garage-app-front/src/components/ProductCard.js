@@ -32,9 +32,9 @@ class ProductCard extends Component {
         let renderResult = [];
         let categories = this.props.categories;
         if (categories[0] !== "Retro_Vintage") {
-            renderResult.push(<Typography key="titleCategoriesList" variant="h6" ><br/> Categories </Typography>);
+            renderResult.push(<Typography key="titleCategoriesList" variant="subheading" ><br/> Categories </Typography>);
             for (let i = 1; i < categories.length; i++) {
-                renderResult.push(<Typography key={categories[i]} component="p">{categories[i]}</Typography>)
+                renderResult.push(<Typography key={categories[i]}><li>{categories[i]}</li></Typography>)
             }
         }
         return (renderResult);
@@ -43,9 +43,9 @@ class ProductCard extends Component {
     renderSpecifications() {
         let renderResult = [];
         let specifications = this.props.specifications;
-        renderResult.push(<Typography key="titleSpecificationsList" variant="h6" ><br/> Specifications </Typography>);
+        renderResult.push(<Typography key="titleSpecificationsList" variant="subheading" ><br/> Specifications </Typography>);
         for (let i = 0; i < specifications.length; i++) {
-            renderResult.push(<Typography key={specifications[i].Id} component="p">{specifications[i].SpecificationType}: {specifications[i].Value}</Typography>)
+            renderResult.push(<Typography key={specifications[i].Id}><li>{specifications[i].SpecificationType}: {specifications[i].Value}</li></Typography>)
         }
         return(renderResult);
     }
@@ -63,7 +63,7 @@ class ProductCard extends Component {
             <Grid item>
                 <Card>
                     <CardContent>
-                        <Typography gutterBottom variant="h5">
+                        <Typography variant='title'>
                             {this.props.product.Name}
                         </Typography>
                         <Typography component="p">

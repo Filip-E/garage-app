@@ -10,41 +10,41 @@ const fbStyle = {
     'textAlign': 'center'
 };
 
-const style = {
-    'textAlign': 'left'
+const imageStyle = {
+    backgroundColor: '#303030',
 };
 
 class Home extends Component {
-
-
     render() {
         return (
-            <div id="home-root" style={style}>
+            <div id="home-root">
                 <Grid container spacing={24}>
                     <Grid item xs={4}>
-                        <Paper elevation={0}>
+                        <Paper elevation={0} style={imageStyle}>
                             <img src="http://www.j-cars.be/images/website2.jpg" title="" alt=""/>
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
                         <br/>
-                        <Paper elevation={0}>
+                        <Paper elevation={0} style={{backgroundColor: '#303030'}}>
                             <Typography variant="headline">
                                 <span>Over ons:</span>
                             </Typography>
-                            <span>Bij ons kan je terecht voor :</span>
-                            <ul>
-                                <li>Oldtimers en 2de handswagens</li>
-                                <li>Service (onderhoud)</li>
-                                <li>Alle onderdelen voor luchtgekoelde Volkswagens</li>
-                                <li>Alle herstellingen</li>
-                                <li>Restauraties</li>
-                                <li>Motorrevisie luchtgekoelde vw's</li>
-                            </ul>
+                            <Typography>
+                                <span>Bij ons kan je terecht voor :</span>
+                                <ul>
+                                    <li>Oldtimers en 2de handswagens</li>
+                                    <li>Service (onderhoud)</li>
+                                    <li>Alle onderdelen voor luchtgekoelde Volkswagens</li>
+                                    <li>Alle herstellingen</li>
+                                    <li>Restauraties</li>
+                                    <li>Motorrevisie luchtgekoelde vw's</li>
+                                </ul>
+                            </Typography>
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Paper elevation={0}>
+                        <Paper elevation={0} style={imageStyle}>
                             <img src="http://www.j-cars.be/images/20171221_144353.jpg" title="" alt=""/>
                         </Paper>
                     </Grid>
@@ -75,8 +75,8 @@ class Home extends Component {
                 </Grid>
 
             </div>
-        )
+    )
     }
-}
+    }
 
-export default Home;
+    export default Home;
