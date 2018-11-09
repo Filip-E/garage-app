@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <EmbeddedResource Include="Scripts\SwaggerAuthorization.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

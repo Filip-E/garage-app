@@ -1,7 +1,6 @@
 using System.Web.Http;
 using WebActivatorEx;
 using garage_app_service;
-using System.Linq;
 using Swashbuckle.Application;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
@@ -183,7 +182,7 @@ namespace garage_app_service
                         // Use the "DocumentTitle" option to change the Document title.
                         // Very helpful when you have multiple Swagger pages open, to tell them apart.
                         //
-                        //c.DocumentTitle("My Swagger UI");
+                        c.DocumentTitle("Garage App Swagger UI");
 
                         // Use the "InjectStylesheet" option to enrich the UI with one or more additional CSS stylesheets.
                         // The file must be included in your project as an "Embedded Resource", and then the resource's
@@ -195,7 +194,8 @@ namespace garage_app_service
                         // has loaded. The file must be included in your project as an "Embedded Resource", and then the resource's
                         // "Logical Name" is passed to the method as shown above.
                         //
-                        //c.InjectJavaScript(thisAssembly, "Swashbuckle.Dummy.SwaggerExtensions.testScript1.js");
+                        // ########## THIS WAS FOUND ON https://github.com/janmohammadi/swashbuckle-authorize ###############
+                        c.InjectJavaScript(thisAssembly, "garage_app_service.Scripts.SwaggerAuthorization.js");
 
                         // The swagger-ui renders boolean data types as a dropdown. By default, it provides "true" and "false"
                         // strings as the possible choices. You can use this option to change these to something else,
