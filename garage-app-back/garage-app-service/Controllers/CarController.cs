@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
+using garage_app_service.AuthFilter;
 using garage_app_service.DTOs.Request;
 using garage_app_service.DTOs.Response;
 using garage_app_service.Mappers;
@@ -75,7 +75,7 @@ namespace garage_app_service.Controllers
             return Ok(responseDtos);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPost]
         [Route("car")]
         public IHttpActionResult InsertCar(InsertCarRequestDto carRequestDto)
@@ -90,7 +90,7 @@ namespace garage_app_service.Controllers
             return Created($"car/{insertCar.Id}", _carsMapper.ToDto(insertCar));
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPut]
         [Route("car")]
         public IHttpActionResult UpdateCar(UpdateCarRequestDto carRequestDto)
@@ -99,7 +99,7 @@ namespace garage_app_service.Controllers
             return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpDelete]
         [Route("car/{productId}")]
         public IHttpActionResult DeleteCar(int productId)

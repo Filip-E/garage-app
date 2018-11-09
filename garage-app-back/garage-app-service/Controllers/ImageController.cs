@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
+using garage_app_service.AuthFilter;
 using garage_app_service.DTOs.Response;
 using garage_app_service.Mappers;
 
@@ -24,7 +25,7 @@ namespace garage_app_service.Controllers
             _imageMapper = new ImageMapper();
         }
         
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPost]
         [Route("product/{productId}")]
         public HttpResponseMessage InsertImage(int productId)
@@ -104,7 +105,7 @@ namespace garage_app_service.Controllers
             return Ok(responseDtos);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpDelete]
         [Route("{imageId}")]
         public IHttpActionResult DeleteImage(int imageId)

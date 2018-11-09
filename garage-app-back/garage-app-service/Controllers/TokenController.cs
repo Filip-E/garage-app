@@ -5,7 +5,7 @@ namespace garage_app_service.Controllers
 {
     public class TokenController : ApiController
     {
-        private AuthService _authService;
+        private readonly AuthService _authService;
 
         public TokenController()
         {

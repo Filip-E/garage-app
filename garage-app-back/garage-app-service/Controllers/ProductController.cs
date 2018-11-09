@@ -1,14 +1,12 @@
 ﻿using System;
 using garage_app_bl.Services;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_entities;
+using garage_app_service.AuthFilter;
 using garage_app_service.DTOs.Request;
 using garage_app_service.DTOs.Response;
 using garage_app_service.Mappers;
@@ -86,7 +84,7 @@ namespace garage_app_service.Controllers
             return Ok(productResponseDtos);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPost]
         [Route("product")]
         public IHttpActionResult InsertProduct(InsertProductRequestDto productRequestDto)
@@ -115,7 +113,7 @@ namespace garage_app_service.Controllers
             }
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPut]
         [Route("product")]
         public IHttpActionResult UpdateProduct(UpdateProductRequestDto productRequestDto)
@@ -125,7 +123,7 @@ namespace garage_app_service.Controllers
             return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpDelete]
         [Route("product/{productId}")]
         public IHttpActionResult DeleteProduct(int productId)
@@ -133,71 +131,5 @@ namespace garage_app_service.Controllers
             _productService.DeleteProduct(productId);
             return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
-
-        /*[AllowAnonymous]
-        [HttpPost]
-        [Route("product/image/{productId}")]
-        public HttpResponseMessage PostFile(int productId)
-        {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            try
-
-            {
-                var httpRequest = HttpContext.Current.Request;
-
-                foreach (string file in httpRequest.Files)
-                {
-                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
-
-                    var postedFile = httpRequest.Files[file];
-                    if (postedFile != null && postedFile.ContentLength > 0)
-                    {
-                        int maxContentLength = 1024 * 1024 * 2; //Size = 2 MB  
-
-                        IList<string> allowedFileExtensions = new List<string> {".jpg", ".png"};
-                        var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
-                        var extension = ext.ToLower();
-                        if (!allowedFileExtensions.Contains(extension))
-                        {
-                            var message = "Please Upload image of type .jpg,.png.";
-
-                            dict.Add("error", message);
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
-                        }
-                        else if (postedFile.ContentLength > maxContentLength)
-                        {
-                            var message = "Please Upload a file up to 1 mb.";
-
-                            dict.Add("error", message);
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
-                        }
-                        else
-                        {
-                            var filePath =
-                                HttpContext.Current.Server.MapPath("~/App_Data/" + postedFile.FileName);
-
-                            postedFile.SaveAs(filePath);
-                            Debug.WriteLine("+++++++++++PICS++++++++++++++");
-                            Debug.WriteLine(productId);
-                            Debug.WriteLine(filePath);
-                        }
-                    }
-
-                    var message1 = "Image Updated Successfully.";
-                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1);
-                    ;
-                }
-
-                var res = "Please Upload a image.";
-                dict.Add("error", res);
-                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
-            }
-            catch (Exception)
-            {
-                var res = "some Message";
-                dict.Add("error", res);
-                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
-            }
-        }*/
     }
 }

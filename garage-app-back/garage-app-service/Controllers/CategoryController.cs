@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Results;
 using garage_app_bl.Services;
 using garage_app_entities;
+using garage_app_service.AuthFilter;
 using garage_app_service.DTOs.Request;
 using garage_app_service.DTOs.Response;
 using garage_app_service.Mappers;
@@ -63,7 +62,7 @@ namespace garage_app_service.Controllers
             return Ok(_categoryService.FindCategory(categoryId));
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPost]
         [Route("category")]
         public IHttpActionResult InsertCategory(InsertCategoryRequestDto productRequestDto)
@@ -73,7 +72,7 @@ namespace garage_app_service.Controllers
             return Created($"category/{category.Id}", _categoryMapper.ToDto(category));
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpPut]
         [Route("category")]
         public IHttpActionResult UpdateCategory(UpdateCategoryRequestDto updateCategoryRequestDto)
@@ -83,7 +82,7 @@ namespace garage_app_service.Controllers
             return new StatusCodeResult(HttpStatusCode.NoContent, this);
         }
 
-        [AllowAnonymous]
+        [JwtAuthentication]
         [HttpDelete]
         [Route("category/{categoryId}")]
         public IHttpActionResult DeleteCategory(int categoryId)
