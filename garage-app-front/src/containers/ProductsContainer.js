@@ -40,6 +40,13 @@ class ProductsContainer extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.response !== null){
+            if (this.props.response.status === 204){
+                if (this.props.response.config.method === 'delete') {
+                    this.props.fetchProducts(this.props.productCategory);
+                }
+            }
+        }
         if (prevProps.token !== this.props.token) {
             if (this.props.token) {
                 this.props.fetchProducts(this.props.productCategory);
