@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import {Redirect, Route, Switch} from "react-router-dom";
 import Home from "./Home";
 import Service from "./Service";
-import Contact from "./Contact";
 import LoginContainer from "../containers/LoginContainer";
 import {getCookie} from "../utils/CookieManager";
 import RetroVintageProductsWrapper from "../wrappers/RetroVintageProductsWrapper";
@@ -38,7 +37,6 @@ class DenseAppBar extends Component {
         const service = "/service";
         const parts = "/parts";
         const cars = "/cars";
-        const contact = "/contact";
         const login = "/login";
         let btn;
         if (getCookie('garage_app_token') === '') {
@@ -68,9 +66,6 @@ class DenseAppBar extends Component {
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={cars}>
                             Cars
                         </IconButton>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" href={contact}>
-                            Contact
-                        </IconButton>
                         <section className={classes.rightToolbar}>
                             {btn}
                         </section>
@@ -82,7 +77,6 @@ class DenseAppBar extends Component {
                     <Route exact path={retroVintage} component={RetroVintageProductsWrapper}/>
                     <Route exact path={parts} component={PartsProductsWrapper}/>
                     <Route exact path={cars} component={CarsProductsWrapper}/>
-                    <Route exact path={contact} component={Contact}/>
                     <Route exact path={login} component={LoginContainer}/>
                     <Redirect to={home}/>
                 </Switch>
