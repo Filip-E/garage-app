@@ -20,7 +20,7 @@ class ProductsComponent extends Component {
     render() {
         let actions;
         if (this.props.token !== '') {
-            if (this.props.productCategory === MainCategories.RETRO_VINTAGE) {
+            if (this.props.productCategory === MainCategories.PARTS) {
                 actions = (
                     <div>
                         <Button mini variant="fab" color="primary" aria-label="Add" onClick={

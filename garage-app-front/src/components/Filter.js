@@ -199,7 +199,7 @@ class Filter extends React.Component {
     };
 
     renderPlaceHolder(){
-        if(this.props.productCategory === MainCategories.RETRO_VINTAGE){
+        if(this.props.productCategory === MainCategories.PARTS){
            return "Selecteer een naam of categorie uit de beschikbare lijst"
         } else{
             return "Selecteer een naam uit de beschikbare lijst"

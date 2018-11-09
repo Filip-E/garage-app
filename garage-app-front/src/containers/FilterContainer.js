@@ -48,7 +48,7 @@ class FilterContainer extends Component {
         this.props.products.forEach((element) => {
             suggestions.push({label: element.Name, type: "product"})
         });
-        if(this.props.productCategory === MainCategories.RETRO_VINTAGE){
+        if(this.props.productCategory === MainCategories.PARTS){
             if (!isEmpty(this.props.categories)) {
                 this.props.categories.forEach((element) => {
                     suggestions.push({label: element.Type, type: "category"})
