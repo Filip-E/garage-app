@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using garage_app_entities;
+using MySql.Data.MySqlClient;
 
 namespace DAL.Repositories
 {
@@ -31,7 +32,8 @@ namespace DAL.Repositories
         /// <returns></returns>
         public List<Image> GetImagesByProductId(int productId)
         {
-            return _context.Images.Where(image => image.ProductId == productId).ToList();
+            return _context.Images.SqlQuery("SELECT * FROM garagedb.images WHERE ProductId = productId",new MySqlParameter("productId",productId)).ToList();
+//            return _context.Images.Where(image => image.ProductId == productId).ToList();
         }
         /// <summary>
         /// deletes a image from the db and from the corresponding product list
