@@ -33,7 +33,6 @@ namespace DAL.Repositories
         public List<Image> GetImagesByProductId(int productId)
         {
             return _context.Images.SqlQuery("SELECT * FROM garagedb.images WHERE ProductId = productId",new MySqlParameter("productId",productId)).ToList();
-//            return _context.Images.Where(image => image.ProductId == productId).ToList();
         }
         /// <summary>
         /// deletes a image from the db and from the corresponding product list
