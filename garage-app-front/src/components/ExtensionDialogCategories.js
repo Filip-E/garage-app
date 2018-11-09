@@ -27,14 +27,12 @@ class ExtensionDialogCategories extends Component {
         }
         fields.push(
             <div>
-                {/*<InputLabel htmlFor="select-multiple-checkbox">Tag</InputLabel>*/}
                 <Select
                     multiple
                     value={this.props.categoriesProduct}
                     onChange={this.props.handleChange}
                     input={<Input id="select-multiple-checkbox"/>}
                     renderValue={selected => selected.join(', ')}
-                    // MenuProps={MenuProps}
                 >
                     {menuItems}
                 </Select>
@@ -45,7 +43,7 @@ class ExtensionDialogCategories extends Component {
     render() {
         return (
             <div>
-                <Typography variant="subtitle1">
+                <Typography variant="subheading">
                     <br/> Categorieën <br/>
                 </Typography>
 
