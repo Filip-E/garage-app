@@ -6,6 +6,7 @@ import {fetchProductsAndFilter, filterProductsBasedOnName} from "../actions/prod
 
 // eslint-disable-next-line
 import {isEmpty} from "../utils/utilFunctions";
+import MainCategories from "../utils/MainCategories";
 
 function mapStateToProps(state) {
     return {
@@ -47,10 +48,12 @@ class FilterContainer extends Component {
         this.props.products.forEach((element) => {
             suggestions.push({label: element.Name, type: "product"})
         });
-        if (!isEmpty(this.props.categories)) {
-            this.props.categories.forEach((element) => {
-                suggestions.push({label: element.Type, type: "category"})
-            });
+        if(this.props.productCategory === MainCategories.RETRO_VINTAGE){
+            if (!isEmpty(this.props.categories)) {
+                this.props.categories.forEach((element) => {
+                    suggestions.push({label: element.Type, type: "category"})
+                });
+            }
         }
         return suggestions;
     }
