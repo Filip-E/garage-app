@@ -8,6 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import AddCategoryDialogContainer from "../containers/AddCategoryDialogContainer";
 import FilterContainer from "../containers/FilterContainer";
 import Typography from "@material-ui/core/Typography/Typography";
+import MainCategories from "../utils/MainCategories";
 
 const styles = () => ({
     root: {
@@ -19,19 +20,32 @@ class ProductsComponent extends Component {
     render() {
         let actions;
         if (this.props.token !== '') {
-            actions = (
-                <div>
-                    <Button mini variant="fab" color="primary" aria-label="Add" onClick={
-                        this.props.handleClickOpen
-                    }>
-                        <AddIcon fontSize="small"/>
-                    </Button>&nbsp;
-                    <Button mini variant="fab" color="secondary" aria-label="Add" onClick={
-                        this.props.handleOpenAddCategory
-                    }>
-                        <AddIcon fontSize="small"/>
-                    </Button>
-                </div>);
+            if (this.props.productCategory === MainCategories.RETRO_VINTAGE) {
+                actions = (
+                    <div>
+                        <Button mini variant="fab" color="primary" aria-label="Add" onClick={
+                            this.props.handleClickOpen
+                        }>
+                            <AddIcon fontSize="small"/>
+                        </Button>&nbsp;
+
+                        <Button mini variant="fab" color="secondary" aria-label="Add" onClick={
+                            this.props.handleOpenAddCategory
+                        }>
+                            <AddIcon fontSize="small"/>
+                        </Button>
+                    </div>);
+            } else {
+                actions = (
+                    <div>
+                        <Button mini variant="fab" color="primary" aria-label="Add" onClick={
+                            this.props.handleClickOpen
+                        }>
+                            <AddIcon fontSize="small"/>
+                        </Button>
+                    </div>);
+            }
+
         } else {
             actions = (<div/>);
         }
