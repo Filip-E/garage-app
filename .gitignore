@@ -1,6 +1,8 @@
 # do not upload images to github
 garage-app-back/garage-app-service/App_Data/
 
+# ignore vpp back up files
+*.vpp.bak*
 
 # Compiled source #
 ###################
